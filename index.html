@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"></head><body><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
@@ -16,19 +16,40 @@
       overflow-x: hidden;
       -webkit-tap-highlight-color: transparent;
     }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .chalk-bg { background: radial-gradient(circle at top right, #26221e 0%, #171513 60%, #110f0d 100%); }
-    .wood-bar { background: linear-gradient(180deg, #4a3222 0%, #382417 100%); }
-    @keyframes pulse-subtle { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
-    .animate-pulse-subtle { animation: pulse-subtle 2.5s infinite ease-in-out; }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .chalk-bg {
+      background: radial-gradient(circle at top right, #26221e 0%, #171513 60%, #110f0d 100%);
+    }
+    .wood-bar {
+      background: linear-gradient(180deg, #4a3222 0%, #382417 100%);
+    }
+    @keyframes pulse-subtle {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    .animate-pulse-subtle {
+      animation: pulse-subtle 2.5s infinite ease-in-out;
+    }
     @media print {
-      body > *:not(#printAllQrSheet) { display: none !important; }
-      #printAllQrSheet { display: block !important; background: white !important; color: black !important; }
+      body > *:not(#printAllQrSheet) {
+        display: none !important;
+      }
+      #printAllQrSheet {
+        display: block !important;
+        background: white !important;
+        color: black !important;
+      }
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col chalk-bg selection:bg-amber-500 selection:text-stone-950">
+
   <!-- Top Mode Bar -->
   <header class="sticky top-0 z-30 bg-stone-950/95 backdrop-blur-md border-b border-stone-800 px-3 py-2.5">
     <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-2">
@@ -47,46 +68,50 @@
           <p class="text-xs text-stone-400">ส.-อา. และวันหยุดนักขัตฤกษ์ • โทร 061-348-5831</p>
         </div>
       </div>
-<pre><code>  &lt;div class=&quot;flex items-center gap-2&quot;&gt;
-    &lt;!-- Auto-Locked Table Badge from QR Code --&gt;
-    &lt;div class=&quot;flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/90 border border-emerald-500/50 text-emerald-300 text-xs sm:text-sm font-semibold shadow-sm&quot;&gt;
-      &lt;span&gt;📲&lt;/span&gt;
-      &lt;span class=&quot;text-[11px] text-emerald-400/90 hidden sm:inline&quot;&gt;สแกนจาก:&lt;/span&gt;
-      &lt;span id=&quot;currentTableLabel&quot; class=&quot;font-extrabold text-amber-300&quot;&gt;โต๊ะ 3&lt;/span&gt;
-      &lt;span class=&quot;px-1.5 py-0.5 rounded bg-emerald-500/20 text-[10px] text-emerald-300 font-bold&quot;&gt;ล็อกตาม QR&lt;/span&gt;
-    &lt;/div&gt;
-    
-    &lt;!-- Simulator Button (Hidden automatically if customer scans via QR) --&gt;
-    &lt;button id=&quot;btnOpenTableModal&quot; type=&quot;button&quot; class=&quot;hidden flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-700 text-stone-300 text-[11px] font-medium transition&quot;&gt;
-      &lt;span&gt;🔄 จำลองสแกนโต๊ะอื่น&lt;/span&gt;
-    &lt;/button&gt;
 
-    &lt;!-- View Switcher --&gt;
-    &lt;div class=&quot;inline-flex rounded-xl bg-stone-900 p-1 border border-stone-800&quot;&gt;
-      &lt;button id=&quot;tabCustomerView&quot; type=&quot;button&quot; class=&quot;px-2.5 py-1 rounded-lg text-xs font-medium transition bg-amber-500 text-stone-950 shadow&quot;&gt;
-        📱 ลูกค้าสั่งอาหาร
-      &lt;/button&gt;
-      &lt;button id=&quot;tabStaffView&quot; type=&quot;button&quot; class=&quot;px-2.5 py-1 rounded-lg text-xs font-medium transition text-stone-400 hover:text-stone-200 relative&quot;&gt;
-        👨‍🍳 ครัว/แคชเชียร์
-        &lt;span id=&quot;staffBadgeCount&quot; class=&quot;hidden ml-1 px-1.5 py-0.2 bg-rose-500 text-white rounded-full text-[10px] font-bold&quot;&gt;0&lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
+      <div class="flex items-center gap-2">
+        <!-- Auto-Locked Table Badge from QR Code -->
+        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/90 border border-emerald-500/50 text-emerald-300 text-xs sm:text-sm font-semibold shadow-sm" title="ระบุโต๊ะอัตโนมัติจาก QR Code ที่สแกน">
+          <span>📲</span>
+          <span class="text-[11px] text-emerald-400/90 hidden sm:inline">สแกนจาก:</span>
+          <span id="currentTableLabel" class="font-extrabold text-amber-300">โต๊ะ 3</span>
+          <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-[10px] text-emerald-300 font-bold">ล็อกตาม QR</span>
+        </div>
+        
+        <!-- Simulator Button (Will be hidden automatically if customer scans via QR) -->
+        <button id="btnOpenTableModal" type="button" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-700 text-stone-300 text-[11px] font-medium transition" title="สำหรับเจ้าของร้านทดลองจำลองการสแกน QR โต๊ะอื่น">
+          <span>🔄 จำลองสแกนโต๊ะอื่น</span>
+        </button>
+
+        <!-- View Switcher -->
+        <div class="inline-flex rounded-xl bg-stone-900 p-1 border border-stone-800">
+          <button id="tabCustomerView" type="button" class="px-2.5 py-1 rounded-lg text-xs font-medium transition bg-amber-500 text-stone-950 shadow">
+            📱 ลูกค้าสั่งอาหาร
+          </button>
+          <button id="tabStaffView" type="button" class="px-2.5 py-1 rounded-lg text-xs font-medium transition text-stone-400 hover:text-stone-200 relative">
+            👨‍🍳 ครัว/แคชเชียร์
+            <span id="staffBadgeCount" class="hidden ml-1 px-1.5 py-0.2 bg-rose-500 text-white rounded-full text-[10px] font-bold">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
   </header>
-  <!-- CUSTOMER VIEW -->
+
+  <!-- ==================== CUSTOMER VIEW ==================== -->
   <main id="customerViewContainer" class="flex-1 max-w-5xl w-full mx-auto pb-28">
+    <!-- Hero Banner -->
     <section class="relative overflow-hidden rounded-b-3xl sm:rounded-3xl sm:mt-4 mx-0 sm:mx-4 border-b sm:border border-stone-800 shadow-2xl">
       <div class="relative h-44 sm:h-56 w-full">
-        <img src="data:image/jpeg;base64,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" alt="มัน.ตึง.ลำ Cafe & Rest" class="w-full h-full object-cover max-w-full" />
+        <div class="absolute inset-0 bg-stone-900 flex items-center justify-center text-amber-400 font-bold text-2xl">
+          มัน.ตึง.ลำ Cafe' &amp; Rest
+        </div>
         <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent"></div>
         <div class="absolute bottom-0 inset-x-0 p-4 sm:p-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
             <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500 text-stone-950 mb-1.5">
               สแกนสั่งอาหารที่โต๊ะ • ไม่ต้องรอคิว
             </span>
-            <h2 class="text-xl sm:text-2xl font-bold text-white drop-shadow">อร่อยครบเครื่อง เรื่องยำ ทอด T้ม ผัด &amp; คาเฟ่</h2>
+            <h2 class="text-xl sm:text-2xl font-bold text-white drop-shadow">อร่อยครบเครื่อง เรื่องยำ ทอด ต้ม ผัด &amp; คาเฟ่</h2>
             <p class="text-xs sm:text-sm text-stone-300">เลือกเมนู ปรับความหวาน/ความเผ็ดตามใจ แล้วกดส่งเข้าครัวได้ทันที</p>
           </div>
           <div class="flex items-center gap-2">
@@ -100,75 +125,76 @@
         </div>
       </div>
     </section>
-<pre><code>&lt;!-- Auto-Detected QR Table Banner --&gt;
-&lt;section class=&quot;px-4 mt-3&quot;&gt;
-  &lt;div class=&quot;p-3 sm:px-4 rounded-2xl bg-gradient-to-r from-emerald-950/90 via-stone-900 to-stone-900 border border-emerald-500/40 flex flex-wrap items-center justify-between gap-2 shadow-md&quot;&gt;
-    &lt;div class=&quot;flex items-center gap-2.5&quot;&gt;
-      &lt;div class=&quot;w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-lg&quot;&gt;
-        📲
-      &lt;/div&gt;
-      &lt;div&gt;
-        &lt;div class=&quot;flex items-center gap-2&quot;&gt;
-          &lt;span class=&quot;text-xs sm:text-sm font-bold text-white&quot;&gt;ระบบระบุที่นั่งอัตโนมัติจาก QR Code:&lt;/span&gt;
-          &lt;span id=&quot;qrDetectedBannerTable&quot; class=&quot;px-2.5 py-0.5 rounded-lg bg-amber-500 text-stone-950 font-extrabold text-xs sm:text-sm shadow&quot;&gt;โต๊ะ 3&lt;/span&gt;
-        &lt;/div&gt;
-        &lt;p class=&quot;text-[11px] text-stone-300 mt-0.5&quot;&gt;ไม่ต้องเลือกโต๊ะเอง • เมื่อกดสั่งอาหาร ออเดอร์จะส่งเข้าครัวเป็นชื่อโต๊ะของคุณทันที&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;text-[11px] text-emerald-300 font-mono bg-stone-950/80 px-2.5 py-1 rounded-lg border border-stone-800&quot; id=&quot;qrUrlParamPreview&quot;&gt;
-      ?table=3
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
 
-&lt;!-- Search &amp; Quick Filter Bar --&gt;
-&lt;section class=&quot;px-4 mt-3&quot;&gt;
-  &lt;div class=&quot;flex flex-col sm:flex-row gap-2.5&quot;&gt;
-    &lt;div class=&quot;relative flex-1&quot;&gt;
-      &lt;span class=&quot;absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 text-sm&quot;&gt;🔍&lt;/span&gt;
-      &lt;input id=&quot;searchInput&quot; type=&quot;text&quot; placeholder=&quot;ค้นหาเมนู เช่น ปลานิล, ยำ, ชาไทย, กะเพรา, เบียร์...&quot; class=&quot;w-full pl-9 pr-9 py-2.5 rounded-2xl bg-stone-900 border border-stone-700/80 text-sm text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-500 transition&quot; /&gt;
-      &lt;button id=&quot;btnClearSearch&quot; type=&quot;button&quot; class=&quot;hidden absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-200 text-xs px-1.5 py-0.5 rounded bg-stone-800&quot;&gt;ล้าง&lt;/button&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5&quot;&gt;
-      &lt;button type=&quot;button&quot; data-quickfilter=&quot;all&quot; class=&quot;quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-amber-500 text-stone-950 transition&quot;&gt;
-        ทั้งหมด (104)
-      &lt;/button&gt;
-      &lt;button type=&quot;button&quot; data-quickfilter=&quot;signature&quot; class=&quot;quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-stone-900 text-stone-300 border border-stone-800 hover:border-amber-500/50 transition&quot;&gt;
-        ⭐ เมนูซิกเนเจอร์/แนะนำ
-      &lt;/button&gt;
-      &lt;button type=&quot;button&quot; data-quickfilter=&quot;spicy&quot; class=&quot;quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-stone-900 text-stone-300 border border-stone-800 hover:border-amber-500/50 transition&quot;&gt;
-        🌶️ สายแซ่บ
-      &lt;/button&gt;
-      &lt;button type=&quot;button&quot; data-quickfilter=&quot;budget&quot; class=&quot;quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-stone-900 text-stone-300 border border-stone-800 hover:border-amber-500/50 transition&quot;&gt;
-        💰 ไม่เกิน 60 ฿
-      &lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
+    <!-- Auto-Detected QR Table Banner -->
+    <section class="px-4 mt-3">
+      <div class="p-3 sm:px-4 rounded-2xl bg-gradient-to-r from-emerald-950/90 via-stone-900 to-stone-900 border border-emerald-500/40 flex flex-wrap items-center justify-between gap-2 shadow-md">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-lg">
+            📲
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs sm:text-sm font-bold text-white">ระบบระบุที่นั่งอัตโนมัติจาก QR Code:</span>
+              <span id="qrDetectedBannerTable" class="px-2.5 py-0.5 rounded-lg bg-amber-500 text-stone-950 font-extrabold text-xs sm:text-sm shadow">โต๊ะ 3</span>
+            </div>
+            <p class="text-[11px] text-stone-300 mt-0.5">ไม่ต้องเลือกโต๊ะเอง • เมื่อกดสั่งอาหาร ออเดอร์จะส่งเข้าครัวเป็นชื่อโต๊ะของคุณทันที</p>
+          </div>
+        </div>
+        <div class="text-[11px] text-emerald-300 font-mono bg-stone-950/80 px-2.5 py-1 rounded-lg border border-stone-800" id="qrUrlParamPreview">
+          ?table=3
+        </div>
+      </div>
+    </section>
 
-&lt;!-- Category Navigation Pills --&gt;
-&lt;nav class=&quot;sticky top-[57px] z-20 bg-stone-950/90 backdrop-blur-md border-b border-stone-800/80 mt-3 py-2.5 px-4&quot;&gt;
-  &lt;div id=&quot;categoryTabsContainer&quot; class=&quot;flex items-center gap-2 overflow-x-auto no-scrollbar&quot;&gt;
-    &lt;!-- Rendered by JS --&gt;
-  &lt;/div&gt;
-&lt;/nav&gt;
+    <!-- Search & Quick Filter Bar -->
+    <section class="px-4 mt-3">
+      <div class="flex flex-col sm:flex-row gap-2.5">
+        <div class="relative flex-1">
+          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 text-sm">🔍</span>
+          <input id="searchInput" type="text" placeholder="ค้นหาเมนู เช่น ปลานิล, ยำ, ชาไทย, กะเพรา, เบียร์..." class="w-full pl-9 pr-9 py-2.5 rounded-2xl bg-stone-900 border border-stone-700/80 text-sm text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-500 transition" />
+          <button id="btnClearSearch" type="button" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-200 text-xs px-1.5 py-0.5 rounded bg-stone-800">ล้าง</button>
+        </div>
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+          <button type="button" data-quickfilter="all" class="quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-amber-500 text-stone-950 transition">
+            ทั้งหมด (104)
+          </button>
+          <button type="button" data-quickfilter="signature" class="quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-stone-900 text-stone-300 border border-stone-800 hover:border-amber-500/50 transition">
+            ⭐ เมนูซิกเนเจอร์/แนะนำ
+          </button>
+          <button type="button" data-quickfilter="spicy" class="quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-stone-900 text-stone-300 border border-stone-800 hover:border-amber-500/50 transition">
+            🌶️ สายแซ่บ
+          </button>
+          <button type="button" data-quickfilter="budget" class="quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-stone-900 text-stone-300 border border-stone-800 hover:border-amber-500/50 transition">
+            💰 ไม่เกิน 60 ฿
+          </button>
+        </div>
+      </div>
+    </section>
 
-&lt;!-- Menu Items Grid --&gt;
-&lt;section class=&quot;px-4 mt-4&quot;&gt;
-  &lt;div class=&quot;flex items-center justify-between mb-3&quot;&gt;
-    &lt;h3 id=&quot;activeCategoryTitle&quot; class=&quot;text-base sm:text-lg font-bold text-amber-400 flex items-center gap-2&quot;&gt;
-      &lt;span&gt;📋&lt;/span&gt; รายการเมนูทั้งหมด
-    &lt;/h3&gt;
-    &lt;span id=&quot;filteredItemCount&quot; class=&quot;text-xs text-stone-400&quot;&gt;104 รายการ&lt;/span&gt;
-  &lt;/div&gt;
+    <!-- Category Navigation Pills -->
+    <nav class="sticky top-[57px] z-20 bg-stone-950/90 backdrop-blur-md border-b border-stone-800/80 mt-3 py-2.5 px-4">
+      <div id="categoryTabsContainer" class="flex items-center gap-2 overflow-x-auto no-scrollbar">
+        <!-- Rendered by JS -->
+      </div>
+    </nav>
 
-  &lt;div id=&quot;menuGridContainer&quot; class=&quot;grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3&quot;&gt;
-    &lt;!-- Rendered by JS --&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
-</code></pre>
+    <!-- Menu Items Grid -->
+    <section class="px-4 mt-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 id="activeCategoryTitle" class="text-base sm:text-lg font-bold text-amber-400 flex items-center gap-2">
+          <span>📋</span> รายการเมนูทั้งหมด
+        </h3>
+        <span id="filteredItemCount" class="text-xs text-stone-400">104 รายการ</span>
+      </div>
+
+      <div id="menuGridContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
   </main>
-  <!-- STAFF / KITCHEN POS VIEW -->
+
+  <!-- ==================== STAFF / KITCHEN POS VIEW ==================== -->
   <section id="staffViewContainer" class="hidden flex-1 max-w-5xl w-full mx-auto px-4 py-5 pb-24">
     <div class="flex flex-wrap items-center justify-between gap-3 mb-5 bg-stone-900/90 p-4 rounded-2xl border border-stone-800">
       <div>
@@ -189,47 +215,48 @@
         </button>
       </div>
     </div>
-<pre><code>&lt;!-- Summary KPI Cards --&gt;
-&lt;div class=&quot;grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5&quot;&gt;
-  &lt;div class=&quot;p-3.5 rounded-2xl bg-stone-900 border border-stone-800&quot;&gt;
-    &lt;div class=&quot;text-xs text-stone-400&quot;&gt;ออเดอร์รอทำ / กำลังปรุง&lt;/div&gt;
-    &lt;div id=&quot;kpiPendingOrders&quot; class=&quot;text-2xl font-bold text-amber-400 mt-1&quot;&gt;0&lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;p-3.5 rounded-2xl bg-stone-900 border border-stone-800&quot;&gt;
-    &lt;div class=&quot;text-xs text-stone-400&quot;&gt;เสิร์ฟแล้วรอเช็คบิล&lt;/div&gt;
-    &lt;div id=&quot;kpiServedOrders&quot; class=&quot;text-2xl font-bold text-emerald-400 mt-1&quot;&gt;0&lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;p-3.5 rounded-2xl bg-stone-900 border border-stone-800&quot;&gt;
-    &lt;div class=&quot;text-xs text-stone-400&quot;&gt;แจ้งเรียกพนักงาน&lt;/div&gt;
-    &lt;div id=&quot;kpiStaffCalls&quot; class=&quot;text-2xl font-bold text-rose-400 mt-1&quot;&gt;0&lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;p-3.5 rounded-2xl bg-stone-900 border border-stone-800&quot;&gt;
-    &lt;div class=&quot;text-xs text-stone-400&quot;&gt;ยอดสั่งซื้อรวมวันนี้&lt;/div&gt;
-    &lt;div id=&quot;kpiTotalRevenue&quot; class=&quot;text-2xl font-bold text-white mt-1&quot;&gt;0 ฿&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
 
-&lt;!-- Staff Calls Alert List --&gt;
-&lt;div id=&quot;staffCallsContainer&quot; class=&quot;mb-5 hidden&quot;&gt;
-  &lt;h3 class=&quot;text-sm font-bold text-rose-400 mb-2 flex items-center gap-1.5&quot;&gt;🔔 โต๊ะที่กำลังเรียกพนักงาน&lt;/h3&gt;
-  &lt;div id=&quot;staffCallsList&quot; class=&quot;grid grid-cols-1 sm:grid-cols-2 gap-2.5&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
+    <!-- Summary KPI Cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+      <div class="p-3.5 rounded-2xl bg-stone-900 border border-stone-800">
+        <div class="text-xs text-stone-400">ออเดอร์รอทำ / กำลังปรุง</div>
+        <div id="kpiPendingOrders" class="text-2xl font-bold text-amber-400 mt-1">0</div>
+      </div>
+      <div class="p-3.5 rounded-2xl bg-stone-900 border border-stone-800">
+        <div class="text-xs text-stone-400">เสิร์ฟแล้วรอเช็คบิล</div>
+        <div id="kpiServedOrders" class="text-2xl font-bold text-emerald-400 mt-1">0</div>
+      </div>
+      <div class="p-3.5 rounded-2xl bg-stone-900 border border-stone-800">
+        <div class="text-xs text-stone-400">แจ้งเรียกพนักงาน</div>
+        <div id="kpiStaffCalls" class="text-2xl font-bold text-rose-400 mt-1">0</div>
+      </div>
+      <div class="p-3.5 rounded-2xl bg-stone-900 border border-stone-800">
+        <div class="text-xs text-stone-400">ยอดสั่งซื้อรวมวันนี้</div>
+        <div id="kpiTotalRevenue" class="text-2xl font-bold text-white mt-1">0 ฿</div>
+      </div>
+    </div>
 
-&lt;!-- Kitchen / Cashier Filter Tabs --&gt;
-&lt;div class=&quot;flex items-center gap-2 mb-4 overflow-x-auto no-scrollbar&quot;&gt;
-  &lt;button type=&quot;button&quot; data-stafffilter=&quot;all&quot; class=&quot;staff-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-amber-500 text-stone-950&quot;&gt;ทั้งหมด&lt;/button&gt;
-  &lt;button type=&quot;button&quot; data-stafffilter=&quot;pending&quot; class=&quot;staff-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-stone-900 text-stone-300 border border-stone-800&quot;&gt;⏳ รอรับออเดอร์ / กำลังปรุง&lt;/button&gt;
-  &lt;button type=&quot;button&quot; data-stafffilter=&quot;served&quot; class=&quot;staff-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-stone-900 text-stone-300 border border-stone-800&quot;&gt;✅ เสิร์ฟครบแล้ว&lt;/button&gt;
-  &lt;button type=&quot;button&quot; data-stafffilter=&quot;paid&quot; class=&quot;staff-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-stone-900 text-stone-300 border border-stone-800&quot;&gt;💰 ชำระเงินแล้ว&lt;/button&gt;
-&lt;/div&gt;
+    <!-- Staff Calls Alert List -->
+    <div id="staffCallsContainer" class="mb-5 hidden">
+      <h3 class="text-sm font-bold text-rose-400 mb-2 flex items-center gap-1.5">🔔 โต๊ะที่กำลังเรียกพนักงาน</h3>
+      <div id="staffCallsList" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+    </div>
 
-&lt;!-- Orders Board --&gt;
-&lt;div id=&quot;staffOrdersGrid&quot; class=&quot;grid grid-cols-1 md:grid-cols-2 gap-4&quot;&gt;
-  &lt;!-- Rendered by JS --&gt;
-&lt;/div&gt;
-</code></pre>
+    <!-- Kitchen / Cashier Filter Tabs -->
+    <div class="flex items-center gap-2 mb-4 overflow-x-auto no-scrollbar">
+      <button type="button" data-stafffilter="all" class="staff-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-amber-500 text-stone-950">ทั้งหมด</button>
+      <button type="button" data-stafffilter="pending" class="staff-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-stone-900 text-stone-300 border border-stone-800">⏳ รอรับออเดอร์ / กำลังปรุง</button>
+      <button type="button" data-stafffilter="served" class="staff-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-stone-900 text-stone-300 border border-stone-800">✅ เสิร์ฟครบแล้ว</button>
+      <button type="button" data-stafffilter="paid" class="staff-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-stone-900 text-stone-300 border border-stone-800">💰 ชำระเงินแล้ว</button>
+    </div>
+
+    <!-- Orders Board -->
+    <div id="staffOrdersGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Rendered by JS -->
+    </div>
   </section>
-  <!-- STICKY BOTTOM CART BAR (Customer) -->
+
+  <!-- ==================== STICKY BOTTOM CART BAR (Customer) ==================== -->
   <div id="bottomCartBar" class="fixed bottom-0 inset-x-0 z-30 p-3 bg-gradient-to-t from-stone-950 via-stone-950/95 to-transparent pointer-events-none">
     <div class="max-w-5xl mx-auto flex items-center justify-between gap-3 pointer-events-auto">
       <button id="btnOpenCartDrawer" type="button" class="flex-1 wood-bar hover:brightness-110 text-white p-3 sm:px-5 rounded-2xl shadow-2xl border border-amber-500/40 flex items-center justify-between transition">
@@ -252,7 +279,8 @@
       </button>
     </div>
   </div>
-  <!-- MODAL 1: ITEM CUSTOMIZATION -->
+
+  <!-- ==================== MODAL 1: ITEM CUSTOMIZATION ==================== -->
   <div id="itemOptionModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-stone-900 border border-stone-700 w-full max-w-md rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
       <div class="p-4 sm:p-5 border-b border-stone-800 flex items-start justify-between gap-3 bg-stone-950/60">
@@ -263,53 +291,54 @@
         </div>
         <button id="btnCloseItemModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center text-sm">✕</button>
       </div>
-<pre><code>  &lt;div class=&quot;p-4 sm:p-5 overflow-y-auto space-y-4 flex-1&quot;&gt;
-    &lt;div id=&quot;modalVariantSection&quot; class=&quot;hidden&quot;&gt;
-      &lt;label id=&quot;modalVariantTitle&quot; class=&quot;block text-xs font-semibold text-amber-300 mb-2&quot;&gt;เลือกรูปแบบ (จำเป็น)&lt;/label&gt;
-      &lt;div id=&quot;modalVariantOptions&quot; class=&quot;grid grid-cols-3 gap-2&quot;&gt;&lt;/div&gt;
-    &lt;/div&gt;
 
-    &lt;div id=&quot;modalSweetnessSection&quot; class=&quot;hidden&quot;&gt;
-      &lt;label class=&quot;block text-xs font-semibold text-amber-300 mb-2&quot;&gt;ระดับความหวาน&lt;/label&gt;
-      &lt;div id=&quot;modalSweetnessOptions&quot; class=&quot;grid grid-cols-3 sm:grid-cols-5 gap-1.5&quot;&gt;&lt;/div&gt;
-    &lt;/div&gt;
+      <div class="p-4 sm:p-5 overflow-y-auto space-y-4 flex-1">
+        <div id="modalVariantSection" class="hidden">
+          <label id="modalVariantTitle" class="block text-xs font-semibold text-amber-300 mb-2">เลือกรูปแบบ (จำเป็น)</label>
+          <div id="modalVariantOptions" class="grid grid-cols-3 gap-2"></div>
+        </div>
 
-    &lt;div id=&quot;modalSpiceSection&quot; class=&quot;hidden&quot;&gt;
-      &lt;label class=&quot;block text-xs font-semibold text-amber-300 mb-2&quot;&gt;ระดับความเผ็ด&lt;/label&gt;
-      &lt;div id=&quot;modalSpiceOptions&quot; class=&quot;grid grid-cols-2 sm:grid-cols-4 gap-2&quot;&gt;&lt;/div&gt;
-    &lt;/div&gt;
+        <div id="modalSweetnessSection" class="hidden">
+          <label class="block text-xs font-semibold text-amber-300 mb-2">ระดับความหวาน</label>
+          <div id="modalSweetnessOptions" class="grid grid-cols-3 sm:grid-cols-5 gap-1.5"></div>
+        </div>
 
-    &lt;div id=&quot;modalAddonSection&quot; class=&quot;hidden&quot;&gt;
-      &lt;label class=&quot;block text-xs font-semibold text-amber-300 mb-2&quot;&gt;เพิ่มท็อปปิ้ง / พิเศษ&lt;/label&gt;
-      &lt;div id=&quot;modalAddonOptions&quot; class=&quot;space-y-2&quot;&gt;&lt;/div&gt;
-    &lt;/div&gt;
+        <div id="modalSpiceSection" class="hidden">
+          <label class="block text-xs font-semibold text-amber-300 mb-2">ระดับความเผ็ด</label>
+          <div id="modalSpiceOptions" class="grid grid-cols-2 sm:grid-cols-4 gap-2"></div>
+        </div>
 
-    &lt;div&gt;
-      &lt;label for=&quot;modalItemNote&quot; class=&quot;block text-xs font-semibold text-stone-300 mb-1.5&quot;&gt;หมายเหตุเพิ่มเติมถึงครัว (ถ้ามี)&lt;/label&gt;
-      &lt;input id=&quot;modalItemNote&quot; type=&quot;text&quot; placeholder=&quot;เช่น ไม่ใส่ผักชี, ไม่ใส่ผงชูรส, แยกน้ำยำ...&quot; class=&quot;w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-700 text-xs sm:text-sm text-white placeholder-stone-500 focus:outline-none focus:border-amber-500&quot; /&gt;
-    &lt;/div&gt;
+        <div id="modalAddonSection" class="hidden">
+          <label class="block text-xs font-semibold text-amber-300 mb-2">เพิ่มท็อปปิ้ง / พิเศษ</label>
+          <div id="modalAddonOptions" class="space-y-2"></div>
+        </div>
 
-    &lt;div class=&quot;flex items-center justify-between pt-2 border-t border-stone-800&quot;&gt;
-      &lt;span class=&quot;text-sm font-medium text-stone-300&quot;&gt;จำนวน&lt;/span&gt;
-      &lt;div class=&quot;flex items-center gap-3&quot;&gt;
-        &lt;button id=&quot;btnModalQtyMinus&quot; type=&quot;button&quot; class=&quot;w-9 h-9 rounded-xl bg-stone-800 hover:bg-stone-700 text-white font-bold text-lg flex items-center justify-center&quot;&gt;−&lt;/button&gt;
-        &lt;span id=&quot;modalItemQty&quot; class=&quot;text-base font-bold text-amber-400 w-6 text-center&quot;&gt;1&lt;/span&gt;
-        &lt;button id=&quot;btnModalQtyPlus&quot; type=&quot;button&quot; class=&quot;w-9 h-9 rounded-xl bg-stone-800 hover:bg-stone-700 text-white font-bold text-lg flex items-center justify-center&quot;&gt;+&lt;/button&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
+        <div>
+          <label for="modalItemNote" class="block text-xs font-semibold text-stone-300 mb-1.5">หมายเหตุเพิ่มเติมถึงครัว (ถ้ามี)</label>
+          <input id="modalItemNote" type="text" placeholder="เช่น ไม่ใส่ผักชี, ไม่ใส่ผงชูรส, แยกน้ำยำ..." class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-700 text-xs sm:text-sm text-white placeholder-stone-500 focus:outline-none focus:border-amber-500" />
+        </div>
 
-  &lt;div class=&quot;p-4 bg-stone-950 border-t border-stone-800&quot;&gt;
-    &lt;button id=&quot;btnConfirmAddToCart&quot; type=&quot;button&quot; class=&quot;w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-sm sm:text-base shadow-lg transition flex items-center justify-center gap-2&quot;&gt;
-      &lt;span&gt;เพิ่มลงตะกร้า&lt;/span&gt;
-      &lt;span&gt;•&lt;/span&gt;
-      &lt;span id=&quot;modalComputedPrice&quot;&gt;0 ฿&lt;/span&gt;
-    &lt;/button&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
+        <div class="flex items-center justify-between pt-2 border-t border-stone-800">
+          <span class="text-sm font-medium text-stone-300">จำนวน</span>
+          <div class="flex items-center gap-3">
+            <button id="btnModalQtyMinus" type="button" class="w-9 h-9 rounded-xl bg-stone-800 hover:bg-stone-700 text-white font-bold text-lg flex items-center justify-center">−</button>
+            <span id="modalItemQty" class="text-base font-bold text-amber-400 w-6 text-center">1</span>
+            <button id="btnModalQtyPlus" type="button" class="w-9 h-9 rounded-xl bg-stone-800 hover:bg-stone-700 text-white font-bold text-lg flex items-center justify-center">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-stone-950 border-t border-stone-800">
+        <button id="btnConfirmAddToCart" type="button" class="w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-sm sm:text-base shadow-lg transition flex items-center justify-center gap-2">
+          <span>เพิ่มลงตะกร้า</span>
+          <span>•</span>
+          <span id="modalComputedPrice">0 ฿</span>
+        </button>
+      </div>
+    </div>
   </div>
-  <!-- MODAL 2: CART DRAWER -->
+
+  <!-- ==================== MODAL 2: CART DRAWER ==================== -->
   <div id="cartDrawerModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-stone-900 border border-stone-700 w-full max-w-lg rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
       <div class="p-4 sm:p-5 border-b border-stone-800 flex items-center justify-between bg-stone-950/70">
@@ -324,30 +353,33 @@
           <button id="btnCloseCartModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center text-sm">✕</button>
         </div>
       </div>
-<pre><code>  &lt;div id=&quot;cartItemsList&quot; class=&quot;p-4 overflow-y-auto flex-1 space-y-2.5&quot;&gt;&lt;/div&gt;
 
-  &lt;div class=&quot;p-4 bg-stone-950 border-t border-stone-800 space-y-3&quot;&gt;
-    &lt;div class=&quot;flex items-center justify-between text-sm&quot;&gt;
-      &lt;span class=&quot;text-stone-400&quot;&gt;จำนวนรายการในตะกร้า&lt;/span&gt;
-      &lt;span id=&quot;cartModalTotalQty&quot; class=&quot;font-semibold text-stone-200&quot;&gt;0 รายการ&lt;/span&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;flex items-center justify-between text-base sm:text-lg font-bold&quot;&gt;
-      &lt;span class=&quot;text-white&quot;&gt;ยอดรวมรอบนี้&lt;/span&gt;
-      &lt;span id=&quot;cartModalTotalPrice&quot; class=&quot;text-amber-400&quot;&gt;0 ฿&lt;/span&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;space-y-2&quot;&gt;
-      &lt;button id=&quot;btnSubmitToLine&quot; type=&quot;button&quot; class=&quot;w-full py-3.5 rounded-2xl bg-[#06C755] hover:bg-[#05b34c] text-stone-950 font-extrabold text-sm sm:text-base shadow-lg transition flex items-center justify-center gap-2&quot;&gt;
-        &lt;span&gt;💬 ส่งออเดอร์เข้า LINE ร้านค้าทันที (@698ygoeo)&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button id=&quot;btnSubmitOrderToKitchen&quot; type=&quot;button&quot; class=&quot;w-full py-2.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/40 font-bold text-xs sm:text-sm transition flex items-center justify-center gap-1.5&quot;&gt;
-        &lt;span&gt;🚀 ส่งออเดอร์เข้าหน้าครัวในเว็บ (ไม่เปิดแอป LINE)&lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
+      <div id="cartItemsList" class="p-4 overflow-y-auto flex-1 space-y-2.5">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="p-4 bg-stone-950 border-t border-stone-800 space-y-3">
+        <div class="flex items-center justify-between text-sm">
+          <span class="text-stone-400">จำนวนรายการในตะกร้า</span>
+          <span id="cartModalTotalQty" class="font-semibold text-stone-200">0 รายการ</span>
+        </div>
+        <div class="flex items-center justify-between text-base sm:text-lg font-bold">
+          <span class="text-white">ยอดรวมรอบนี้</span>
+          <span id="cartModalTotalPrice" class="text-amber-400">0 ฿</span>
+        </div>
+        <div class="space-y-2">
+          <button id="btnSubmitToLine" type="button" class="w-full py-3.5 rounded-2xl bg-[#06C755] hover:bg-[#05b34c] text-stone-950 font-extrabold text-sm sm:text-base shadow-lg transition flex items-center justify-center gap-2">
+            <span>💬 ส่งออเดอร์เข้า LINE ร้านค้าทันที (@698ygoeo)</span>
+          </button>
+          <button id="btnSubmitOrderToKitchen" type="button" class="w-full py-2.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/40 font-bold text-xs sm:text-sm transition flex items-center justify-center gap-1.5">
+            <span>🚀 ส่งออเดอร์เข้าหน้าครัวในเว็บ (ไม่เปิดแอป LINE)</span>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- MODAL 3: ACTIVE BILL & ORDER TRACKING -->
+
+  <!-- ==================== MODAL 3: ACTIVE BILL & ORDER TRACKING ==================== -->
   <div id="activeBillModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-stone-900 border border-stone-700 w-full max-w-lg rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
       <div class="p-4 sm:p-5 border-b border-stone-800 flex items-center justify-between bg-stone-950/70">
@@ -359,26 +391,29 @@
         </div>
         <button id="btnCloseBillModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center text-sm">✕</button>
       </div>
-<pre><code>  &lt;div id=&quot;activeBillContent&quot; class=&quot;p-4 overflow-y-auto flex-1 space-y-4&quot;&gt;&lt;/div&gt;
 
-  &lt;div class=&quot;p-4 bg-stone-950 border-t border-stone-800 space-y-3&quot;&gt;
-    &lt;div class=&quot;flex items-center justify-between text-base sm:text-lg font-bold&quot;&gt;
-      &lt;span class=&quot;text-white&quot;&gt;ยอดรวมสุทธิของโต๊ะนี้&lt;/span&gt;
-      &lt;span id=&quot;billModalGrandTotal&quot; class=&quot;text-amber-400 text-xl&quot;&gt;0 ฿&lt;/span&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;grid grid-cols-2 gap-2.5&quot;&gt;
-      &lt;button id=&quot;btnRequestCashBill&quot; type=&quot;button&quot; class=&quot;py-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/40 font-semibold text-xs sm:text-sm transition&quot;&gt;
-        💵 เรียกเช็คบิล (เงินสด)
-      &lt;/button&gt;
-      &lt;button id=&quot;btnRequestPromptPay&quot; type=&quot;button&quot; class=&quot;py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs sm:text-sm transition shadow&quot;&gt;
-        📲 สแกนจ่าย PromptPay
-      &lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
+      <div id="activeBillContent" class="p-4 overflow-y-auto flex-1 space-y-4">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="p-4 bg-stone-950 border-t border-stone-800 space-y-3">
+        <div class="flex items-center justify-between text-base sm:text-lg font-bold">
+          <span class="text-white">ยอดรวมสุทธิของโต๊ะนี้</span>
+          <span id="billModalGrandTotal" class="text-amber-400 text-xl">0 ฿</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <button id="btnRequestCashBill" type="button" class="py-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/40 font-semibold text-xs sm:text-sm transition">
+            💵 เรียกเช็คบิล (เงินสด)
+          </button>
+          <button id="btnRequestPromptPay" type="button" class="py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs sm:text-sm transition shadow">
+            📲 สแกนจ่าย PromptPay
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- MODAL 4: TABLE SELECTOR -->
+
+  <!-- ==================== MODAL 4: TABLE SELECTOR ==================== -->
   <div id="tableSelectModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-stone-900 border border-stone-700 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl">
       <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950/60">
@@ -404,7 +439,8 @@
       </div>
     </div>
   </div>
-  <!-- MODAL 5: CALL STAFF -->
+
+  <!-- ==================== MODAL 5: CALL STAFF / PROMPTPAY ==================== -->
   <div id="serviceCallModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-stone-900 border border-stone-700 w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl">
       <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950/60">
@@ -431,13 +467,14 @@
       </div>
     </div>
   </div>
-  <!-- MODAL 6: QR GENERATOR -->
+
+  <!-- ==================== MODAL 6: QR GENERATOR FOR TABLES (Staff) ==================== -->
   <div id="qrGeneratorModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-stone-900 border border-stone-700 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl max-h-[92vh] flex flex-col">
       <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950/60">
         <div>
-          <h3 class="text-base font-bold text-amber-400">🖨️ ป้าย QR Code ถาวรประจำโต๊ะ</h3>
-          <p class="text-[11px] text-emerald-400">✓ เคลือบแปะโต๊ะไว้ใช้ได้ตลอด</p>
+          <h3 class="text-base font-bold text-amber-400">🖨️ ป้าย QR Code ถาวรประจำโต๊ะ (ใช้ซ้ำได้ตลอด)</h3>
+          <p class="text-[11px] text-emerald-400">✓ ไม่ใช่ Single-use • เคลือบแปะโต๊ะไว้ใช้ได้ถาวร เมื่อแคชเชียร์กดเคลียร์โต๊ะ ลูกค้าคนถัดไปสแกนซ้ำได้ทันที</p>
         </div>
         <button id="btnCloseQrModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center text-sm">✕</button>
       </div>
@@ -448,39 +485,48 @@
             <select id="qrTableSelect" class="w-full px-3 py-2 rounded-xl bg-stone-800 border border-stone-700 text-xs text-amber-300 font-semibold"></select>
           </div>
           <div>
-            <label for="qrBaseUrlInput" class="block text-[11px] text-stone-300 mb-1">ลิงก์เว็บ GitHub Pages:</label>
+            <label for="qrBaseUrlInput" class="block text-[11px] text-stone-300 mb-1">ลิงก์เว็บหลักของร้าน:</label>
             <input id="qrBaseUrlInput" type="text" value="https://peach2808.github.io/cafe-7/" class="w-full px-3 py-2 rounded-xl bg-stone-950 border border-stone-700 text-xs text-stone-200 font-mono focus:outline-none focus:border-amber-500" />
           </div>
         </div>
-<pre><code>    &lt;div class=&quot;bg-white text-stone-900 p-4 rounded-2xl max-w-xs mx-auto shadow-xl border-4 border-amber-500&quot;&gt;
-      &lt;div class=&quot;text-xs font-extrabold tracking-widest text-amber-700 uppercase&quot;&gt;มัน.ตึง.ลำ Cafe' &amp;amp; Rest&lt;/div&gt;
-      &lt;div id=&quot;qrCardTableTitle&quot; class=&quot;text-xl font-black text-stone-950 mt-0.5&quot;&gt;โต๊ะ 3 (โซนด้านใน)&lt;/div&gt;
-      &lt;div class=&quot;text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-0.5 inline-block mt-1&quot;&gt;
-        ♾️ QR ถาวรประจำโต๊ะ • สแกนขึ้นโต๊ะอัตโนมัติ
-      &lt;/div&gt;
-      &lt;div id=&quot;qrSvgContainer&quot; class=&quot;my-2.5 flex justify-center&quot;&gt;&lt;/div&gt;
-      &lt;div id=&quot;qrEncodedLinkText&quot; class=&quot;text-[10px] font-mono bg-stone-100 text-stone-700 px-2 py-1 rounded border border-stone-200 truncate&quot;&gt;&lt;/div&gt;
-      &lt;div class=&quot;text-xs font-bold text-stone-800 mt-1.5&quot;&gt;สแกนด้วยกล้องมือถือ เพื่อสั่งอาหาร&lt;/div&gt;
-      &lt;div class=&quot;text-[10px] text-stone-500 mt-0.5&quot;&gt;เปิดบริการ 10.00 - 20.00 น. • โทร 061-348-5831&lt;/div&gt;
-    &lt;/div&gt;
 
-    &lt;div class=&quot;grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1&quot;&gt;
-      &lt;button id=&quot;btnPrintAll12Tables&quot; type=&quot;button&quot; class=&quot;py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs transition shadow flex items-center justify-center gap-1.5&quot;&gt;
-        🖨️ พิมพ์ป้ายครบทั้ง 12 โต๊ะ
-      &lt;/button&gt;
-      &lt;button id=&quot;btnCopyTableLink&quot; type=&quot;button&quot; class=&quot;py-2.5 px-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/40 font-bold text-xs transition&quot;&gt;
-        🔗 คัดลอกลิงก์ประจำโต๊ะ
-      &lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
+        <div class="bg-white text-stone-900 p-4 rounded-2xl max-w-xs mx-auto shadow-xl border-4 border-amber-500">
+          <div class="text-xs font-extrabold tracking-widest text-amber-700 uppercase">มัน.ตึง.ลำ CAFE' &amp; REST</div>
+          <div id="qrCardTableTitle" class="text-xl font-black text-stone-950 mt-0.5">โต๊ะ 3 (โซนด้านใน)</div>
+          <div class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-0.5 inline-block mt-1">
+            ♾️ QR ถาวรประจำโต๊ะ • สแกนขึ้นโต๊ะอัตโนมัติ
+          </div>
+          <div id="qrSvgContainer" class="my-2.5 flex justify-center"></div>
+          <div id="qrEncodedLinkText" class="text-[10px] font-mono bg-stone-100 text-stone-700 px-2 py-1 rounded border border-stone-200 truncate">
+            https://peach2808.github.io/cafe-7/?table=3
+          </div>
+          <div class="text-xs font-bold text-stone-800 mt-1.5">สแกนด้วยกล้องมือถือ หรือ LINE เพื่อสั่งอาหาร</div>
+          <div class="text-[10px] text-stone-500 mt-0.5">เปิดบริการ 10.00 - 20.00 น. • โทร 061-348-5831</div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+          <button id="btnPrintAll12Tables" type="button" class="py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs transition shadow flex items-center justify-center gap-1.5">
+            🖨️ พิมพ์ป้ายครบทั้ง 12 โต๊ะ (ใช้ถาวร)
+          </button>
+          <button id="btnCopyTableLink" type="button" class="py-2.5 px-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/40 font-bold text-xs transition">
+            🔗 คัดลอกลิงก์ประจำโต๊ะนี้
+          </button>
+        </div>
+        <button id="btnSimulateScanThisTable" type="button" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs sm:text-sm transition">
+          📱 ทดลองสแกนเข้าสั่งอาหารในนามโต๊ะนี้
+        </button>
+      </div>
+    </div>
   </div>
+
   <div id="printAllQrSheet" class="hidden p-6 bg-white text-stone-900"></div>
+
+  <!-- TOAST -->
   <div id="toastBanner" class="hidden fixed top-16 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-emerald-500 text-stone-950 font-bold text-xs sm:text-sm shadow-2xl flex items-center gap-2 transition-all">
     <span id="toastIcon">✅</span>
     <span id="toastMessage">บันทึกสำเร็จ</span>
   </div>
+
   <script>
     const LINE_OA_ID = "@698ygoeo";
 
@@ -667,24 +713,11 @@
     let state = {
       viewMode: 'customer',
       currentTable: 'โต๊ะ 3',
-      isQrLocked: false,
       activeCategory: 'all',
       quickFilter: 'all',
       searchQuery: '',
       cart: [],
-      orders: [
-        {
-          orderId: 'ORD-101',
-          table: 'โต๊ะ 3',
-          time: '10:12 น.',
-          status: 'cooking',
-          items: [
-            { name: 'ปลานิลมันตึงลำ (Signature)', optionSummary: 'เผ็ดปกติ', qty: 1, unitPrice: 209 },
-            { name: 'ต้มแซ่บกระดูกอ่อน', optionSummary: 'เผ็ดจัดจ้าน', qty: 1, unitPrice: 139 },
-            { name: 'ข้าวสวย (จาน / โถ)', optionSummary: 'โถ (80 ฿)', qty: 1, unitPrice: 80 }
-          ]
-        }
-      ],
+      orders: [],
       staffCalls: [],
       staffFilter: 'all',
       soundEnabled: true,
@@ -698,41 +731,24 @@
     };
 
     try {
-      const saved = localStorage.getItem('mantuenglam_app_state_v2');
+      const saved = localStorage.getItem('mantuenglam_app_state_v1');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed.orders) state.orders = parsed.orders;
         if (parsed.cart) state.cart = parsed.cart;
-        if (parsed.currentTable && parsed.isQrLocked) {
-          state.currentTable = parsed.currentTable;
-          state.isQrLocked = true;
-        }
+        if (parsed.currentTable) state.currentTable = parsed.currentTable;
       }
     } catch (e) {}
 
     function saveState() {
       try {
-        localStorage.setItem('mantuenglam_app_state_v2', JSON.stringify({
+        localStorage.setItem('mantuenglam_app_state_v1', JSON.stringify({
           orders: state.orders,
           cart: state.cart,
-          currentTable: state.currentTable,
-          isQrLocked: state.isQrLocked
+          currentTable: state.currentTable
         }));
       } catch (e) {}
     }
-
-    window.addEventListener('storage', (e) => {
-      if (e.key === 'mantuenglam_app_state_v2' && e.newValue) {
-        try {
-          const parsed = JSON.parse(e.newValue);
-          if (parsed.orders) {
-            state.orders = parsed.orders;
-            renderStaffDashboard();
-            updateCartUI();
-          }
-        } catch (err) {}
-      }
-    });
 
     let audioCtx = null;
     function playBeep(type) {
@@ -750,12 +766,14 @@
           osc.frequency.setValueAtTime(880, now + 0.12);
           gain.gain.setValueAtTime(0.12, now);
           gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-          osc.start(now); osc.stop(now + 0.35);
+          osc.start(now);
+          osc.stop(now + 0.35);
         } else {
           osc.frequency.setValueAtTime(660, now);
           gain.gain.setValueAtTime(0.06, now);
           gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-          osc.start(now); osc.stop(now + 0.12);
+          osc.start(now);
+          osc.stop(now + 0.12);
         }
       } catch (e) {}
     }
@@ -767,7 +785,7 @@
       document.getElementById('toastMessage').textContent = msg;
       banner.classList.remove('hidden');
       if (toastTimer) clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => { banner.classList.add('hidden'); }, 2600);
+      toastTimer = setTimeout(() => banner.classList.add('hidden'), 2600);
     }
 
     function renderCategoryTabs() {
@@ -822,42 +840,35 @@
       const catObj = CATEGORIES.find(c => c.id === state.activeCategory) || CATEGORIES[0];
       document.getElementById('activeCategoryTitle').innerHTML = `<span>${catObj.icon}</span> <span>${catObj.name}</span>`;
       document.getElementById('filteredItemCount').textContent = `${items.length} รายการ`;
+
       const grid = document.getElementById('menuGridContainer');
       grid.innerHTML = '';
 
-      if (items.length === 0) {
-        grid.innerHTML = `
-          <div class="col-span-full py-12 text-center bg-stone-900/60 rounded-3xl border border-stone-800 p-6">
-            <div class="text-4xl mb-2">🔍</div>
-            <div class="text-base font-bold text-stone-200">ไม่พบเมนูที่ค้นหา</div>
-          </div>
-        `;
-        return;
-      }
-
       items.forEach(item => {
         const inCartQty = getCartCountForMenuItem(item.id);
-        const catLabel = (CATEGORIES.find(c => c.id === item.cat) || {}).name || '';
         const hasOptions = Boolean(item.variants || item.sweet || item.spicy || item.singleDish);
         const card = document.createElement('div');
-        card.className = `group bg-stone-900/95 hover:bg-stone-900 border ${inCartQty > 0 ? 'border-amber-500/70' : 'border-stone-800/90'} rounded-2xl p-3.5 flex items-center justify-between gap-3 transition shadow-sm`;
+        card.className = `group bg-stone-900/90 hover:bg-stone-900 border ${
+          inCartQty > 0 ? 'border-amber-500/70' : 'border-stone-800/90 hover:border-stone-700'
+        } rounded-2xl p-3.5 flex items-center justify-between gap-3 transition shadow-sm`;
 
         card.innerHTML = `
           <div class="flex items-start gap-3 min-w-0 flex-1 cursor-pointer item-card-trigger">
-            <div class="w-12 h-12 rounded-2xl bg-stone-800 border border-stone-700/70 flex items-center justify-center text-2xl shrink-0 shadow-inner">${item.emoji}</div>
+            <div class="w-12 h-12 rounded-2xl bg-stone-800 border border-stone-700/70 flex items-center justify-center text-2xl shrink-0">
+              ${item.emoji}
+            </div>
             <div class="min-w-0 flex-1">
               <h4 class="font-bold text-sm sm:text-base text-stone-100 group-hover:text-amber-300 transition truncate mt-0.5">${item.name}</h4>
               <div class="flex items-center gap-2 mt-1.5">
                 <span class="text-sm sm:text-base font-extrabold text-amber-400">${getItemPriceDisplay(item)}</span>
-                <span class="text-[11px] text-stone-500">• ${catLabel}</span>
               </div>
             </div>
           </div>
           <div class="flex flex-col items-end gap-1.5 shrink-0">
             ${inCartQty > 0 ? `<span class="px-2 py-0.5 rounded-full bg-amber-500 text-stone-950 font-extrabold text-[10px]">ในตะกร้า ${inCartQty}</span>` : ''}
-            <button type="button" class="btn-add-item px-3 py-2 rounded-xl font-bold text-xs transition flex items-center gap-1 shadow ${hasOptions ? 'bg-stone-800 hover:bg-amber-500 text-amber-300 hover:text-stone-950 border border-amber-500/40' : 'bg-amber-500 hover:bg-amber-400 text-stone-950'}">
-              <span>+ เลือก</span>
-            </button>
+            <button type="button" class="btn-add-item px-3 py-2 rounded-xl font-bold text-xs transition shadow ${
+              hasOptions ? 'bg-stone-800 hover:bg-amber-500 text-amber-300 hover:text-stone-950 border border-amber-500/40' : 'bg-amber-500 hover:bg-amber-400 text-stone-950'
+            }">+ เลือก</button>
           </div>
         `;
 
@@ -869,15 +880,14 @@
 
     function openItemModal(item) {
       state.modalItem = item;
-      state.modalVariantIdx = item.variants && item.variants.length > 1 ? 0 : 0;
+      state.modalVariantIdx = 0;
       state.modalSweetness = 'หวานปกติ 100%';
       state.modalSpice = 'เผ็ดปกติ';
       state.modalAddFriedEgg = false;
       state.modalQty = 1;
       state.modalNote = '';
 
-      const catObj = CATEGORIES.find(c => c.id === item.cat) || {};
-      document.getElementById('modalItemCategory').textContent = `${catObj.icon || ''} ${catObj.name || ''}`;
+      document.getElementById('modalItemCategory').textContent = item.cat;
       document.getElementById('modalItemName').textContent = `${item.emoji} ${item.name}`;
       document.getElementById('modalItemBasePrice').textContent = `ราคา ${getItemPriceDisplay(item)}`;
       document.getElementById('modalItemNote').value = '';
@@ -891,7 +901,9 @@
         item.variants.forEach((v, idx) => {
           const b = document.createElement('button');
           b.type = 'button';
-          b.className = `p-2.5 rounded-xl border text-xs font-bold transition flex flex-col items-center justify-center ${state.modalVariantIdx === idx ? 'bg-amber-500 text-stone-950 border-amber-400 shadow' : 'bg-stone-950 text-stone-300 border-stone-800'}`;
+          b.className = `p-2.5 rounded-xl border text-xs font-bold transition flex flex-col items-center justify-center ${
+            state.modalVariantIdx === idx ? 'bg-amber-500 text-stone-950 border-amber-400' : 'bg-stone-950 text-stone-300 border-stone-800'
+          }`;
           b.innerHTML = `<span>${v.label}</span><span class="text-[11px] opacity-85 mt-0.5">${v.price} ฿</span>`;
           b.addEventListener('click', () => { state.modalVariantIdx = idx; renderModalDynamicSelections(); });
           varOpts.appendChild(b);
@@ -911,43 +923,39 @@
     function renderModalDynamicSelections() {
       const item = state.modalItem;
       if (!item) return;
-
-      if (item.variants && item.variants.length > 0) {
-        const varOpts = document.getElementById('modalVariantOptions');
-        Array.from(varOpts.children).forEach((btn, idx) => {
-          btn.className = `p-2.5 rounded-xl border text-xs font-bold transition flex flex-col items-center justify-center ${state.modalVariantIdx === idx ? 'bg-amber-500 text-stone-950 border-amber-400 shadow' : 'bg-stone-950 text-stone-300 border-stone-800'}`;
+      if (item.variants) {
+        Array.from(document.getElementById('modalVariantOptions').children).forEach((btn, idx) => {
+          btn.className = `p-2.5 rounded-xl border text-xs font-bold transition flex flex-col items-center justify-center ${
+            state.modalVariantIdx === idx ? 'bg-amber-500 text-stone-950 border-amber-400' : 'bg-stone-950 text-stone-300 border-stone-800'
+          }`;
         });
       }
-
       if (item.sweet) {
-        const sweetOpts = document.getElementById('modalSweetnessOptions');
-        sweetOpts.innerHTML = '';
+        const sw = document.getElementById('modalSweetnessOptions');
+        sw.innerHTML = '';
         SWEETNESS_LEVELS.forEach(lv => {
           const b = document.createElement('button');
           b.type = 'button';
           b.className = `p-2 rounded-xl border text-[11px] font-semibold transition ${state.modalSweetness === lv ? 'bg-amber-500 text-stone-950 border-amber-400' : 'bg-stone-950 text-stone-300 border-stone-800'}`;
           b.textContent = lv;
           b.addEventListener('click', () => { state.modalSweetness = lv; renderModalDynamicSelections(); });
-          sweetOpts.appendChild(b);
+          sw.appendChild(b);
         });
       }
-
       if (item.spicy) {
-        const spiceOpts = document.getElementById('modalSpiceOptions');
-        spiceOpts.innerHTML = '';
+        const sp = document.getElementById('modalSpiceOptions');
+        sp.innerHTML = '';
         SPICE_LEVELS.forEach(lv => {
           const b = document.createElement('button');
           b.type = 'button';
           b.className = `p-2 rounded-xl border text-xs font-semibold transition ${state.modalSpice === lv ? 'bg-rose-500 text-white border-rose-400' : 'bg-stone-950 text-stone-300 border-stone-800'}`;
           b.textContent = lv;
           b.addEventListener('click', () => { state.modalSpice = lv; renderModalDynamicSelections(); });
-          spiceOpts.appendChild(b);
+          sp.appendChild(b);
         });
       }
-
       if (item.singleDish) {
-        const addonOpts = document.getElementById('modalAddonOptions');
-        addonOpts.innerHTML = `
+        document.getElementById('modalAddonOptions').innerHTML = `
           <button type="button" id="btnToggleFriedEgg" class="w-full p-3 rounded-xl border text-xs font-semibold flex items-center justify-between transition ${state.modalAddFriedEgg ? 'bg-amber-500/20 border-amber-500 text-amber-300' : 'bg-stone-950 border-stone-800 text-stone-300'}">
             <span>🍳 เพิ่มไข่ดาว (+10 ฿)</span>
             <span>${state.modalAddFriedEgg ? '✓ เลือกแล้ว' : '+ เพิ่ม'}</span>
@@ -959,36 +967,32 @@
         });
       }
 
-      const unitPrice = computeCurrentModalUnitPrice();
-      document.getElementById('modalItemQty').textContent = String(state.modalQty);
-      document.getElementById('modalComputedPrice').textContent = `${unitPrice * state.modalQty} ฿`;
-    }
-
-    function computeCurrentModalUnitPrice() {
-      const item = state.modalItem;
-      if (!item) return 0;
-      let base = item.variants && item.variants[state.modalVariantIdx] ? item.variants[state.modalVariantIdx].price : item.price;
+      let base = item.price;
+      if (item.variants && item.variants[state.modalVariantIdx]) base = item.variants[state.modalVariantIdx].price;
       if (item.singleDish && state.modalAddFriedEgg) base += 10;
-      return base;
+      document.getElementById('modalItemQty').textContent = String(state.modalQty);
+      document.getElementById('modalComputedPrice').textContent = `${base * state.modalQty} ฿`;
     }
 
     function confirmAddModalItemToCart() {
       const item = state.modalItem;
       if (!item) return;
-      const unitPrice = computeCurrentModalUnitPrice();
+      let unitPrice = item.price;
+      if (item.variants && item.variants[state.modalVariantIdx]) unitPrice = item.variants[state.modalVariantIdx].price;
+      if (item.singleDish && state.modalAddFriedEgg) unitPrice += 10;
+
       const parts = [];
-      if (item.variants && item.variants[state.modalVariantIdx]) parts.push(item.variants[state.modalVariantIdx].label);
+      if (item.variants) parts.push(item.variants[state.modalVariantIdx].label);
       if (item.sweet) parts.push(state.modalSweetness);
       if (item.spicy) parts.push(state.modalSpice);
-      if (item.singleDish && state.modalAddFriedEgg) parts.push('+ ไข่ดาว (10฿)');
+      if (item.singleDish && state.modalAddFriedEgg) parts.push('+ ไข่ดาว');
       const note = document.getElementById('modalItemNote').value.trim();
-      if (note) parts.push(`หมายเหตุ: ${note}`);
-
+      if (note) parts.push(`โน้ต: ${note}`);
       const optionSummary = parts.length > 0 ? parts.join(' • ') : 'ปกติ';
-      const cartKey = `${item.id}__${optionSummary}`;
-      const existing = state.cart.find(c => c.cartKey === cartKey);
-      if (existing) { existing.qty += state.modalQty; }
-      else { state.cart.push({ cartKey, itemId: item.id, name: item.name, emoji: item.emoji, unitPrice, qty: state.modalQty, optionSummary }); }
+
+      const existing = state.cart.find(c => c.itemId === item.id && c.optionSummary === optionSummary);
+      if (existing) existing.qty += state.modalQty;
+      else state.cart.push({ itemId: item.id, name: item.name, emoji: item.emoji, unitPrice, qty: state.modalQty, optionSummary });
 
       saveState();
       playBeep('tap');
@@ -1001,7 +1005,6 @@
     function updateCartUI() {
       const totalQty = state.cart.reduce((s, i) => s + i.qty, 0);
       const totalPrice = state.cart.reduce((s, i) => s + i.qty * i.unitPrice, 0);
-
       document.getElementById('cartBadgeCount').textContent = String(totalQty);
       document.getElementById('cartBarTotalPrice').textContent = `${totalPrice.toLocaleString()} ฿`;
       document.getElementById('cartBarTableText').textContent = state.currentTable;
@@ -1010,11 +1013,10 @@
       document.getElementById('cartModalTotalPrice').textContent = `${totalPrice.toLocaleString()} ฿`;
 
       const subtext = document.getElementById('cartBarSubtext');
-      subtext.textContent = totalQty === 0 ? 'ยังไม่มีรายการในตะกร้า • แตะที่เมนูเพื่อสั่งอาหาร' : `เลือกไว้ ${totalQty} รายการ • กดเพื่อดูตะกร้าและส่งเข้าครัว`;
+      subtext.textContent = totalQty === 0 ? 'ยังไม่มีรายการในตะกร้า • แตะที่เมนูเพื่อสั่งอาหาร' : `เลือกไว้ ${totalQty} รายการ • ดูตะกร้า`;
 
       const tableOrders = state.orders.filter(o => o.table === state.currentTable && o.status !== 'paid');
-      const billItemCount = tableOrders.reduce((acc, ord) => acc + ord.items.reduce((s, x) => s + x.qty, 0), 0);
-      document.getElementById('topBillCount').textContent = String(billItemCount);
+      document.getElementById('topBillCount').textContent = String(tableOrders.reduce((acc, o) => acc + o.items.reduce((s, x) => s + x.qty, 0), 0));
       renderCartItemsList();
     }
 
@@ -1022,7 +1024,7 @@
       const list = document.getElementById('cartItemsList');
       list.innerHTML = '';
       if (state.cart.length === 0) {
-        list.innerHTML = `<div class="py-12 text-center"><div class="text-4xl mb-2">🛒</div><div class="text-base font-bold text-stone-300">ตะกร้ายังว่างอยู่</div></div>`;
+        list.innerHTML = `<div class="py-12 text-center text-stone-500">ตะกร้ายังว่างอยู่</div>`;
         return;
       }
       state.cart.forEach((cItem, index) => {
@@ -1030,47 +1032,56 @@
         row.className = 'p-3 rounded-2xl bg-stone-950 border border-stone-800 flex items-center justify-between gap-3';
         row.innerHTML = `
           <div class="min-w-0 flex-1">
-            <div class="font-bold text-sm text-stone-100 flex items-center gap-1.5"><span>${cItem.emoji}</span><span class="truncate">${cItem.name}</span></div>
-            <div class="text-xs text-stone-400 mt-0.5">${cItem.optionSummary}</div>
+            <div class="font-bold text-sm text-stone-100">${cItem.emoji} ${cItem.name}</div>
+            <div class="text-xs text-stone-400">${cItem.optionSummary}</div>
             <div class="text-xs font-bold text-amber-400 mt-1">${cItem.unitPrice} ฿</div>
           </div>
           <div class="flex items-center gap-2 shrink-0">
-            <button type="button" class="btn-cart-dec w-8 h-8 rounded-xl bg-stone-800 text-white font-bold">−</button>
-            <span class="w-6 text-center font-bold text-sm text-amber-400">${cItem.qty}</span>
-            <button type="button" class="btn-cart-inc w-8 h-8 rounded-xl bg-stone-800 text-white font-bold">+</button>
+            <button type="button" class="btn-dec w-8 h-8 rounded-xl bg-stone-800 text-white font-bold">−</button>
+            <span class="w-6 text-center font-bold text-amber-400">${cItem.qty}</span>
+            <button type="button" class="btn-inc w-8 h-8 rounded-xl bg-stone-800 text-white font-bold">+</button>
           </div>
         `;
-        row.querySelector('.btn-cart-dec').addEventListener('click', () => { cItem.qty -= 1; if (cItem.qty <= 0) state.cart.splice(index, 1); saveState(); updateCartUI(); renderMenuGrid(); });
-        row.querySelector('.btn-cart-inc').addEventListener('click', () => { cItem.qty += 1; saveState(); updateCartUI(); renderMenuGrid(); });
+        row.querySelector('.btn-dec').addEventListener('click', () => {
+          cItem.qty--;
+          if (cItem.qty <= 0) state.cart.splice(index, 1);
+          saveState(); updateCartUI(); renderMenuGrid();
+        });
+        row.querySelector('.btn-inc').addEventListener('click', () => {
+          cItem.qty++;
+          saveState(); updateCartUI(); renderMenuGrid();
+        });
         list.appendChild(row);
       });
     }
 
     function submitCartToKitchen(sendViaLine = false) {
-      if (state.cart.length === 0) { showToast('กรุณาเลือกเมนูลงตะกร้าก่อนครับ', '⚠️'); return; }
+      if (state.cart.length === 0) { showToast('กรุณาเลือกเมนูก่อนครับ', '⚠️'); return; }
       const now = new Date();
       const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} น.`;
-      const orderItems = state.cart.map(c => ({ name: c.name, optionSummary: c.optionSummary, qty: c.qty, unitPrice: c.unitPrice }));
-      const newOrder = { orderId: `ORD-${Math.floor(100 + Math.random() * 900)}`, table: state.currentTable, time: timeStr, status: 'pending', items: orderItems };
+      const newOrder = {
+        orderId: `ORD-${Math.floor(100 + Math.random() * 900)}`,
+        table: state.currentTable,
+        time: timeStr,
+        status: 'pending',
+        items: [...state.cart]
+      };
+
+      if (sendViaLine) {
+        let msg = `🚨 สั่งอาหารจาก ${state.currentTable} (${newOrder.orderId})\n`;
+        state.cart.forEach(i => { msg += `• ${i.name} [${i.optionSummary}] x${i.qty} (${i.unitPrice * i.qty}฿)\n`; });
+        const lineUrl = `https://line.me/R/oaMessage/${LINE_OA_ID}/?${encodeURIComponent(msg)}`;
+        window.open(lineUrl, '_blank');
+      }
 
       state.orders.unshift(newOrder);
       state.cart = [];
       saveState();
       playBeep('order');
       document.getElementById('cartDrawerModal').classList.add('hidden');
-      updateCartUI();
-      renderMenuGrid();
-      renderStaffDashboard();
-
-      if (sendViaLine) {
-        let text = `🚨 สั่งอาหารจาก ${state.currentTable}\nรหัส: ${newOrder.orderId}\n------------------\n`;
-        orderItems.forEach(i => text += `• ${i.name} [${i.optionSummary}] x${i.qty} (${i.unitPrice * i.qty}฿)\n`);
-        const lineUrl = `https://line.me/R/oaMessage/${LINE_OA_ID}/?${encodeURIComponent(text)}`;
-        const win = window.open(lineUrl, '_blank'); if (!win) { window.location.href = lineUrl; }
-      } else {
-        openActiveBillModal();
-        showToast(`ส่งออเดอร์ ${state.currentTable} เข้าครัวเรียบร้อย!`, '🚀');
-      }
+      updateCartUI(); renderMenuGrid(); renderStaffDashboard();
+      openActiveBillModal();
+      showToast('ส่งออเดอร์เข้าครัวเรียบร้อยแล้ว!');
     }
 
     function openActiveBillModal() {
@@ -1078,88 +1089,28 @@
       const content = document.getElementById('activeBillContent');
       const tableOrders = state.orders.filter(o => o.table === state.currentTable && o.status !== 'paid');
       if (tableOrders.length === 0) {
-        content.innerHTML = `<div class="py-10 text-center"><div class="text-4xl mb-2">🧾</div><div class="text-base font-bold text-stone-300">ยังไม่มีออเดอร์สำหรับ ${state.currentTable}</div></div>`;
+        content.innerHTML = `<div class="py-10 text-center text-stone-500">ยังไม่มีออเดอร์สำหรับ ${state.currentTable}</div>`;
         document.getElementById('billModalGrandTotal').textContent = '0 ฿';
       } else {
         let grandTotal = 0;
         content.innerHTML = '';
         tableOrders.forEach(ord => {
-          grandTotal += ord.items.reduce((s, x) => s + x.qty * x.unitPrice, 0);
+          const ordTotal = ord.items.reduce((s, x) => s + x.qty * x.unitPrice, 0);
+          grandTotal += ordTotal;
           const box = document.createElement('div');
           box.className = 'p-3.5 rounded-2xl bg-stone-950 border border-stone-800 space-y-2';
           box.innerHTML = `
-            <div class="flex items-center justify-between border-b border-stone-800 pb-2">
-              <div class="text-xs text-stone-400">รหัส <strong>${ord.orderId}</strong> • ${ord.time}</div>
-              <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300">${ord.status === 'pending' ? '⏳ รอครัวรับ' : ord.status === 'cooking' ? '🔥 กำลังทำ' : '✅ เสิร์ฟแล้ว'}</span>
+            <div class="flex items-center justify-between text-xs text-stone-400 border-b border-stone-800 pb-1">
+              <span>ออเดอร์ ${ord.orderId} • ${ord.time}</span>
+              <span class="text-amber-400 font-bold">${ord.status === 'pending' ? '⏳ รอรับออเดอร์' : ord.status === 'cooking' ? '🔥 กำลังทำ' : '✅ เสิร์ฟแล้ว'}</span>
             </div>
-            <div class="space-y-1.5">${ord.items.map(it => `<div class="flex justify-between text-xs"><span>${it.name} x${it.qty}</span><span>${it.qty * it.unitPrice} ฿</span></div>`).join('')}</div>
+            ${ord.items.map(it => `<div class="flex justify-between text-xs"><span>${it.name} x${it.qty}</span><span>${it.qty * it.unitPrice} ฿</span></div>`).join('')}
           `;
           content.appendChild(box);
         });
         document.getElementById('billModalGrandTotal').textContent = `${grandTotal.toLocaleString()} ฿`;
       }
       document.getElementById('activeBillModal').classList.remove('hidden');
-    }
-
-    function renderTableSelector() {
-      const indoorDiv = document.getElementById('tableOptionsIndoor');
-      const specialDiv = document.getElementById('tableOptionsSpecial');
-      const qrSelect = document.getElementById('qrTableSelect');
-      indoorDiv.innerHTML = ''; specialDiv.innerHTML = ''; qrSelect.innerHTML = '';
-
-      TABLE_ZONES.forEach(zone => {
-        const optGroup = document.createElement('optgroup');
-        optGroup.label = zone.zoneName;
-        zone.tables.forEach(tObj => {
-          const opt = document.createElement('option'); opt.value = tObj.name; opt.textContent = `${tObj.name} (${zone.zoneName})`;
-          optGroup.appendChild(opt);
-        });
-        qrSelect.appendChild(optGroup);
-      });
-
-      const createBtn = (tName) => {
-        const btn = document.createElement('button'); btn.type = 'button';
-        btn.className = `p-2.5 rounded-xl border text-xs font-bold transition ${state.currentTable === tName ? 'bg-amber-500 text-stone-950 border-amber-400' : 'bg-stone-950 text-stone-300 border-stone-800'}`;
-        btn.textContent = tName;
-        btn.addEventListener('click', () => selectTable(tName));
-        return btn;
-      };
-      TABLE_ZONES[0].tables.forEach(t => indoorDiv.appendChild(createBtn(t.name)));
-      TABLE_ZONES[2].tables.forEach(t => specialDiv.appendChild(createBtn(t.name)));
-    }
-
-    function resolveTableFromParam(rawVal) {
-      if (!rawVal) return null;
-      const val = decodeURIComponent(String(rawVal).trim());
-      const norm = val.toLowerCase().replace(/\s+/g, '');
-      const matched = ALL_TABLE_META.find(t => t.name === val || t.code.toLowerCase() === norm || t.aliases.some(a => a.toLowerCase() === norm));
-      return matched ? matched.name : null;
-    }
-
-    function detectTableFromUrl() {
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const qTable = params.get('table') || params.get('t');
-        if (qTable) return resolveTableFromParam(qTable);
-      } catch (e) {}
-      return null;
-    }
-
-    function syncTableBadges() {
-      document.getElementById('currentTableLabel').textContent = state.currentTable;
-      document.getElementById('serviceModalTable').textContent = state.currentTable;
-      const banner = document.getElementById('qrDetectedBannerTable');
-      if (banner) banner.textContent = state.currentTable;
-    }
-
-    function selectTable(tName) {
-      state.currentTable = tName;
-      state.isQrLocked = false;
-      saveState();
-      syncTableBadges();
-      document.getElementById('tableSelectModal').classList.add('hidden');
-      updateCartUI();
-      showToast(`เปลี่ยนเป็น "${tName}" แล้ว`, '📲');
     }
 
     function renderStaffDashboard() {
@@ -1169,59 +1120,38 @@
 
       document.getElementById('kpiPendingOrders').textContent = String(pendingCount);
       document.getElementById('kpiServedOrders').textContent = String(servedCount);
-      document.getElementById('kpiStaffCalls').textContent = String(state.staffCalls.length);
       document.getElementById('kpiTotalRevenue').textContent = `${totalRev.toLocaleString()} ฿`;
-
-      const badge = document.getElementById('staffBadgeCount');
-      if (pendingCount + state.staffCalls.length > 0) {
-        badge.textContent = String(pendingCount + state.staffCalls.length);
-        badge.classList.remove('hidden');
-      } else { badge.classList.add('hidden'); }
-
-      const callsWrap = document.getElementById('staffCallsContainer');
-      const callsList = document.getElementById('staffCallsList');
-      if (state.staffCalls.length === 0) { callsWrap.classList.add('hidden'); }
-      else {
-        callsWrap.classList.remove('hidden');
-        callsList.innerHTML = '';
-        state.staffCalls.forEach((sc, idx) => {
-          const card = document.createElement('div');
-          card.className = 'p-3 rounded-xl bg-rose-950/50 border border-rose-500/40 flex items-center justify-between gap-2';
-          card.innerHTML = `<div><div class="text-xs font-bold text-rose-300">${sc.table} • ${sc.time}</div><div class="text-xs text-stone-200">${sc.reason}</div></div><button type="button" class="px-2.5 py-1 rounded-lg bg-rose-500 text-white text-xs font-bold">รับทราบ</button>`;
-          card.querySelector('button').addEventListener('click', () => { state.staffCalls.splice(idx, 1); renderStaffDashboard(); });
-          callsList.appendChild(card);
-        });
-      }
 
       const grid = document.getElementById('staffOrdersGrid');
       grid.innerHTML = '';
+      if (state.orders.length === 0) {
+        grid.innerHTML = `<div class="col-span-full py-12 text-center text-stone-500">ไม่มีออเดอร์ในระบบ</div>`;
+        return;
+      }
       state.orders.forEach(ord => {
         const card = document.createElement('div');
-        card.className = 'bg-stone-900 border border-stone-800 rounded-2xl overflow-hidden flex flex-col justify-between shadow-lg';
+        card.className = 'bg-stone-900 border border-stone-800 rounded-2xl p-4 flex flex-col justify-between';
         card.innerHTML = `
           <div>
-            <div class="p-3.5 border-b border-stone-800 flex items-center justify-between bg-stone-950">
-              <span class="text-base font-extrabold text-amber-400">${ord.table} (${ord.orderId})</span>
-              <span class="text-xs font-bold px-2 py-0.5 rounded bg-stone-800 text-stone-300">${ord.status}</span>
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-black text-amber-400 text-lg">${ord.table}</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-stone-800 text-stone-300">${ord.status}</span>
             </div>
-            <div class="p-4 space-y-1">${ord.items.map(it => `<div class="text-xs text-stone-200">▪ ${it.name} x${it.qty} [${it.optionSummary}]</div>`).join('')}</div>
+            ${ord.items.map(i => `<div class="text-xs text-stone-200">▪ ${i.name} x${i.qty}</div>`).join('')}
           </div>
-          <div class="p-3 bg-stone-950 border-t border-stone-800 flex justify-end gap-2">
-            ${ord.status === 'pending' ? `<button type="button" data-next="cooking" class="btn-st px-3 py-1.5 rounded-lg bg-sky-500 text-stone-950 font-bold text-xs">เริ่มทำ</button>` : ''}
-            ${ord.status === 'cooking' ? `<button type="button" data-next="served" class="btn-st px-3 py-1.5 rounded-lg bg-emerald-500 text-stone-950 font-bold text-xs">เสิร์ฟแล้ว</button>` : ''}
-            ${ord.status === 'served' ? `<button type="button" data-next="paid" class="btn-st px-3 py-1.5 rounded-lg bg-amber-500 text-stone-950 font-bold text-xs">ปิดบิล</button>` : ''}
+          <div class="mt-4 flex gap-2">
+            <button type="button" class="btn-st px-3 py-1.5 rounded-lg bg-sky-500 text-stone-950 font-bold text-xs" data-st="cooking">ทำ</button>
+            <button type="button" class="btn-st px-3 py-1.5 rounded-lg bg-emerald-500 text-stone-950 font-bold text-xs" data-st="served">เสิร์ฟ</button>
+            <button type="button" class="btn-st px-3 py-1.5 rounded-lg bg-rose-500 text-stone-950 font-bold text-xs" data-st="paid">เคลียร์โต๊ะ</button>
           </div>
         `;
-        const stBtn = card.querySelector('.btn-st');
-        if (stBtn) {
-          stBtn.addEventListener('click', () => {
-            ord.status = stBtn.getAttribute('data-next');
-            saveState();
-            renderStaffDashboard();
-            updateCartUI();
-            showToast(`อัปเดตสถานะ ${ord.table} เป็น ${ord.status} แล้ว`);
+        card.querySelectorAll('.btn-st').forEach(b => {
+          b.addEventListener('click', () => {
+            ord.status = b.getAttribute('data-st');
+            saveState(); renderStaffDashboard(); updateCartUI();
+            showToast(`อัปเดตสถานะ ${ord.table} เป็น ${ord.status}`);
           });
-        }
+        });
         grid.appendChild(card);
       });
     }
@@ -1230,79 +1160,44 @@
       const container = document.getElementById('qrSvgContainer');
       const linkText = document.getElementById('qrEncodedLinkText');
       if (!container) return;
-      const matched = ALL_TABLE_META.find(t => t.name === tName);
-      const code = matched ? matched.code : encodeURIComponent(tName);
-      const fullUrl = `https://peach2808.github.io/cafe-7/?table=${code}`;
+      const fullUrl = `https://peach2808.github.io/cafe-7/?table=${encodeURIComponent(tName)}`;
       if (linkText) linkText.textContent = fullUrl;
-      container.innerHTML = `<div class="p-2 font-mono text-xs bg-stone-100 text-stone-900 rounded-lg">QR: ${fullUrl}</div>`;
+      container.innerHTML = `<div class="p-3 bg-stone-100 rounded-xl text-xs font-mono text-center break-all">QR: ${fullUrl}</div>`;
     }
 
     function initApp() {
-      const urlTable = detectTableFromUrl();
-      if (urlTable) {
-        state.currentTable = urlTable;
-        state.isQrLocked = true;
-        saveState();
+      const params = new URLSearchParams(window.location.search);
+      const tParam = params.get('table');
+      if (tParam) {
+        state.currentTable = decodeURIComponent(tParam);
+        const simBtn = document.getElementById('btnOpenTableModal');
+        if (simBtn) simBtn.classList.add('hidden'); // ซ่อนปุ่มจำลองทันทีเมื่อลูกค้าสแกน QR มา
       }
+      document.getElementById('currentTableLabel').textContent = state.currentTable;
 
-      if (state.isQrLocked) {
-        document.getElementById('btnOpenTableModal').classList.add('hidden');
-      } else {
-        document.getElementById('btnOpenTableModal').classList.remove('hidden');
-      }
-
-      syncTableBadges();
       renderCategoryTabs();
       renderMenuGrid();
-      renderTableSelector();
-      document.getElementById('qrTableSelect').value = state.currentTable;
-      document.getElementById('qrCardTableTitle').textContent = state.currentTable;
-      renderQrSvgForTable(state.currentTable);
-      updateCartUI();
       renderStaffDashboard();
 
-      const tabCust = document.getElementById('tabCustomerView');
-      const tabStaff = document.getElementById('tabStaffView');
-      const custView = document.getElementById('customerViewContainer');
-      const staffView = document.getElementById('staffViewContainer');
-      const bottomBar = document.getElementById('bottomCartBar');
-
-      tabCust.addEventListener('click', () => {
-        tabCust.className = 'px-2.5 py-1 rounded-lg text-xs font-medium transition bg-amber-500 text-stone-950 shadow';
-        tabStaff.className = 'px-2.5 py-1 rounded-lg text-xs font-medium transition text-stone-400';
-        custView.classList.remove('hidden'); bottomBar.classList.remove('hidden'); staffView.classList.add('hidden');
+      document.getElementById('tabCustomerView').addEventListener('click', () => {
+        document.getElementById('customerViewContainer').classList.remove('hidden');
+        document.getElementById('bottomCartBar').classList.remove('hidden');
+        document.getElementById('staffViewContainer').classList.add('hidden');
       });
-
-      tabStaff.addEventListener('click', () => {
-        tabStaff.className = 'px-2.5 py-1 rounded-lg text-xs font-medium transition bg-amber-500 text-stone-950 shadow';
-        tabCust.className = 'px-2.5 py-1 rounded-lg text-xs font-medium transition text-stone-400';
-        custView.classList.add('hidden'); bottomBar.classList.add('hidden'); staffView.classList.remove('hidden');
+      document.getElementById('tabStaffView').addEventListener('click', () => {
+        document.getElementById('customerViewContainer').classList.add('hidden');
+        document.getElementById('bottomCartBar').classList.add('hidden');
+        document.getElementById('staffViewContainer').classList.remove('hidden');
         renderStaffDashboard();
       });
 
       document.getElementById('searchInput').addEventListener('input', (e) => {
         state.searchQuery = e.target.value;
-        document.getElementById('btnClearSearch').classList.toggle('hidden', state.searchQuery.trim().length === 0);
         renderMenuGrid();
-      });
-      document.getElementById('btnClearSearch').addEventListener('click', () => {
-        state.searchQuery = ''; document.getElementById('searchInput').value = '';
-        document.getElementById('btnClearSearch').classList.add('hidden');
-        renderMenuGrid();
-      });
-
-      document.querySelectorAll('.quick-filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          state.quickFilter = btn.getAttribute('data-quickfilter');
-          document.querySelectorAll('.quick-filter-btn').forEach(b => {
-            b.className = b.getAttribute('data-quickfilter') === state.quickFilter ? 'quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-amber-500 text-stone-950 transition' : 'quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-stone-900 text-stone-300 border border-stone-800';
-          });
-          renderMenuGrid();
-        });
       });
 
       document.getElementById('btnCloseItemModal').addEventListener('click', () => document.getElementById('itemOptionModal').classList.add('hidden'));
-      document.getElementById('btnModalQtyMinus').addEventListener('click', () => { if (state.modalQty > 1) { state.modalQty--; renderModalDynamicSelections(); } });
+      document.getElementById('btnModalQtyMinus').addEventListener('click', () => { if(state.modalQty > 1) { state.modalQty--; renderModalDynamicSelections(); }});
       document.getElementById('btnModalQtyPlus').addEventListener('click', () => { state.modalQty++; renderModalDynamicSelections(); });
       document.getElementById('btnConfirmAddToCart').addEventListener('click', confirmAddModalItemToCart);
 
@@ -1315,43 +1210,24 @@
       document.getElementById('btnViewActiveBillTop').addEventListener('click', openActiveBillModal);
       document.getElementById('btnCloseBillModal').addEventListener('click', () => document.getElementById('activeBillModal').classList.add('hidden'));
 
-      if (!state.isQrLocked) {
-        document.getElementById('btnOpenTableModal').addEventListener('click', () => { renderTableSelector(); document.getElementById('tableSelectModal').classList.remove('hidden'); });
-      }
-      document.getElementById('btnCloseTableModal').addEventListener('click', () => document.getElementById('tableSelectModal').classList.add('hidden'));
-
-      document.getElementById('btnCallStaff').addEventListener('click', () => { document.getElementById('serviceModalTable').textContent = state.currentTable; document.getElementById('serviceCallModal').classList.remove('hidden'); });
-      document.getElementById('btnCloseServiceModal').addEventListener('click', () => document.getElementById('serviceCallModal').classList.add('hidden'));
-      document.querySelectorAll('.service-req-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          state.staffCalls.unshift({ table: state.currentTable, reason: btn.getAttribute('data-service'), time: new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + ' น.' });
-          playBeep('order'); saveState(); renderStaffDashboard();
-          document.getElementById('serviceCallModal').classList.add('hidden');
-          showToast('ส่งคำขอพนักงานแล้ว', '🔔');
-        });
-      });
-
       document.getElementById('btnOpenQrGenerator').addEventListener('click', () => document.getElementById('qrGeneratorModal').classList.remove('hidden'));
       document.getElementById('btnCloseQrModal').addEventListener('click', () => document.getElementById('qrGeneratorModal').classList.add('hidden'));
-      document.getElementById('qrTableSelect').addEventListener('change', (e) => {
+      
+      const qrSelect = document.getElementById('qrTableSelect');
+      ALL_TABLE_META.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.name;
+        opt.textContent = `${t.name} (${t.zoneName})`;
+        qrSelect.appendChild(opt);
+      });
+      qrSelect.addEventListener('change', (e) => {
         document.getElementById('qrCardTableTitle').textContent = e.target.value;
         renderQrSvgForTable(e.target.value);
       });
-      document.getElementById('btnPrintAll12Tables').addEventListener('click', () => window.print());
-      document.getElementById('btnCopyTableLink').addEventListener('click', () => {
-        const chosen = document.getElementById('qrTableSelect').value;
-        const matched = ALL_TABLE_META.find(t => t.name === chosen);
-        navigator.clipboard.writeText(`https://peach2808.github.io/cafe-7/?table=${matched ? matched.code : chosen}`);
-        showToast('คัดลอกลิงก์โต๊ะแล้ว', '🔗');
-      });
-
-      document.getElementById('btnAddDemoOrder').addEventListener('click', () => {
-        state.orders.unshift({ orderId: `ORD-${Math.floor(100 + Math.random() * 900)}`, table: 'โซฟา 1', time: '15:15 น.', status: 'pending', items: [{ name: 'ยำผักบุ้งกรอบ', optionSummary: 'เผ็ดปกติ', qty: 1, unitPrice: 129 }] });
-        saveState(); playBeep('order'); renderStaffDashboard(); showToast('เพิ่มออเดอร์จำลองแล้ว', '🔔');
-      });
+      renderQrSvgForTable('โต๊ะ 3');
     }
 
     window.addEventListener('DOMContentLoaded', initApp);
   </script>
 </body>
-</html></body></html>
+</html>
