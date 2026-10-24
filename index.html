@@ -29,23 +29,6 @@
     .wood-bar {
       background: linear-gradient(180deg, #4a3222 0%, #382417 100%);
     }
-    @keyframes pulse-subtle {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.03); }
-    }
-    .animate-pulse-subtle {
-      animation: pulse-subtle 2.5s infinite ease-in-out;
-    }
-    @media print {
-      body > *:not(#printAllQrSheet) {
-        display: none !important;
-      }
-      #printAllQrSheet {
-        display: block !important;
-        background: white !important;
-        color: black !important;
-      }
-    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col chalk-bg selection:bg-amber-500 selection:text-stone-950">
@@ -70,20 +53,17 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <!-- Auto-Locked Table Badge from QR Code -->
-        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/90 border border-emerald-500/50 text-emerald-300 text-xs sm:text-sm font-semibold shadow-sm" title="ระบุโต๊ะอัตโนมัติจาก QR Code ที่สแกน">
+        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/90 border border-emerald-500/50 text-emerald-300 text-xs sm:text-sm font-semibold shadow-sm">
           <span>📲</span>
           <span class="text-[11px] text-emerald-400/90 hidden sm:inline">สแกนจาก:</span>
           <span id="currentTableLabel" class="font-extrabold text-amber-300">โต๊ะ 3</span>
           <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-[10px] text-emerald-300 font-bold">ล็อกตาม QR</span>
         </div>
         
-        <!-- Simulator Button (Will be hidden automatically if customer scans via QR) -->
         <button id="btnOpenTableModal" type="button" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-700 text-stone-300 text-[11px] font-medium transition" title="สำหรับเจ้าของร้านทดลองจำลองการสแกน QR โต๊ะอื่น">
           <span>🔄 จำลองสแกนโต๊ะอื่น</span>
         </button>
 
-        <!-- View Switcher -->
         <div class="inline-flex rounded-xl bg-stone-900 p-1 border border-stone-800">
           <button id="tabCustomerView" type="button" class="px-2.5 py-1 rounded-lg text-xs font-medium transition bg-amber-500 text-stone-950 shadow">
             📱 ลูกค้าสั่งอาหาร
@@ -99,16 +79,15 @@
 
   <!-- ==================== CUSTOMER VIEW ==================== -->
   <main id="customerViewContainer" class="flex-1 max-w-5xl w-full mx-auto pb-28">
-    <!-- Hero Banner -->
+    <!-- Hero Banner with Background Image -->
     <section class="relative overflow-hidden rounded-b-3xl sm:rounded-3xl sm:mt-4 mx-0 sm:mx-4 border-b sm:border border-stone-800 shadow-2xl">
       <div class="relative h-44 sm:h-56 w-full">
-        <div class="absolute inset-0 bg-stone-900 flex items-center justify-center text-amber-400 font-bold text-2xl">
-          มัน.ตึง.ลำ Cafe' &amp; Rest
-        </div>
+        <!-- รูปปกแบนเนอร์ร้านอาหาร/คาเฟ่ -->
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop" alt="มัน.ตึง.ลำ Cafe & Rest" class="w-full h-full object-cover max-w-full brightness-90" />
         <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent"></div>
         <div class="absolute bottom-0 inset-x-0 p-4 sm:p-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500 text-stone-950 mb-1.5">
+            <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500 text-stone-950 mb-1.5 shadow">
               สแกนสั่งอาหารที่โต๊ะ • ไม่ต้องรอคิว
             </span>
             <h2 class="text-xl sm:text-2xl font-bold text-white drop-shadow">อร่อยครบเครื่อง เรื่องยำ ทอด ต้ม ผัด &amp; คาเฟ่</h2>
@@ -155,20 +134,6 @@
           <input id="searchInput" type="text" placeholder="ค้นหาเมนู เช่น ปลานิล, ยำ, ชาไทย, กะเพรา, เบียร์..." class="w-full pl-9 pr-9 py-2.5 rounded-2xl bg-stone-900 border border-stone-700/80 text-sm text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-500 transition" />
           <button id="btnClearSearch" type="button" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-200 text-xs px-1.5 py-0.5 rounded bg-stone-800">ล้าง</button>
         </div>
-        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
-          <button type="button" data-quickfilter="all" class="quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-amber-500 text-stone-950 transition">
-            ทั้งหมด (104)
-          </button>
-          <button type="button" data-quickfilter="signature" class="quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-stone-900 text-stone-300 border border-stone-800 hover:border-amber-500/50 transition">
-            ⭐ เมนูซิกเนเจอร์/แนะนำ
-          </button>
-          <button type="button" data-quickfilter="spicy" class="quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-stone-900 text-stone-300 border border-stone-800 hover:border-amber-500/50 transition">
-            🌶️ สายแซ่บ
-          </button>
-          <button type="button" data-quickfilter="budget" class="quick-filter-btn shrink-0 px-3 py-2 rounded-xl text-xs font-medium bg-stone-900 text-stone-300 border border-stone-800 hover:border-amber-500/50 transition">
-            💰 ไม่เกิน 60 ฿
-          </button>
-        </div>
       </div>
     </section>
 
@@ -210,14 +175,10 @@
         <button id="btnOpenQrGenerator" type="button" class="px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-bold transition shadow">
           🖨️ สร้างป้าย QR ประจำโต๊ะ
         </button>
-        <button id="btnAddDemoOrder" type="button" class="px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-medium border border-stone-700 transition">
-          + จำลองออเดอร์ลูกค้า
-        </button>
       </div>
     </div>
 
-    <!-- Summary KPI Cards -->
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
       <div class="p-3.5 rounded-2xl bg-stone-900 border border-stone-800">
         <div class="text-xs text-stone-400">ออเดอร์รอทำ / กำลังปรุง</div>
         <div id="kpiPendingOrders" class="text-2xl font-bold text-amber-400 mt-1">0</div>
@@ -227,30 +188,11 @@
         <div id="kpiServedOrders" class="text-2xl font-bold text-emerald-400 mt-1">0</div>
       </div>
       <div class="p-3.5 rounded-2xl bg-stone-900 border border-stone-800">
-        <div class="text-xs text-stone-400">แจ้งเรียกพนักงาน</div>
-        <div id="kpiStaffCalls" class="text-2xl font-bold text-rose-400 mt-1">0</div>
-      </div>
-      <div class="p-3.5 rounded-2xl bg-stone-900 border border-stone-800">
         <div class="text-xs text-stone-400">ยอดสั่งซื้อรวมวันนี้</div>
         <div id="kpiTotalRevenue" class="text-2xl font-bold text-white mt-1">0 ฿</div>
       </div>
     </div>
 
-    <!-- Staff Calls Alert List -->
-    <div id="staffCallsContainer" class="mb-5 hidden">
-      <h3 class="text-sm font-bold text-rose-400 mb-2 flex items-center gap-1.5">🔔 โต๊ะที่กำลังเรียกพนักงาน</h3>
-      <div id="staffCallsList" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
-    </div>
-
-    <!-- Kitchen / Cashier Filter Tabs -->
-    <div class="flex items-center gap-2 mb-4 overflow-x-auto no-scrollbar">
-      <button type="button" data-stafffilter="all" class="staff-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-amber-500 text-stone-950">ทั้งหมด</button>
-      <button type="button" data-stafffilter="pending" class="staff-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-stone-900 text-stone-300 border border-stone-800">⏳ รอรับออเดอร์ / กำลังปรุง</button>
-      <button type="button" data-stafffilter="served" class="staff-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-stone-900 text-stone-300 border border-stone-800">✅ เสิร์ฟครบแล้ว</button>
-      <button type="button" data-stafffilter="paid" class="staff-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-stone-900 text-stone-300 border border-stone-800">💰 ชำระเงินแล้ว</button>
-    </div>
-
-    <!-- Orders Board -->
     <div id="staffOrdersGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <!-- Rendered by JS -->
     </div>
@@ -280,7 +222,7 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 1: ITEM CUSTOMIZATION ==================== -->
+  <!-- ==================== MODALS ==================== -->
   <div id="itemOptionModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-stone-900 border border-stone-700 w-full max-w-md rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
       <div class="p-4 sm:p-5 border-b border-stone-800 flex items-start justify-between gap-3 bg-stone-950/60">
@@ -294,7 +236,7 @@
 
       <div class="p-4 sm:p-5 overflow-y-auto space-y-4 flex-1">
         <div id="modalVariantSection" class="hidden">
-          <label id="modalVariantTitle" class="block text-xs font-semibold text-amber-300 mb-2">เลือกรูปแบบ (จำเป็น)</label>
+          <label class="block text-xs font-semibold text-amber-300 mb-2">เลือกรูปแบบ (จำเป็น)</label>
           <div id="modalVariantOptions" class="grid grid-cols-3 gap-2"></div>
         </div>
 
@@ -315,7 +257,7 @@
 
         <div>
           <label for="modalItemNote" class="block text-xs font-semibold text-stone-300 mb-1.5">หมายเหตุเพิ่มเติมถึงครัว (ถ้ามี)</label>
-          <input id="modalItemNote" type="text" placeholder="เช่น ไม่ใส่ผักชี, ไม่ใส่ผงชูรส, แยกน้ำยำ..." class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-700 text-xs sm:text-sm text-white placeholder-stone-500 focus:outline-none focus:border-amber-500" />
+          <input id="modalItemNote" type="text" placeholder="เช่น ไม่ใส่ผักชี, ไม่ใส่ผงชูรส..." class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-700 text-xs sm:text-sm text-white placeholder-stone-500 focus:outline-none focus:border-amber-500" />
         </div>
 
         <div class="flex items-center justify-between pt-2 border-t border-stone-800">
@@ -330,396 +272,104 @@
 
       <div class="p-4 bg-stone-950 border-t border-stone-800">
         <button id="btnConfirmAddToCart" type="button" class="w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-sm sm:text-base shadow-lg transition flex items-center justify-center gap-2">
-          <span>เพิ่มลงตะกร้า</span>
-          <span>•</span>
-          <span id="modalComputedPrice">0 ฿</span>
+          <span>เพิ่มลงตะกร้า</span> • <span id="modalComputedPrice">0 ฿</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== MODAL 2: CART DRAWER ==================== -->
   <div id="cartDrawerModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-stone-900 border border-stone-700 w-full max-w-lg rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
       <div class="p-4 sm:p-5 border-b border-stone-800 flex items-center justify-between bg-stone-950/70">
-        <div>
-          <h3 class="text-lg font-bold text-amber-400 flex items-center gap-2">
-            🛒 ตะกร้าสั่งอาหาร (<span id="cartModalTableName">โต๊ะ 1</span>)
-          </h3>
-          <p class="text-xs text-stone-400">ตรวจสอบรายการก่อนกดส่งเข้าครัว</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <button id="btnClearCart" type="button" class="px-2.5 py-1 rounded-lg bg-stone-800 hover:bg-rose-950 text-stone-400 hover:text-rose-300 text-xs transition">ล้างตะกร้า</button>
-          <button id="btnCloseCartModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center text-sm">✕</button>
-        </div>
+        <h3 class="text-lg font-bold text-amber-400">🛒 ตะกร้าสั่งอาหาร (<span id="cartModalTableName">โต๊ะ 1</span>)</h3>
+        <button id="btnCloseCartModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 text-stone-300 flex items-center justify-center">✕</button>
       </div>
-
-      <div id="cartItemsList" class="p-4 overflow-y-auto flex-1 space-y-2.5">
-        <!-- Rendered by JS -->
-      </div>
-
+      <div id="cartItemsList" class="p-4 overflow-y-auto flex-1 space-y-2.5"></div>
       <div class="p-4 bg-stone-950 border-t border-stone-800 space-y-3">
-        <div class="flex items-center justify-between text-sm">
-          <span class="text-stone-400">จำนวนรายการในตะกร้า</span>
-          <span id="cartModalTotalQty" class="font-semibold text-stone-200">0 รายการ</span>
-        </div>
-        <div class="flex items-center justify-between text-base sm:text-lg font-bold">
-          <span class="text-white">ยอดรวมรอบนี้</span>
-          <span id="cartModalTotalPrice" class="text-amber-400">0 ฿</span>
-        </div>
-        <div class="space-y-2">
-          <button id="btnSubmitToLine" type="button" class="w-full py-3.5 rounded-2xl bg-[#06C755] hover:bg-[#05b34c] text-stone-950 font-extrabold text-sm sm:text-base shadow-lg transition flex items-center justify-center gap-2">
-            <span>💬 ส่งออเดอร์เข้า LINE ร้านค้าทันที (@698ygoeo)</span>
-          </button>
-          <button id="btnSubmitOrderToKitchen" type="button" class="w-full py-2.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/40 font-bold text-xs sm:text-sm transition flex items-center justify-center gap-1.5">
-            <span>🚀 ส่งออเดอร์เข้าหน้าครัวในเว็บ (ไม่เปิดแอป LINE)</span>
-          </button>
-        </div>
+        <div class="flex justify-between text-base font-bold text-white"><span>ยอดรวม</span><span id="cartModalTotalPrice" class="text-amber-400">0 ฿</span></div>
+        <button id="btnSubmitToLine" type="button" class="w-full py-3.5 rounded-2xl bg-[#06C755] hover:bg-[#05b34c] text-stone-950 font-extrabold text-sm shadow-lg">💬 ส่งออเดอร์เข้า LINE ร้านค้าทันที (@698ygoeo)</button>
+        <button id="btnSubmitOrderToKitchen" type="button" class="w-full py-2.5 rounded-xl bg-stone-800 text-amber-300 border border-amber-500/40 font-bold text-xs">🚀 ส่งออเดอร์เข้าหน้าครัวในเว็บ</button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== MODAL 3: ACTIVE BILL & ORDER TRACKING ==================== -->
   <div id="activeBillModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-stone-900 border border-stone-700 w-full max-w-lg rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
       <div class="p-4 sm:p-5 border-b border-stone-800 flex items-center justify-between bg-stone-950/70">
-        <div>
-          <h3 class="text-lg font-bold text-emerald-400 flex items-center gap-2">
-            🧾 บิลค่าอาหาร &amp; สถานะออเดอร์ (<span id="billModalTableName">โต๊ะ 1</span>)
-          </h3>
-          <p class="text-xs text-stone-400">มัน.ตึง.ลำ Cafe' &amp; Rest • โทร 061-348-5831</p>
-        </div>
-        <button id="btnCloseBillModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center text-sm">✕</button>
+        <h3 class="text-lg font-bold text-emerald-400">🧾 สถานะออเดอร์ (<span id="billModalTableName">โต๊ะ 1</span>)</h3>
+        <button id="btnCloseBillModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 text-stone-300 flex items-center justify-center">✕</button>
       </div>
-
-      <div id="activeBillContent" class="p-4 overflow-y-auto flex-1 space-y-4">
-        <!-- Rendered by JS -->
-      </div>
-
-      <div class="p-4 bg-stone-950 border-t border-stone-800 space-y-3">
-        <div class="flex items-center justify-between text-base sm:text-lg font-bold">
-          <span class="text-white">ยอดรวมสุทธิของโต๊ะนี้</span>
-          <span id="billModalGrandTotal" class="text-amber-400 text-xl">0 ฿</span>
-        </div>
-        <div class="grid grid-cols-2 gap-2.5">
-          <button id="btnRequestCashBill" type="button" class="py-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/40 font-semibold text-xs sm:text-sm transition">
-            💵 เรียกเช็คบิล (เงินสด)
-          </button>
-          <button id="btnRequestPromptPay" type="button" class="py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs sm:text-sm transition shadow">
-            📲 สแกนจ่าย PromptPay
-          </button>
-        </div>
+      <div id="activeBillContent" class="p-4 overflow-y-auto flex-1 space-y-4"></div>
+      <div class="p-4 bg-stone-950 border-t border-stone-800 flex justify-between font-bold text-white text-lg">
+        <span>ยอดรวมสุทธิ</span><span id="billModalGrandTotal" class="text-amber-400">0 ฿</span>
       </div>
     </div>
   </div>
 
-  <!-- ==================== MODAL 4: TABLE SELECTOR ==================== -->
   <div id="tableSelectModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-stone-900 border border-stone-700 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl">
-      <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950/60">
-        <div>
-          <h3 class="text-base font-bold text-amber-400">📲 จำลองการสแกน QR Code ประจำโต๊ะ</h3>
-          <p class="text-[11px] text-stone-400">ของจริงลูกค้าไม่ต้องกดเลือกเอง (เมื่อสแกน QR บนโต๊ะไหน เว็บจะล็อกเป็นโต๊ะนั้นอัตโนมัติ)</p>
-        </div>
-        <button id="btnCloseTableModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center text-sm">✕</button>
-      </div>
-      <div class="p-4 space-y-4 max-h-[75vh] overflow-y-auto">
-        <div>
-          <label class="block text-xs font-semibold text-amber-300 mb-2">🛋️ โซนด้านใน (โซฟา 1–2, โต๊ะ 3–5)</label>
-          <div id="tableOptionsIndoor" class="grid grid-cols-3 sm:grid-cols-5 gap-2"></div>
-        </div>
-        <div>
-          <label class="block text-xs font-semibold text-sky-300 mb-2">🌿 โซนด้านนอก (โต๊ะ 6–8)</label>
-          <div id="tableOptionsOutdoor" class="grid grid-cols-3 gap-2"></div>
-        </div>
-        <div>
-          <label class="block text-xs font-semibold text-emerald-300 mb-2">🏕️ โซนสนาม (โต๊ะสนาม 1–4)</label>
-          <div id="tableOptionsSpecial" class="grid grid-cols-2 sm:grid-cols-4 gap-2"></div>
-        </div>
-      </div>
+    <div class="bg-stone-900 border border-stone-700 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl p-4 space-y-4">
+      <div class="flex justify-between items-center"><h3 class="text-base font-bold text-amber-400">จำลองการสแกนโต๊ะ</h3><button id="btnCloseTableModal" class="w-8 h-8 rounded-full bg-stone-800 text-white">✕</button></div>
+      <div id="tableOptionsIndoor" class="grid grid-cols-3 gap-2"></div>
     </div>
   </div>
 
-  <!-- ==================== MODAL 5: CALL STAFF / PROMPTPAY ==================== -->
   <div id="serviceCallModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-stone-900 border border-stone-700 w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl">
-      <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950/60">
-        <h3 class="text-base font-bold text-amber-400">🔔 บริการประจำโต๊ะ (<span id="serviceModalTable">โต๊ะ 1</span>)</h3>
-        <button id="btnCloseServiceModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center text-sm">✕</button>
-      </div>
-      <div class="p-4 space-y-2.5">
-        <button type="button" data-service="ขอเติมน้ำแข็ง / น้ำเปล่า" class="service-req-btn w-full p-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-left text-sm font-medium text-stone-100 flex items-center justify-between transition">
-          <span>🧊 ขอเติมน้ำแข็ง / น้ำเปล่า</span>
-          <span class="text-xs text-amber-400">กดเรียก →</span>
-        </button>
-        <button type="button" data-service="ขอช้อนส้อม / จานแบ่ง / ทิชชู่เพิ่ม" class="service-req-btn w-full p-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-left text-sm font-medium text-stone-100 flex items-center justify-between transition">
-          <span>🍽️ ขอช้อนส้อม / จานแบ่ง / ทิชชู่</span>
-          <span class="text-xs text-amber-400">กดเรียก →</span>
-        </button>
-        <button type="button" data-service="ต้องการสอบถาม / เรียกพนักงานที่โต๊ะ" class="service-req-btn w-full p-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-left text-sm font-medium text-stone-100 flex items-center justify-between transition">
-          <span>🙋‍♂️ เรียกพนักงานมาที่โต๊ะ</span>
-          <span class="text-xs text-amber-400">กดเรียก →</span>
-        </button>
-        <button type="button" data-service="ขอเช็คบิลชำระเงินที่โต๊ะ" class="service-req-btn w-full p-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-left text-sm font-semibold text-amber-300 flex items-center justify-between transition">
-          <span>🧾 ขอเช็คบิล / ชำระเงิน</span>
-          <span class="text-xs text-amber-400">กดเรียก →</span>
-        </button>
-      </div>
+    <div class="bg-stone-900 border border-stone-700 w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl p-4 space-y-2.5">
+      <div class="flex justify-between items-center mb-2"><h3 class="text-base font-bold text-amber-400">เรียกพนักงาน</h3><button id="btnCloseServiceModal" class="w-8 h-8 rounded-full bg-stone-800 text-white">✕</button></div>
+      <button type="button" data-service="ขอเติมน้ำแข็ง / น้ำเปล่า" class="service-req-btn w-full p-3 rounded-xl bg-stone-800 text-left text-sm text-white">🧊 ขอเติมน้ำแข็ง / น้ำเปล่า</button>
+      <button type="button" data-service="ขอเช็คบิล" class="service-req-btn w-full p-3 rounded-xl bg-amber-500 text-stone-950 text-left text-sm font-bold">🧾 ขอเช็คบิลชำระเงิน</button>
     </div>
   </div>
 
-  <!-- ==================== MODAL 6: QR GENERATOR FOR TABLES (Staff) ==================== -->
   <div id="qrGeneratorModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-stone-900 border border-stone-700 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl max-h-[92vh] flex flex-col">
-      <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950/60">
-        <div>
-          <h3 class="text-base font-bold text-amber-400">🖨️ ป้าย QR Code ถาวรประจำโต๊ะ (ใช้ซ้ำได้ตลอด)</h3>
-          <p class="text-[11px] text-emerald-400">✓ ไม่ใช่ Single-use • เคลือบแปะโต๊ะไว้ใช้ได้ถาวร เมื่อแคชเชียร์กดเคลียร์โต๊ะ ลูกค้าคนถัดไปสแกนซ้ำได้ทันที</p>
-        </div>
-        <button id="btnCloseQrModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center text-sm">✕</button>
-      </div>
-      <div class="p-4 sm:p-5 text-center space-y-3.5 overflow-y-auto flex-1">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-left">
-          <div>
-            <label for="qrTableSelect" class="block text-[11px] text-stone-300 mb-1">เลือกโต๊ะที่ต้องการดู/พิมพ์ป้าย:</label>
-            <select id="qrTableSelect" class="w-full px-3 py-2 rounded-xl bg-stone-800 border border-stone-700 text-xs text-amber-300 font-semibold"></select>
-          </div>
-          <div>
-            <label for="qrBaseUrlInput" class="block text-[11px] text-stone-300 mb-1">ลิงก์เว็บหลักของร้าน:</label>
-            <input id="qrBaseUrlInput" type="text" value="https://peach2808.github.io/cafe-7/" class="w-full px-3 py-2 rounded-xl bg-stone-950 border border-stone-700 text-xs text-stone-200 font-mono focus:outline-none focus:border-amber-500" />
-          </div>
-        </div>
-
-        <div class="bg-white text-stone-900 p-4 rounded-2xl max-w-xs mx-auto shadow-xl border-4 border-amber-500">
-          <div class="text-xs font-extrabold tracking-widest text-amber-700 uppercase">มัน.ตึง.ลำ CAFE' &amp; REST</div>
-          <div id="qrCardTableTitle" class="text-xl font-black text-stone-950 mt-0.5">โต๊ะ 3 (โซนด้านใน)</div>
-          <div class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-0.5 inline-block mt-1">
-            ♾️ QR ถาวรประจำโต๊ะ • สแกนขึ้นโต๊ะอัตโนมัติ
-          </div>
-          <div id="qrSvgContainer" class="my-2.5 flex justify-center"></div>
-          <div id="qrEncodedLinkText" class="text-[10px] font-mono bg-stone-100 text-stone-700 px-2 py-1 rounded border border-stone-200 truncate">
-            https://peach2808.github.io/cafe-7/?table=3
-          </div>
-          <div class="text-xs font-bold text-stone-800 mt-1.5">สแกนด้วยกล้องมือถือ หรือ LINE เพื่อสั่งอาหาร</div>
-          <div class="text-[10px] text-stone-500 mt-0.5">เปิดบริการ 10.00 - 20.00 น. • โทร 061-348-5831</div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-          <button id="btnPrintAll12Tables" type="button" class="py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs transition shadow flex items-center justify-center gap-1.5">
-            🖨️ พิมพ์ป้ายครบทั้ง 12 โต๊ะ (ใช้ถาวร)
-          </button>
-          <button id="btnCopyTableLink" type="button" class="py-2.5 px-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/40 font-bold text-xs transition">
-            🔗 คัดลอกลิงก์ประจำโต๊ะนี้
-          </button>
-        </div>
-        <button id="btnSimulateScanThisTable" type="button" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs sm:text-sm transition">
-          📱 ทดลองสแกนเข้าสั่งอาหารในนามโต๊ะนี้
-        </button>
+    <div class="bg-stone-900 border border-stone-700 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl p-4 space-y-4">
+      <div class="flex justify-between items-center"><h3 class="text-base font-bold text-amber-400">ป้าย QR Code โต๊ะ</h3><button id="btnCloseQrModal" class="w-8 h-8 rounded-full bg-stone-800 text-white">✕</button></div>
+      <select id="qrTableSelect" class="w-full px-3 py-2 rounded-xl bg-stone-800 text-amber-300 font-semibold"></select>
+      <div class="bg-white text-stone-900 p-4 rounded-2xl text-center space-y-2 border-4 border-amber-500">
+        <div class="text-xs font-bold text-amber-700 uppercase">มัน.ตึง.ลำ CAFE' &amp; REST</div>
+        <div id="qrCardTableTitle" class="text-xl font-black">โต๊ะ 3</div>
+        <div id="qrEncodedLinkText" class="text-xs font-mono bg-stone-100 p-1 rounded"></div>
       </div>
     </div>
   </div>
 
-  <div id="printAllQrSheet" class="hidden p-6 bg-white text-stone-900"></div>
-
-  <!-- TOAST -->
-  <div id="toastBanner" class="hidden fixed top-16 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-emerald-500 text-stone-950 font-bold text-xs sm:text-sm shadow-2xl flex items-center gap-2 transition-all">
-    <span id="toastIcon">✅</span>
-    <span id="toastMessage">บันทึกสำเร็จ</span>
+  <div id="toastBanner" class="hidden fixed top-16 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-emerald-500 text-stone-950 font-bold text-sm shadow-2xl flex items-center gap-2">
+    <span id="toastIcon">✅</span><span id="toastMessage">สำเร็จ</span>
   </div>
 
   <script>
     const LINE_OA_ID = "@698ygoeo";
-
     const CATEGORIES = [
       { id: 'all', name: 'ทั้งหมด', icon: '🍽️' },
       { id: 'coffee', name: 'กาแฟ & โกโก้', icon: '☕' },
       { id: 'tea_milk', name: 'ชา & นมสด', icon: '🍵' },
-      { id: 'smoothie_soda', name: 'สมูทตี้ & โซดา', icon: '🍓' },
-      { id: 'beverage', name: 'เครื่องดื่ม & เบียร์', icon: '🍺' },
       { id: 'yam', name: 'เมนูยำ', icon: '🌶️' },
       { id: 'fried', name: 'เมนูทอด', icon: '🍗' },
       { id: 'soup', name: 'ต้ม / แกง', icon: '🍲' },
-      { id: 'appetizer', name: 'กับแกล้ม', icon: '🥗' },
-      { id: 'stirfry', name: 'เมนูผัด', icon: '🥬' },
       { id: 'singledish', name: 'อาหารจานเดียว', icon: '🍛' }
     ];
 
-    const SWEETNESS_LEVELS = ['หวานปกติ 100%', 'หวานน้อย 50%', 'หวานน้อยมาก 25%', 'ไม่หวาน 0%', 'เพิ่มหวาน 125%'];
-    const SPICE_LEVELS = ['เผ็ดปกติ', 'เผ็ดน้อย', 'เผ็ดจัดจ้าน', 'ไม่ใส่พริก'];
-
     const MENU_ITEMS = [
       { id: 'c1', cat: 'coffee', name: 'Espresso (เอสเพรสโซ่)', price: 40, emoji: '☕', sweet: true, variants: [{ label: 'ร้อน', price: 40 }, { label: 'เย็น', price: 45 }, { label: 'ปั่น', price: 50 }] },
-      { id: 'c2', cat: 'coffee', name: 'Mocca (มอคค่า)', price: 40, emoji: '☕', sweet: true, variants: [{ label: 'ร้อน', price: 40 }, { label: 'เย็น', price: 45 }, { label: 'ปั่น', price: 50 }] },
-      { id: 'c3', cat: 'coffee', name: 'Capuccino (คาปูชิโน่)', price: 40, emoji: '☕', sweet: true, variants: [{ label: 'ร้อน', price: 40 }, { label: 'เย็น', price: 45 }, { label: 'ปั่น', price: 50 }] },
-      { id: 'c4', cat: 'coffee', name: 'Latte (ลาเต้)', price: 40, emoji: '☕', sweet: true, badge: 'ขายดี', signature: true, variants: [{ label: 'ร้อน', price: 40 }, { label: 'เย็น', price: 45 }, { label: 'ปั่น', price: 50 }] },
-      { id: 'c5', cat: 'coffee', name: 'Americano (อเมริกาโน่)', price: 40, emoji: '☕', sweet: true, variants: [{ label: 'ร้อน', price: 40 }, { label: 'เย็น', price: 45 }, { label: 'ปั่น', price: 50 }] },
-      { id: 'c6', cat: 'coffee', name: 'โกโก้เข้มข้น', price: 35, emoji: '🍫', sweet: true, badge: 'ยอดฮิต', variants: [{ label: 'ร้อน', price: 35 }, { label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
-      { id: 't1', cat: 'tea_milk', name: 'ชาเขียว', price: 35, emoji: '🍵', sweet: true, variants: [{ label: 'ร้อน', price: 35 }, { label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
-      { id: 't2', cat: 'tea_milk', name: 'ชาเขียวมัจฉะ', price: 40, emoji: '🍵', sweet: true, badge: 'แนะนำ', signature: true, variants: [{ label: 'ร้อน', price: 40 }, { label: 'เย็น', price: 45 }, { label: 'ปั่น', price: 50 }] },
-      { id: 't3', cat: 'tea_milk', name: 'ชาไทย', price: 35, emoji: '🧋', sweet: true, badge: 'ขายดี', signature: true, variants: [{ label: 'ร้อน', price: 35 }, { label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
-      { id: 't4', cat: 'tea_milk', name: 'ชาพีช', price: 35, emoji: '🍑', sweet: true, variants: [{ label: 'ร้อน', price: 35 }, { label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
-      { id: 't5', cat: 'tea_milk', name: 'ชามะนาว', price: 35, emoji: '🍋', sweet: true, variants: [{ label: 'ร้อน', price: 35 }, { label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
-      { id: 't6', cat: 'tea_milk', name: 'ชาน้ำผึ้งมะนาว', price: 40, emoji: '🍯', sweet: true, variants: [{ label: 'ร้อน', price: 40 }, { label: 'เย็น', price: 45 }, { label: 'ปั่น', price: 50 }] },
-      { id: 't7', cat: 'tea_milk', name: 'นมสด', price: 30, emoji: '🥛', sweet: true, variants: [{ label: 'ร้อน', price: 30 }, { label: 'เย็น', price: 35 }, { label: 'ปั่น', price: 40 }] },
-      { id: 't8', cat: 'tea_milk', name: 'นมสดน้ำผึ้ง', price: 35, emoji: '🍯', sweet: true, variants: [{ label: 'ร้อน', price: 35 }, { label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
-      { id: 't9', cat: 'tea_milk', name: 'นมชมพู', price: 40, emoji: '🩷', sweet: true, variants: [{ label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
-      { id: 't10', cat: 'tea_milk', name: 'นมคาราเมล', price: 40, emoji: '🍮', sweet: true, variants: [{ label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
-      { id: 's1', cat: 'smoothie_soda', name: 'สตอเบอร์รี่สมูทตี้ (ปั่น)', price: 45, emoji: '🍓', sweet: true },
-      { id: 's2', cat: 'smoothie_soda', name: 'กีวี่สมูทตี้ (ปั่น)', price: 45, emoji: '🥝', sweet: true },
-      { id: 's3', cat: 'smoothie_soda', name: 'บลูเบอร์รี่สมูทตี้ (ปั่น)', price: 45, emoji: '🫐', sweet: true },
-      { id: 's4', cat: 'smoothie_soda', name: 'นมสดโอริโอ้ (ปั่น)', price: 45, emoji: '🍪', sweet: true, badge: 'ยอดฮิต', signature: true },
-      { id: 's5', cat: 'smoothie_soda', name: 'สตอเบอร์รี่ อิตาเลี่ยนโซดา (เย็น)', price: 30, emoji: '🍹', sweet: true },
-      { id: 's6', cat: 'smoothie_soda', name: 'บลูฮาวาย อิตาเลี่ยนโซดา (เย็น)', price: 30, emoji: '🧊', sweet: true },
-      { id: 's7', cat: 'smoothie_soda', name: 'เสาวรส อิตาเลี่ยนโซดา (เย็น)', price: 30, emoji: '💛', sweet: true },
-      { id: 's8', cat: 'smoothie_soda', name: 'แอปเปิ้ล อิตาเลี่ยนโซดา (เย็น)', price: 30, emoji: '🍏', sweet: true },
-      { id: 's9', cat: 'smoothie_soda', name: 'แดงโซดา / แดงมะนาวโซดา (เย็น)', price: 30, emoji: '🍒', sweet: true, variants: [{ label: 'แดงมะนาวโซดา', price: 30 }, { label: 'แดงโซดา', price: 30 }] },
-      { id: 's10', cat: 'smoothie_soda', name: 'น้ำผึ้งมะนาวโซดา (เย็น)', price: 30, emoji: '🍋', sweet: true },
-      { id: 's11', cat: 'smoothie_soda', name: 'องุ่น อิตาเลี่ยนโซดา (เย็น)', price: 30, emoji: '🍇', sweet: true },
-      { id: 's12', cat: 'smoothie_soda', name: 'กีวี่ อิตาเลี่ยนโซดา (เย็น)', price: 30, emoji: '🥝', sweet: true },
-      { id: 's13', cat: 'smoothie_soda', name: 'ลิ้นจี่ อิตาเลี่ยนโซดา (เย็น)', price: 30, emoji: '荔', sweet: true },
-      { id: 'b1', cat: 'beverage', name: 'เบียร์ช้าง (Chang)', price: 65, emoji: '🍺' },
-      { id: 'b2', cat: 'beverage', name: 'เบียร์ลีโอ (Leo)', price: 70, emoji: '🍺' },
-      { id: 'b3', cat: 'beverage', name: 'เบียร์สิงห์ (Singha)', price: 75, emoji: '🍺' },
-      { id: 'b4', cat: 'beverage', name: 'หงส์ทอง', price: 190, emoji: '🥃', variants: [{ label: 'แบน (190 ฿)', price: 190 }, { label: 'กลม (320 ฿)', price: 320 }] },
-      { id: 'b5', cat: 'beverage', name: 'แสงโสม', price: 200, emoji: '🥃', variants: [{ label: 'แบน (200 ฿)', price: 200 }, { label: 'กลม (350 ฿)', price: 350 }] },
-      { id: 'b6', cat: 'beverage', name: 'รีเจนซี่ (Regency)', price: 470, emoji: '🥃' },
-      { id: 'b7', cat: 'beverage', name: 'โซดา', price: 15, emoji: '🫧' },
-      { id: 'b8', cat: 'beverage', name: 'น้ำเปล่า', price: 10, emoji: '💧' },
-      { id: 'b9', cat: 'beverage', name: 'น้ำอัดลม', price: 20, emoji: '🥤' },
-      { id: 'b10', cat: 'beverage', name: 'น้ำแข็ง (ถังเล็ก)', price: 10, emoji: '🧊' },
-      { id: 'b11', cat: 'beverage', name: 'น้ำแข็ง (ถังใหญ่)', price: 20, emoji: '🪣' },
-      { id: 'b12', cat: 'beverage', name: 'ค่าเปิดเหล้า / ขวด', price: 30, emoji: '🍾' },
-      { id: 'y1', cat: 'yam', name: 'ยำหมูยอ', price: 79, emoji: '🌶️', spicy: true },
-      { id: 'y2', cat: 'yam', name: 'ยำปูอัด', price: 79, emoji: '🦀', spicy: true },
-      { id: 'y3', cat: 'yam', name: 'ยำแหนม', price: 89, emoji: '🌶️', spicy: true },
-      { id: 'y4', cat: 'yam', name: 'ยำไข่เยี่ยวม้า', price: 89, emoji: '🥚', spicy: true },
-      { id: 'y5', cat: 'yam', name: 'ยำวุ้นเส้นหมูสับ', price: 79, emoji: '🍜', spicy: true, badge: 'ขายดี' },
-      { id: 'y6', cat: 'yam', name: 'ยำวุ้นเส้นทะเล', price: 99, emoji: '🦐', spicy: true, signature: true },
-      { id: 'y7', cat: 'yam', name: 'ยำเส้นแก้วหมูสับ', price: 79, emoji: '🥗', spicy: true },
-      { id: 'y8', cat: 'yam', name: 'ยำเส้นแก้วทะเล', price: 99, emoji: '🦑', spicy: true },
-      { id: 'y9', cat: 'yam', name: 'ยำคะน้ากุ้งสด', price: 99, emoji: '🦐', spicy: true, badge: 'แนะนำ' },
-      { id: 'y10', cat: 'yam', name: 'พล่ากุ้งเห็ดเข็มทอง', price: 109, emoji: '🍄', spicy: true },
-      { id: 'y11', cat: 'yam', name: 'ยำรวมทะเล', price: 119, emoji: '🦪', spicy: true, badge: 'สุดคุ้ม', signature: true },
-      { id: 'y12', cat: 'yam', name: 'ยำผักบุ้งกรอบ', price: 129, emoji: '🌿', spicy: true, badge: 'ซิกเนเจอร์', signature: true },
-      { id: 'y13', cat: 'yam', name: 'ยำเห็ดเข็มทองกรอบ', price: 129, emoji: '🍄', spicy: true },
-      { id: 'y14', cat: 'yam', name: 'ยำหอยนางรม', price: 129, emoji: '🦪', spicy: true },
-      { id: 'f1', cat: 'fried', name: 'ถั่วทอดสมุนไพร', price: 39, emoji: '🥜' },
-      { id: 'f2', cat: 'fried', name: 'เม็ดมะม่วงหิมพานต์ทอด', price: 59, emoji: '🥜' },
-      { id: 'f3', cat: 'fried', name: 'เฟรนฟราย (French Fries)', price: 69, emoji: '🍟' },
-      { id: 'f4', cat: 'fried', name: 'ไก่จ๊อทอด', price: 69, emoji: '🍢' },
-      { id: 'f5', cat: 'fried', name: 'นักเก็ตไก่', price: 69, emoji: '🍗' },
-      { id: 'f6', cat: 'fried', name: 'เกี๊ยวซ่า', price: 69, emoji: '🥟' },
-      { id: 'f7', cat: 'fried', name: 'ปอเปี๊ยะทอด', price: 69, emoji: '🌯' },
-      { id: 'f8', cat: 'fried', name: 'ถุงทองทอดกรอบ', price: 69, emoji: '🥟' },
-      { id: 'f9', cat: 'fried', name: 'ปีกไก่ทอด', price: 79, emoji: '🍗', badge: 'ขายดี' },
-      { id: 'f10', cat: 'fried', name: 'เอ็นไก่ทอด', price: 79, emoji: '🍗' },
-      { id: 'f11', cat: 'fried', name: 'ไก่ทอดซอสเกาหลี', price: 89, emoji: '🍗' },
-      { id: 'f12', cat: 'fried', name: 'ไก่ทอดซอสครีมมะนาว', price: 99, emoji: '🍋', badge: 'แนะนำ' },
-      { id: 'f13', cat: 'fried', name: 'หมูสามชั้นทอดน้ำปลา', price: 119, emoji: '🥓', badge: 'ยอดฮิต', signature: true },
-      { id: 'f14', cat: 'fried', name: 'แหนมซี่โครงทอด', price: 129, emoji: '🍖' },
-      { id: 'f15', cat: 'fried', name: 'ปลานิลทอดน้ำปลา', price: 169, emoji: '🐟' },
-      { id: 'f16', cat: 'fried', name: 'ฉู่ฉี่ปลานิล', price: 179, emoji: '🐟', spicy: true },
-      { id: 'f17', cat: 'fried', name: 'ปลานิลคั่วพริกเกลือ', price: 189, emoji: '🐟', spicy: true },
-      { id: 'f18', cat: 'fried', name: 'ปลานิลยำสมุนไพร', price: 199, emoji: '🐟', spicy: true },
-      { id: 'f19', cat: 'fried', name: 'ปลานิลทอดสมุนไพร', price: 199, emoji: '🐟', badge: 'ขายดี' },
-      { id: 'f20', cat: 'fried', name: 'ปลานิลมันตึงลำ (Signature)', price: 209, emoji: '👑', spicy: true, badge: 'ซิกเนเจอร์ร้าน', signature: true },
-      { id: 'sp1', cat: 'soup', name: 'แกงจืดไข่น้ำ', price: 89, emoji: '🍲' },
-      { id: 'sp2', cat: 'soup', name: 'แกงจืดเต้าหู้หมูสับ', price: 99, emoji: '🍲' },
-      { id: 'sp3', cat: 'soup', name: 'ต้มแซ่บเอ็นไก่', price: 109, emoji: '🥣', spicy: true },
-      { id: 'sp4', cat: 'soup', name: 'ต้มแซ่บกระดูกอ่อน', price: 139, emoji: '🍖', spicy: true, badge: 'ขายดี', signature: true },
-      { id: 'sp5', cat: 'soup', name: 'ต้มแซ่บปลานิล', price: 139, emoji: '🐟', spicy: true },
-      { id: 'sp6', cat: 'soup', name: 'ต้มยำปลาดอลลี่', price: 139, emoji: '🍲', spicy: true, variants: [{ label: 'น้ำข้น', price: 139 }, { label: 'น้ำใส', price: 139 }] },
-      { id: 'sp7', cat: 'soup', name: 'ต้มยำปลานิล', price: 159, emoji: '🐟', spicy: true, variants: [{ label: 'น้ำข้น', price: 159 }, { label: 'น้ำใส', price: 159 }] },
-      { id: 'sp8', cat: 'soup', name: 'ต้มยำทะเล', price: 169, emoji: '🦐', spicy: true, badge: 'แนะนำ', variants: [{ label: 'น้ำข้น', price: 169 }, { label: 'น้ำใส', price: 169 }] },
-      { id: 'sp9', cat: 'soup', name: 'โป๊ะแตกทะเล', price: 169, emoji: '🦑', spicy: true },
-      { id: 'sp10', cat: 'soup', name: 'แกงส้มปลานิลทอด', price: 209, emoji: '🍲', spicy: true, signature: true },
-      { id: 'ap1', cat: 'appetizer', name: 'ปูอัดวาซาบิ', price: 69, emoji: '🦀' },
-      { id: 'ap2', cat: 'appetizer', name: 'ไข่เยี่ยวม้าทรงเครื่อง', price: 79, emoji: '🥚', spicy: true },
-      { id: 'ap3', cat: 'appetizer', name: 'แหนมทรงเครื่อง', price: 89, emoji: '🥗', spicy: true },
-      { id: 'ap4', cat: 'appetizer', name: 'กุ้งแช่น้ำปลา', price: 89, emoji: '🦐', spicy: true, badge: 'ตัวท็อป', signature: true },
-      { id: 'ap5', cat: 'appetizer', name: 'หมูมะนาว', price: 89, emoji: '🥩', spicy: true },
-      { id: 'ap6', cat: 'appetizer', name: 'ปลาลวกจิ้ม', price: 99, emoji: '🐟' },
-      { id: 'ap7', cat: 'appetizer', name: 'ทะเลลวกจิ้ม', price: 119, emoji: '🦑' },
-      { id: 'sf1', cat: 'stirfry', name: 'กะหล่ำผัดน้ำปลา', price: 69, emoji: '🥬', badge: 'ขายดี' },
-      { id: 'sf2', cat: 'stirfry', name: 'ผักบุ้งไฟแดง', price: 69, emoji: '🌿', spicy: true },
-      { id: 'sf3', cat: 'stirfry', name: 'ผักบุ้งไฟแดงหมูสับ', price: 89, emoji: '🌿', spicy: true },
-      { id: 'sf4', cat: 'stirfry', name: 'คะน้าน้ำมันหอย', price: 69, emoji: '🥦' },
-      { id: 'sf5', cat: 'stirfry', name: 'คะน้าน้ำมันหอยหมู', price: 89, emoji: '🥦' },
-      { id: 'sf6', cat: 'stirfry', name: 'คะน้าน้ำมันหอยทะเล', price: 109, emoji: '🦐' },
-      { id: 'sf7', cat: 'stirfry', name: 'ผัดผักรวม', price: 69, emoji: '🥗' },
-      { id: 'sf8', cat: 'stirfry', name: 'ผัดผักรวมหมู', price: 89, emoji: '🥗' },
-      { id: 'sf9', cat: 'stirfry', name: 'ผัดผักรวมทะเล', price: 109, emoji: '🦐' },
-      { id: 'sf10', cat: 'stirfry', name: 'ผัดกะเพราไข่เยี่ยวม้า (กับข้าว)', price: 109, emoji: '🌿', spicy: true, badge: 'แนะนำ' },
-      { id: 'sf11', cat: 'stirfry', name: 'ผัดผงกะหรี่ทะเล (กับข้าว)', price: 139, emoji: '🍛', signature: true },
-      { id: 'sf12', cat: 'stirfry', name: 'ผัดฉ่าทะเล (กับข้าว)', price: 139, emoji: '🌶️', spicy: true },
-      { id: 'sf13', cat: 'stirfry', name: 'ข้าวผัดหมู (จานใหญ่)', price: 129, emoji: '🍚' },
-      { id: 'sf14', cat: 'stirfry', name: 'ข้าวผัดทะเล (จานใหญ่)', price: 159, emoji: '🦐' },
-      { id: 'sd1', cat: 'singledish', name: 'ข้าวไข่เจียวหมูสับ', price: 50, emoji: '🍳', singleDish: true },
-      { id: 'sd2', cat: 'singledish', name: 'ข้าวผัดหมู', price: 55, emoji: '🍚', singleDish: true },
-      { id: 'sd3', cat: 'singledish', name: 'ข้าวผัดทะเล', price: 65, emoji: '🦐', singleDish: true },
-      { id: 'sd4', cat: 'singledish', name: 'ข้าวหมูกระเทียม', price: 55, emoji: '🧄', singleDish: true },
-      { id: 'sd5', cat: 'singledish', name: 'ข้าวกะเพราหมู', price: 55, emoji: '🌿', spicy: true, singleDish: true, badge: 'ขายดี', signature: true },
-      { id: 'sd6', cat: 'singledish', name: 'ข้าวกะเพราทะเล', price: 65, emoji: '🦐', spicy: true, singleDish: true },
-      { id: 'sd7', cat: 'singledish', name: 'ข้าวผัดพริกสดหมู', price: 55, emoji: '🌶️', spicy: true, singleDish: true },
-      { id: 'sd8', cat: 'singledish', name: 'ข้าวผัดพริกสดทะเล', price: 65, emoji: '🌶️', spicy: true, singleDish: true },
-      { id: 'sd9', cat: 'singledish', name: 'ข้าวผัดพริกแกงหมู', price: 55, emoji: '🍛', spicy: true, singleDish: true },
-      { id: 'sd10', cat: 'singledish', name: 'ข้าวผัดพริกแกงทะเล', price: 65, emoji: '🍛', spicy: true, singleDish: true },
-      { id: 'sd11', cat: 'singledish', name: 'ข้าวผัดคะน้าหมู', price: 55, emoji: '🥬', singleDish: true },
-      { id: 'sd12', cat: 'singledish', name: 'ข้าวผัดคะน้าทะเล', price: 65, emoji: '🥬', singleDish: true },
-      { id: 'sd13', cat: 'singledish', name: 'สุกี้หมู', price: 55, emoji: '🍜', variants: [{ label: 'สุกี้น้ำ', price: 55 }, { label: 'สุกี้แห้ง', price: 55 }] },
-      { id: 'sd14', cat: 'singledish', name: 'สุกี้ทะเล', price: 65, emoji: '🦐', variants: [{ label: 'สุกี้น้ำ', price: 65 }, { label: 'สุกี้แห้ง', price: 65 }] },
-      { id: 'sd15', cat: 'singledish', name: 'สปาเก็ตตี้ผัดขี้เมาหมู', price: 79, emoji: '🍝', spicy: true },
-      { id: 'sd16', cat: 'singledish', name: 'สปาเก็ตตี้ผัดขี้เมาทะเล', price: 89, emoji: '🍝', spicy: true, badge: 'แนะนำ' },
-      { id: 'sd17', cat: 'singledish', name: 'ไข่ดาว', price: 10, emoji: '🍳' },
-      { id: 'sd18', cat: 'singledish', name: 'ไข่เจียว (กับข้าว)', price: 59, emoji: '🍳' },
-      { id: 'sd19', cat: 'singledish', name: 'ไข่เจียวหมูสับ (กับข้าว)', price: 79, emoji: '🍳' },
-      { id: 'sd20', cat: 'singledish', name: 'ข้าวสวย (จาน / โถ)', price: 15, emoji: '🍚', variants: [{ label: 'จาน (15 ฿)', price: 15 }, { label: 'โถ (80 ฿)', price: 80 }] }
+      { id: 'c4', cat: 'coffee', name: 'Latte (ลาเต้)', price: 40, emoji: '☕', sweet: true, variants: [{ label: 'ร้อน', price: 40 }, { label: 'เย็น', price: 45 }, { label: 'ปั่น', price: 50 }] },
+      { id: 't3', cat: 'tea_milk', name: 'ชาไทย', price: 35, emoji: '🧋', sweet: true, variants: [{ label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
+      { id: 'y5', cat: 'yam', name: 'ยำวุ้นเส้นหมูสับ', price: 79, emoji: '🍜', spicy: true },
+      { id: 'y12', cat: 'yam', name: 'ยำผักบุ้งกรอบ', price: 129, emoji: '🌿', spicy: true },
+      { id: 'f9', cat: 'fried', name: 'ปีกไก่ทอด', price: 79, emoji: '🍗' },
+      { id: 'f13', cat: 'fried', name: 'หมูสามชั้นทอดน้ำปลา', price: 119, emoji: '🥓' },
+      { id: 'f20', cat: 'fried', name: 'ปลานิลมันตึงลำ (Signature)', price: 209, emoji: '👑', spicy: true },
+      { id: 'sp4', cat: 'soup', name: 'ต้มแซ่บกระดูกอ่อน', price: 139, emoji: '🍖', spicy: true },
+      { id: 'sd5', cat: 'singledish', name: 'ข้าวกะเพราหมู', price: 55, emoji: '🌿', spicy: true, singleDish: true }
     ];
 
-    const TABLE_ZONES = [
-      {
-        zoneId: 'indoor',
-        zoneName: 'โซนด้านใน',
-        tables: [
-          { name: 'โซฟา 1', code: 'sofa1', aliases: ['โซฟาหนึ่ง', 'โซฟา1', 'sofa1'] },
-          { name: 'โซฟา 2', code: 'sofa2', aliases: ['โซฟาสอง', 'โซฟา2', 'sofa2'] },
-          { name: 'โต๊ะ 3', code: '3', aliases: ['โต๊ะสาม', 'โต๊ะ3', '3'] },
-          { name: 'โต๊ะ 4', code: '4', aliases: ['โต๊ะสี่', 'โต๊ะ4', '4'] },
-          { name: 'โต๊ะ 5', code: '5', aliases: ['โต๊ะห้า', 'โต๊ะ5', '5'] }
-        ]
-      },
-      {
-        zoneId: 'outdoor',
-        zoneName: 'โซนด้านนอก',
-        tables: [
-          { name: 'โต๊ะ 6', code: '6', aliases: ['โต๊ะหก', 'โต๊ะ6', '6'] },
-          { name: 'โต๊ะ 7', code: '7', aliases: ['โต๊ะเจ็ด', 'โต๊ะ7', '7'] },
-          { name: 'โต๊ะ 8', code: '8', aliases: ['โต๊ะแปด', 'โต๊ะ8', '8'] }
-        ]
-      },
-      {
-        zoneId: 'lawn',
-        zoneName: 'โซนสนาม',
-        tables: [
-          { name: 'โต๊ะสนาม 1', code: 'lawn1', aliases: ['โต๊ะสนามหนึ่ง', 'โต๊ะสนาม1', 'สนาม1', 'lawn1'] },
-          { name: 'โต๊ะสนาม 2', code: 'lawn2', aliases: ['โต๊ะสนามสอง', 'โต๊ะสนาม2', 'สนาม2', 'lawn2'] },
-          { name: 'โต๊ะสนาม 3', code: 'lawn3', aliases: ['โต๊ะสนามสาม', 'โต๊ะสนาม3', 'สนาม3', 'lawn3'] },
-          { name: 'โต๊ะสนาม 4', code: 'lawn4', aliases: ['โต๊ะสนามสี่', 'โต๊ะสนาม4', 'สนาม4', 'lawn4'] }
-        ]
-      }
-    ];
-    const ALL_TABLE_META = TABLE_ZONES.flatMap(z => z.tables.map(t => ({ ...t, zoneName: z.zoneName })));
-
+    const TABLES = ['โต๊ะ 3', 'โต๊ะ 4', 'โต๊ะ 5', 'โต๊ะ 6', 'โซฟา 1', 'โซฟา 2'];
     let state = {
-      viewMode: 'customer',
       currentTable: 'โต๊ะ 3',
       activeCategory: 'all',
-      quickFilter: 'all',
       searchQuery: '',
       cart: [],
       orders: [],
       staffCalls: [],
-      staffFilter: 'all',
       soundEnabled: true,
       modalItem: null,
       modalVariantIdx: 0,
@@ -742,138 +392,53 @@
 
     function saveState() {
       try {
-        localStorage.setItem('mantuenglam_app_state_v1', JSON.stringify({
-          orders: state.orders,
-          cart: state.cart,
-          currentTable: state.currentTable
-        }));
+        localStorage.setItem('mantuenglam_app_state_v1', JSON.stringify({ orders: state.orders, cart: state.cart, currentTable: state.currentTable }));
       } catch (e) {}
     }
 
-    let audioCtx = null;
-    function playBeep(type) {
-      if (!state.soundEnabled) return;
-      try {
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        const now = audioCtx.currentTime;
-        if (type === 'order') {
-          osc.frequency.setValueAtTime(587.33, now);
-          osc.frequency.setValueAtTime(880, now + 0.12);
-          gain.gain.setValueAtTime(0.12, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-          osc.start(now);
-          osc.stop(now + 0.35);
-        } else {
-          osc.frequency.setValueAtTime(660, now);
-          gain.gain.setValueAtTime(0.06, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-          osc.start(now);
-          osc.stop(now + 0.12);
-        }
-      } catch (e) {}
-    }
-
-    let toastTimer = null;
     function showToast(msg, icon = '✅') {
       const banner = document.getElementById('toastBanner');
       document.getElementById('toastIcon').textContent = icon;
       document.getElementById('toastMessage').textContent = msg;
       banner.classList.remove('hidden');
-      if (toastTimer) clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => banner.classList.add('hidden'), 2600);
+      setTimeout(() => banner.classList.add('hidden'), 2600);
     }
 
     function renderCategoryTabs() {
       const container = document.getElementById('categoryTabsContainer');
       container.innerHTML = '';
       CATEGORIES.forEach(cat => {
-        const isActive = state.activeCategory === cat.id;
-        const count = cat.id === 'all' ? MENU_ITEMS.length : MENU_ITEMS.filter(i => i.cat === cat.id).length;
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = `shrink-0 px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition ${
-          isActive ? 'bg-amber-500 text-stone-950 shadow-md scale-[1.02]' : 'bg-stone-900 text-stone-300 border border-stone-800 hover:border-amber-500/40'
+        btn.className = `shrink-0 px-3.5 py-2 rounded-2xl text-xs font-semibold flex items-center gap-1.5 transition ${
+          state.activeCategory === cat.id ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-900 text-stone-300 border border-stone-800'
         }`;
-        btn.innerHTML = `<span>${cat.icon}</span><span>${cat.name}</span><span class="text-[10px] opacity-75">(${count})</span>`;
-        btn.addEventListener('click', () => {
-          state.activeCategory = cat.id;
-          renderCategoryTabs();
-          renderMenuGrid();
-        });
+        btn.innerHTML = `<span>${cat.icon}</span><span>${cat.name}</span>`;
+        btn.addEventListener('click', () => { state.activeCategory = cat.id; renderCategoryTabs(); renderMenuGrid(); });
         container.appendChild(btn);
       });
     }
 
-    function getFilteredMenuItems() {
-      return MENU_ITEMS.filter(item => {
-        if (state.activeCategory !== 'all' && item.cat !== state.activeCategory) return false;
-        if (state.quickFilter === 'signature' && !item.signature && !item.badge) return false;
-        if (state.quickFilter === 'spicy' && !item.spicy) return false;
-        if (state.quickFilter === 'budget' && item.price > 60) return false;
-        if (state.searchQuery.trim() !== '') {
-          const q = state.searchQuery.trim().toLowerCase();
-          if (!item.name.toLowerCase().includes(q)) return false;
-        }
-        return true;
-      });
-    }
-
-    function getItemPriceDisplay(item) {
-      if (item.variants && item.variants.length > 1) {
-        const prices = item.variants.map(v => v.price);
-        return `${Math.min(...prices)} - ${Math.max(...prices)} ฿`;
-      }
-      return `${item.price} ฿`;
-    }
-
-    function getCartCountForMenuItem(itemId) {
-      return state.cart.filter(c => c.itemId === itemId).reduce((sum, c) => sum + c.qty, 0);
-    }
-
     function renderMenuGrid() {
-      const items = getFilteredMenuItems();
-      const catObj = CATEGORIES.find(c => c.id === state.activeCategory) || CATEGORIES[0];
-      document.getElementById('activeCategoryTitle').innerHTML = `<span>${catObj.icon}</span> <span>${catObj.name}</span>`;
-      document.getElementById('filteredItemCount').textContent = `${items.length} รายการ`;
-
       const grid = document.getElementById('menuGridContainer');
       grid.innerHTML = '';
+      const items = MENU_ITEMS.filter(i => state.activeCategory === 'all' || i.cat === state.activeCategory);
 
       items.forEach(item => {
-        const inCartQty = getCartCountForMenuItem(item.id);
-        const hasOptions = Boolean(item.variants || item.sweet || item.spicy || item.singleDish);
         const card = document.createElement('div');
-        card.className = `group bg-stone-900/90 hover:bg-stone-900 border ${
-          inCartQty > 0 ? 'border-amber-500/70' : 'border-stone-800/90 hover:border-stone-700'
-        } rounded-2xl p-3.5 flex items-center justify-between gap-3 transition shadow-sm`;
-
+        card.className = 'group bg-stone-900 border border-stone-800 rounded-2xl p-3.5 flex items-center justify-between gap-3 shadow-sm';
         card.innerHTML = `
-          <div class="flex items-start gap-3 min-w-0 flex-1 cursor-pointer item-card-trigger">
-            <div class="w-12 h-12 rounded-2xl bg-stone-800 border border-stone-700/70 flex items-center justify-center text-2xl shrink-0">
-              ${item.emoji}
-            </div>
+          <div class="flex items-start gap-3 min-w-0 flex-1 cursor-pointer item-trigger">
+            <div class="w-12 h-12 rounded-2xl bg-stone-800 border border-stone-700 flex items-center justify-center text-2xl shrink-0">${item.emoji}</div>
             <div class="min-w-0 flex-1">
-              <h4 class="font-bold text-sm sm:text-base text-stone-100 group-hover:text-amber-300 transition truncate mt-0.5">${item.name}</h4>
-              <div class="flex items-center gap-2 mt-1.5">
-                <span class="text-sm sm:text-base font-extrabold text-amber-400">${getItemPriceDisplay(item)}</span>
-              </div>
+              <h4 class="font-bold text-sm text-stone-100 group-hover:text-amber-300 truncate">${item.name}</h4>
+              <div class="text-sm font-extrabold text-amber-400 mt-1">${item.price} ฿</div>
             </div>
           </div>
-          <div class="flex flex-col items-end gap-1.5 shrink-0">
-            ${inCartQty > 0 ? `<span class="px-2 py-0.5 rounded-full bg-amber-500 text-stone-950 font-extrabold text-[10px]">ในตะกร้า ${inCartQty}</span>` : ''}
-            <button type="button" class="btn-add-item px-3 py-2 rounded-xl font-bold text-xs transition shadow ${
-              hasOptions ? 'bg-stone-800 hover:bg-amber-500 text-amber-300 hover:text-stone-950 border border-amber-500/40' : 'bg-amber-500 hover:bg-amber-400 text-stone-950'
-            }">+ เลือก</button>
-          </div>
+          <button type="button" class="btn-add px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs shadow">+ เลือก</button>
         `;
-
-        card.querySelector('.item-card-trigger').addEventListener('click', () => openItemModal(item));
-        card.querySelector('.btn-add-item').addEventListener('click', (e) => { e.stopPropagation(); openItemModal(item); });
+        card.querySelector('.item-trigger').addEventListener('click', () => openItemModal(item));
+        card.querySelector('.btn-add').addEventListener('click', () => openItemModal(item));
         grid.appendChild(card);
       });
     }
@@ -881,303 +446,104 @@
     function openItemModal(item) {
       state.modalItem = item;
       state.modalVariantIdx = 0;
-      state.modalSweetness = 'หวานปกติ 100%';
-      state.modalSpice = 'เผ็ดปกติ';
-      state.modalAddFriedEgg = false;
       state.modalQty = 1;
-      state.modalNote = '';
-
-      document.getElementById('modalItemCategory').textContent = item.cat;
       document.getElementById('modalItemName').textContent = `${item.emoji} ${item.name}`;
-      document.getElementById('modalItemBasePrice').textContent = `ราคา ${getItemPriceDisplay(item)}`;
-      document.getElementById('modalItemNote').value = '';
-      document.getElementById('modalItemQty').textContent = '1';
-
+      document.getElementById('modalItemBasePrice').textContent = `${item.price} ฿`;
+      
       const varSec = document.getElementById('modalVariantSection');
       const varOpts = document.getElementById('modalVariantOptions');
-      if (item.variants && item.variants.length > 0) {
+      if (item.variants) {
         varSec.classList.remove('hidden');
         varOpts.innerHTML = '';
         item.variants.forEach((v, idx) => {
           const b = document.createElement('button');
           b.type = 'button';
-          b.className = `p-2.5 rounded-xl border text-xs font-bold transition flex flex-col items-center justify-center ${
-            state.modalVariantIdx === idx ? 'bg-amber-500 text-stone-950 border-amber-400' : 'bg-stone-950 text-stone-300 border-stone-800'
-          }`;
-          b.innerHTML = `<span>${v.label}</span><span class="text-[11px] opacity-85 mt-0.5">${v.price} ฿</span>`;
-          b.addEventListener('click', () => { state.modalVariantIdx = idx; renderModalDynamicSelections(); });
+          b.className = `p-2 rounded-xl border text-xs font-bold ${state.modalVariantIdx === idx ? 'bg-amber-500 text-stone-950' : 'bg-stone-950 text-stone-300'}`;
+          b.textContent = `${v.label} (${v.price}฿)`;
+          b.addEventListener('click', () => { state.modalVariantIdx = idx; openItemModal(item); });
           varOpts.appendChild(b);
         });
       } else {
         varSec.classList.add('hidden');
       }
-
-      document.getElementById('modalSweetnessSection').classList.toggle('hidden', !item.sweet);
-      document.getElementById('modalSpiceSection').classList.toggle('hidden', !item.spicy);
-      document.getElementById('modalAddonSection').classList.toggle('hidden', !item.singleDish);
-
-      renderModalDynamicSelections();
       document.getElementById('itemOptionModal').classList.remove('hidden');
     }
 
-    function renderModalDynamicSelections() {
+    document.getElementById('btnConfirmAddToCart').addEventListener('click', () => {
       const item = state.modalItem;
-      if (!item) return;
-      if (item.variants) {
-        Array.from(document.getElementById('modalVariantOptions').children).forEach((btn, idx) => {
-          btn.className = `p-2.5 rounded-xl border text-xs font-bold transition flex flex-col items-center justify-center ${
-            state.modalVariantIdx === idx ? 'bg-amber-500 text-stone-950 border-amber-400' : 'bg-stone-950 text-stone-300 border-stone-800'
-          }`;
-        });
-      }
-      if (item.sweet) {
-        const sw = document.getElementById('modalSweetnessOptions');
-        sw.innerHTML = '';
-        SWEETNESS_LEVELS.forEach(lv => {
-          const b = document.createElement('button');
-          b.type = 'button';
-          b.className = `p-2 rounded-xl border text-[11px] font-semibold transition ${state.modalSweetness === lv ? 'bg-amber-500 text-stone-950 border-amber-400' : 'bg-stone-950 text-stone-300 border-stone-800'}`;
-          b.textContent = lv;
-          b.addEventListener('click', () => { state.modalSweetness = lv; renderModalDynamicSelections(); });
-          sw.appendChild(b);
-        });
-      }
-      if (item.spicy) {
-        const sp = document.getElementById('modalSpiceOptions');
-        sp.innerHTML = '';
-        SPICE_LEVELS.forEach(lv => {
-          const b = document.createElement('button');
-          b.type = 'button';
-          b.className = `p-2 rounded-xl border text-xs font-semibold transition ${state.modalSpice === lv ? 'bg-rose-500 text-white border-rose-400' : 'bg-stone-950 text-stone-300 border-stone-800'}`;
-          b.textContent = lv;
-          b.addEventListener('click', () => { state.modalSpice = lv; renderModalDynamicSelections(); });
-          sp.appendChild(b);
-        });
-      }
-      if (item.singleDish) {
-        document.getElementById('modalAddonOptions').innerHTML = `
-          <button type="button" id="btnToggleFriedEgg" class="w-full p-3 rounded-xl border text-xs font-semibold flex items-center justify-between transition ${state.modalAddFriedEgg ? 'bg-amber-500/20 border-amber-500 text-amber-300' : 'bg-stone-950 border-stone-800 text-stone-300'}">
-            <span>🍳 เพิ่มไข่ดาว (+10 ฿)</span>
-            <span>${state.modalAddFriedEgg ? '✓ เลือกแล้ว' : '+ เพิ่ม'}</span>
-          </button>
-        `;
-        document.getElementById('btnToggleFriedEgg').addEventListener('click', () => {
-          state.modalAddFriedEgg = !state.modalAddFriedEgg;
-          renderModalDynamicSelections();
-        });
-      }
-
-      let base = item.price;
-      if (item.variants && item.variants[state.modalVariantIdx]) base = item.variants[state.modalVariantIdx].price;
-      if (item.singleDish && state.modalAddFriedEgg) base += 10;
-      document.getElementById('modalItemQty').textContent = String(state.modalQty);
-      document.getElementById('modalComputedPrice').textContent = `${base * state.modalQty} ฿`;
-    }
-
-    function confirmAddModalItemToCart() {
-      const item = state.modalItem;
-      if (!item) return;
-      let unitPrice = item.price;
-      if (item.variants && item.variants[state.modalVariantIdx]) unitPrice = item.variants[state.modalVariantIdx].price;
-      if (item.singleDish && state.modalAddFriedEgg) unitPrice += 10;
-
-      const parts = [];
-      if (item.variants) parts.push(item.variants[state.modalVariantIdx].label);
-      if (item.sweet) parts.push(state.modalSweetness);
-      if (item.spicy) parts.push(state.modalSpice);
-      if (item.singleDish && state.modalAddFriedEgg) parts.push('+ ไข่ดาว');
-      const note = document.getElementById('modalItemNote').value.trim();
-      if (note) parts.push(`โน้ต: ${note}`);
-      const optionSummary = parts.length > 0 ? parts.join(' • ') : 'ปกติ';
-
-      const existing = state.cart.find(c => c.itemId === item.id && c.optionSummary === optionSummary);
-      if (existing) existing.qty += state.modalQty;
-      else state.cart.push({ itemId: item.id, name: item.name, emoji: item.emoji, unitPrice, qty: state.modalQty, optionSummary });
-
+      let price = item.price;
+      if (item.variants && item.variants[state.modalVariantIdx]) price = item.variants[state.modalVariantIdx].price;
+      state.cart.push({ itemId: item.id, name: item.name, emoji: item.emoji, unitPrice: price, qty: state.modalQty, optionSummary: item.variants ? item.variants[state.modalVariantIdx].label : 'ปกติ' });
       saveState();
-      playBeep('tap');
       document.getElementById('itemOptionModal').classList.add('hidden');
       updateCartUI();
-      renderMenuGrid();
       showToast(`เพิ่ม "${item.name}" ลงตะกร้าแล้ว`);
-    }
+    });
 
     function updateCartUI() {
       const totalQty = state.cart.reduce((s, i) => s + i.qty, 0);
       const totalPrice = state.cart.reduce((s, i) => s + i.qty * i.unitPrice, 0);
       document.getElementById('cartBadgeCount').textContent = String(totalQty);
-      document.getElementById('cartBarTotalPrice').textContent = `${totalPrice.toLocaleString()} ฿`;
+      document.getElementById('cartBarTotalPrice').textContent = `${totalPrice} ฿`;
       document.getElementById('cartBarTableText').textContent = state.currentTable;
-      document.getElementById('cartModalTableName').textContent = state.currentTable;
-      document.getElementById('cartModalTotalQty').textContent = `${totalQty} รายการ`;
-      document.getElementById('cartModalTotalPrice').textContent = `${totalPrice.toLocaleString()} ฿`;
-
-      const subtext = document.getElementById('cartBarSubtext');
-      subtext.textContent = totalQty === 0 ? 'ยังไม่มีรายการในตะกร้า • แตะที่เมนูเพื่อสั่งอาหาร' : `เลือกไว้ ${totalQty} รายการ • ดูตะกร้า`;
-
-      const tableOrders = state.orders.filter(o => o.table === state.currentTable && o.status !== 'paid');
-      document.getElementById('topBillCount').textContent = String(tableOrders.reduce((acc, o) => acc + o.items.reduce((s, x) => s + x.qty, 0), 0));
-      renderCartItemsList();
-    }
-
-    function renderCartItemsList() {
-      const list = document.getElementById('cartItemsList');
-      list.innerHTML = '';
-      if (state.cart.length === 0) {
-        list.innerHTML = `<div class="py-12 text-center text-stone-500">ตะกร้ายังว่างอยู่</div>`;
-        return;
-      }
-      state.cart.forEach((cItem, index) => {
-        const row = document.createElement('div');
-        row.className = 'p-3 rounded-2xl bg-stone-950 border border-stone-800 flex items-center justify-between gap-3';
-        row.innerHTML = `
-          <div class="min-w-0 flex-1">
-            <div class="font-bold text-sm text-stone-100">${cItem.emoji} ${cItem.name}</div>
-            <div class="text-xs text-stone-400">${cItem.optionSummary}</div>
-            <div class="text-xs font-bold text-amber-400 mt-1">${cItem.unitPrice} ฿</div>
-          </div>
-          <div class="flex items-center gap-2 shrink-0">
-            <button type="button" class="btn-dec w-8 h-8 rounded-xl bg-stone-800 text-white font-bold">−</button>
-            <span class="w-6 text-center font-bold text-amber-400">${cItem.qty}</span>
-            <button type="button" class="btn-inc w-8 h-8 rounded-xl bg-stone-800 text-white font-bold">+</button>
-          </div>
-        `;
-        row.querySelector('.btn-dec').addEventListener('click', () => {
-          cItem.qty--;
-          if (cItem.qty <= 0) state.cart.splice(index, 1);
-          saveState(); updateCartUI(); renderMenuGrid();
-        });
-        row.querySelector('.btn-inc').addEventListener('click', () => {
-          cItem.qty++;
-          saveState(); updateCartUI(); renderMenuGrid();
-        });
-        list.appendChild(row);
-      });
     }
 
     function submitCartToKitchen(sendViaLine = false) {
-      if (state.cart.length === 0) { showToast('กรุณาเลือกเมนูก่อนครับ', '⚠️'); return; }
-      const now = new Date();
-      const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} น.`;
-      const newOrder = {
-        orderId: `ORD-${Math.floor(100 + Math.random() * 900)}`,
-        table: state.currentTable,
-        time: timeStr,
-        status: 'pending',
-        items: [...state.cart]
-      };
-
+      if (state.cart.length === 0) { showToast('ตะกร้าว่าง', '⚠️'); return; }
+      const newOrder = { orderId: `ORD-${Math.floor(100+Math.random()*900)}`, table: state.currentTable, time: 'ตอนนี้', status: 'pending', items: [...state.cart] };
       if (sendViaLine) {
-        let msg = `🚨 สั่งอาหารจาก ${state.currentTable} (${newOrder.orderId})\n`;
-        state.cart.forEach(i => { msg += `• ${i.name} [${i.optionSummary}] x${i.qty} (${i.unitPrice * i.qty}฿)\n`; });
-        const lineUrl = `https://line.me/R/oaMessage/${LINE_OA_ID}/?${encodeURIComponent(msg)}`;
-        window.open(lineUrl, '_blank');
+        const msg = `สั่งอาหารจาก ${state.currentTable}\n` + state.cart.map(i => `• ${i.name} x${i.qty}`).join('\n');
+        window.open(`https://line.me/R/oaMessage/${LINE_OA_ID}/?${encodeURIComponent(msg)}`, '_blank');
       }
-
       state.orders.unshift(newOrder);
       state.cart = [];
       saveState();
-      playBeep('order');
       document.getElementById('cartDrawerModal').classList.add('hidden');
-      updateCartUI(); renderMenuGrid(); renderStaffDashboard();
-      openActiveBillModal();
-      showToast('ส่งออเดอร์เข้าครัวเรียบร้อยแล้ว!');
-    }
-
-    function openActiveBillModal() {
-      document.getElementById('billModalTableName').textContent = state.currentTable;
-      const content = document.getElementById('activeBillContent');
-      const tableOrders = state.orders.filter(o => o.table === state.currentTable && o.status !== 'paid');
-      if (tableOrders.length === 0) {
-        content.innerHTML = `<div class="py-10 text-center text-stone-500">ยังไม่มีออเดอร์สำหรับ ${state.currentTable}</div>`;
-        document.getElementById('billModalGrandTotal').textContent = '0 ฿';
-      } else {
-        let grandTotal = 0;
-        content.innerHTML = '';
-        tableOrders.forEach(ord => {
-          const ordTotal = ord.items.reduce((s, x) => s + x.qty * x.unitPrice, 0);
-          grandTotal += ordTotal;
-          const box = document.createElement('div');
-          box.className = 'p-3.5 rounded-2xl bg-stone-950 border border-stone-800 space-y-2';
-          box.innerHTML = `
-            <div class="flex items-center justify-between text-xs text-stone-400 border-b border-stone-800 pb-1">
-              <span>ออเดอร์ ${ord.orderId} • ${ord.time}</span>
-              <span class="text-amber-400 font-bold">${ord.status === 'pending' ? '⏳ รอรับออเดอร์' : ord.status === 'cooking' ? '🔥 กำลังทำ' : '✅ เสิร์ฟแล้ว'}</span>
-            </div>
-            ${ord.items.map(it => `<div class="flex justify-between text-xs"><span>${it.name} x${it.qty}</span><span>${it.qty * it.unitPrice} ฿</span></div>`).join('')}
-          `;
-          content.appendChild(box);
-        });
-        document.getElementById('billModalGrandTotal').textContent = `${grandTotal.toLocaleString()} ฿`;
-      }
-      document.getElementById('activeBillModal').classList.remove('hidden');
+      updateCartUI();
+      renderStaffDashboard();
+      showToast('ส่งออเดอร์เข้าครัวเรียบร้อย!');
     }
 
     function renderStaffDashboard() {
-      const pendingCount = state.orders.filter(o => o.status === 'pending' || o.status === 'cooking').length;
-      const servedCount = state.orders.filter(o => o.status === 'served').length;
-      const totalRev = state.orders.reduce((acc, ord) => acc + ord.items.reduce((s, i) => s + i.qty * i.unitPrice, 0), 0);
-
-      document.getElementById('kpiPendingOrders').textContent = String(pendingCount);
-      document.getElementById('kpiServedOrders').textContent = String(servedCount);
-      document.getElementById('kpiTotalRevenue').textContent = `${totalRev.toLocaleString()} ฿`;
-
       const grid = document.getElementById('staffOrdersGrid');
       grid.innerHTML = '';
-      if (state.orders.length === 0) {
-        grid.innerHTML = `<div class="col-span-full py-12 text-center text-stone-500">ไม่มีออเดอร์ในระบบ</div>`;
-        return;
-      }
+      if (state.orders.length === 0) { grid.innerHTML = `<div class="text-stone-500 col-span-full text-center">ยังไม่มีออเดอร์</div>`; return; }
       state.orders.forEach(ord => {
         const card = document.createElement('div');
         card.className = 'bg-stone-900 border border-stone-800 rounded-2xl p-4 flex flex-col justify-between';
         card.innerHTML = `
           <div>
-            <div class="flex justify-between items-center mb-2">
-              <span class="font-black text-amber-400 text-lg">${ord.table}</span>
-              <span class="text-xs px-2 py-0.5 rounded bg-stone-800 text-stone-300">${ord.status}</span>
-            </div>
-            ${ord.items.map(i => `<div class="text-xs text-stone-200">▪ ${i.name} x${i.qty}</div>`).join('')}
+            <div class="flex justify-between items-center mb-2"><span class="font-bold text-amber-400 text-lg">${ord.table}</span><span class="text-xs px-2 py-0.5 rounded bg-stone-800">${ord.status}</span></div>
+            ${ord.items.map(i => `<div class="text-xs text-stone-200">• ${i.name} x${i.qty}</div>`).join('')}
           </div>
           <div class="mt-4 flex gap-2">
-            <button type="button" class="btn-st px-3 py-1.5 rounded-lg bg-sky-500 text-stone-950 font-bold text-xs" data-st="cooking">ทำ</button>
-            <button type="button" class="btn-st px-3 py-1.5 rounded-lg bg-emerald-500 text-stone-950 font-bold text-xs" data-st="served">เสิร์ฟ</button>
-            <button type="button" class="btn-st px-3 py-1.5 rounded-lg bg-rose-500 text-stone-950 font-bold text-xs" data-st="paid">เคลียร์โต๊ะ</button>
+            <button class="px-2.5 py-1 rounded bg-sky-500 text-stone-950 font-bold text-xs" onclick="updateOrderStatus('${ord.orderId}', 'cooking')">ทำ</button>
+            <button class="px-2.5 py-1 rounded bg-emerald-500 text-stone-950 font-bold text-xs" onclick="updateOrderStatus('${ord.orderId}', 'served')">เสิร์ฟ</button>
+            <button class="px-2.5 py-1 rounded bg-rose-500 text-stone-950 font-bold text-xs" onclick="updateOrderStatus('${ord.orderId}', 'paid')">เคลียร์</button>
           </div>
         `;
-        card.querySelectorAll('.btn-st').forEach(b => {
-          b.addEventListener('click', () => {
-            ord.status = b.getAttribute('data-st');
-            saveState(); renderStaffDashboard(); updateCartUI();
-            showToast(`อัปเดตสถานะ ${ord.table} เป็น ${ord.status}`);
-          });
-        });
         grid.appendChild(card);
       });
     }
 
-    function renderQrSvgForTable(tName) {
-      const container = document.getElementById('qrSvgContainer');
-      const linkText = document.getElementById('qrEncodedLinkText');
-      if (!container) return;
-      const fullUrl = `https://peach2808.github.io/cafe-7/?table=${encodeURIComponent(tName)}`;
-      if (linkText) linkText.textContent = fullUrl;
-      container.innerHTML = `<div class="p-3 bg-stone-100 rounded-xl text-xs font-mono text-center break-all">QR: ${fullUrl}</div>`;
-    }
+    window.updateOrderStatus = function(id, st) {
+      const ord = state.orders.find(o => o.orderId === id);
+      if (ord) { ord.status = st; saveState(); renderStaffDashboard(); showToast(`อัปเดตเป็น ${st}`); }
+    };
 
     function initApp() {
       const params = new URLSearchParams(window.location.search);
       const tParam = params.get('table');
       if (tParam) {
         state.currentTable = decodeURIComponent(tParam);
-        const simBtn = document.getElementById('btnOpenTableModal');
-        if (simBtn) simBtn.classList.add('hidden'); // ซ่อนปุ่มจำลองทันทีเมื่อลูกค้าสแกน QR มา
+        document.getElementById('btnOpenTableModal').classList.add('hidden'); // ซ่อนปุ่มจำลองทันทีเมื่อสแกน QR มา
       }
       document.getElementById('currentTableLabel').textContent = state.currentTable;
 
       renderCategoryTabs();
       renderMenuGrid();
       renderStaffDashboard();
+      updateCartUI();
 
       document.getElementById('tabCustomerView').addEventListener('click', () => {
         document.getElementById('customerViewContainer').classList.remove('hidden');
@@ -1191,41 +557,43 @@
         renderStaffDashboard();
       });
 
-      document.getElementById('searchInput').addEventListener('input', (e) => {
-        state.searchQuery = e.target.value;
-        renderMenuGrid();
-      });
-
       document.getElementById('btnCloseItemModal').addEventListener('click', () => document.getElementById('itemOptionModal').classList.add('hidden'));
-      document.getElementById('btnModalQtyMinus').addEventListener('click', () => { if(state.modalQty > 1) { state.modalQty--; renderModalDynamicSelections(); }});
-      document.getElementById('btnModalQtyPlus').addEventListener('click', () => { state.modalQty++; renderModalDynamicSelections(); });
-      document.getElementById('btnConfirmAddToCart').addEventListener('click', confirmAddModalItemToCart);
-
-      document.getElementById('btnOpenCartDrawer').addEventListener('click', () => { updateCartUI(); document.getElementById('cartDrawerModal').classList.remove('hidden'); });
+      document.getElementById('btnOpenCartDrawer').addEventListener('click', () => {
+        const list = document.getElementById('cartItemsList');
+        list.innerHTML = state.cart.length === 0 ? '<div class="text-stone-500 text-center py-6">ตะกร้าว่าง</div>' : state.cart.map(i => `<div class="flex justify-between text-sm text-white"><span>${i.emoji} ${i.name} x${i.qty}</span><span class="text-amber-400">${i.unitPrice * i.qty} ฿</span></div>`).join('');
+        document.getElementById('cartDrawerModal').classList.remove('hidden');
+      });
       document.getElementById('btnCloseCartModal').addEventListener('click', () => document.getElementById('cartDrawerModal').classList.add('hidden'));
-      document.getElementById('btnClearCart').addEventListener('click', () => { state.cart = []; saveState(); updateCartUI(); renderMenuGrid(); });
       document.getElementById('btnSubmitToLine').addEventListener('click', () => submitCartToKitchen(true));
       document.getElementById('btnSubmitOrderToKitchen').addEventListener('click', () => submitCartToKitchen(false));
 
-      document.getElementById('btnViewActiveBillTop').addEventListener('click', openActiveBillModal);
-      document.getElementById('btnCloseBillModal').addEventListener('click', () => document.getElementById('activeBillModal').classList.add('hidden'));
-
-      document.getElementById('btnOpenQrGenerator').addEventListener('click', () => document.getElementById('qrGeneratorModal').classList.remove('hidden'));
+      document.getElementById('btnOpenQrGenerator').addEventListener('click', () => {
+        const sel = document.getElementById('qrTableSelect');
+        sel.innerHTML = TABLES.map(t => `<option value="${t}">${t}</option>`).join('');
+        document.getElementById('qrGeneratorModal').classList.remove('hidden');
+      });
       document.getElementById('btnCloseQrModal').addEventListener('click', () => document.getElementById('qrGeneratorModal').classList.add('hidden'));
-      
-      const qrSelect = document.getElementById('qrTableSelect');
-      ALL_TABLE_META.forEach(t => {
-        const opt = document.createElement('option');
-        opt.value = t.name;
-        opt.textContent = `${t.name} (${t.zoneName})`;
-        qrSelect.appendChild(opt);
-      });
-      qrSelect.addEventListener('change', (e) => {
+      document.getElementById('qrTableSelect').addEventListener('change', (e) => {
         document.getElementById('qrCardTableTitle').textContent = e.target.value;
-        renderQrSvgForTable(e.target.value);
+        document.getElementById('qrEncodedLinkText').textContent = `https://peach2808.github.io/cafe-7/?table=${encodeURIComponent(e.target.value)}`;
       });
-      renderQrSvgForTable('โต๊ะ 3');
+      document.getElementById('qrEncodedLinkText').textContent = `https://peach2808.github.io/cafe-7/?table=โต๊ะ 3`;
+
+      document.getElementById('btnOpenTableModal').addEventListener('click', () => {
+        document.getElementById('tableOptionsIndoor').innerHTML = TABLES.map(t => `<button class="p-2 rounded bg-stone-800 text-amber-300 font-bold" onclick="selectTable('${t}')">${t}</button>`).join('');
+        document.getElementById('tableSelectModal').classList.remove('hidden');
+      });
+      document.getElementById('btnCloseTableModal').addEventListener('click', () => document.getElementById('tableSelectModal').classList.add('hidden'));
     }
+
+    window.selectTable = function(t) {
+      state.currentTable = t;
+      saveState();
+      document.getElementById('currentTableLabel').textContent = t;
+      document.getElementById('tableSelectModal').classList.add('hidden');
+      updateCartUI();
+      showToast(`เลือก ${t}`);
+    };
 
     window.addEventListener('DOMContentLoaded', initApp);
   </script>
