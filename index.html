@@ -179,7 +179,7 @@
     </section>
 
     <!-- Category Navigation Pills -->
-    <nav class="sticky top-[57px] z-20 bg-stone-950/90 backdrop-blur-md border-b border-stone-800/80 mt-3 py-2.5 px-4">
+    <nav class="sticky top-[57px] z-20 bg-stone-950/95 backdrop-blur-md border-b border-stone-800/80 mt-3 py-3 px-3 sm:px-4 shadow-md">
       <div id="categoryTabsContainer" class="flex items-center gap-2 overflow-x-auto no-scrollbar">
         <!-- Rendered by JS -->
       </div>
@@ -212,6 +212,10 @@
       <div class="flex flex-wrap items-center gap-2">
         <button id="btnToggleSound" type="button" class="px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-xs font-medium text-amber-300 border border-stone-700 transition">
           🔊 เสียงแจ้งเตือน: เปิด
+        </button>
+        <button id="btnOpenMenuStockModal" type="button" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition shadow flex items-center gap-1.5">
+          <span>📦 เปิด-ปิดเมนู (ของหมด)</span>
+          <span id="soldOutCountBadge" class="hidden px-1.5 py-0.2 bg-black/40 rounded-full text-[10px]">0</span>
         </button>
         <button id="btnOpenQrGenerator" type="button" class="px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-bold transition shadow">
           🖨️ สร้างป้าย QR ประจำโต๊ะ/กลับบ้าน
@@ -531,6 +535,68 @@
     </div>
   </div>
 
+    <!-- ==================== MODAL 7: MENU STOCK MANAGEMENT (Staff Only) ==================== -->
+  <div id="menuStockModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-stone-900 border border-stone-700 w-full max-w-2xl rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
+      <div class="p-4 sm:p-5 border-b border-stone-800 flex items-center justify-between bg-stone-950/70">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-amber-400 flex items-center gap-2">
+            📦 จัดการสถานะเมนู (เปิด-ปิดการขาย)
+          </h3>
+          <p class="text-xs text-stone-400">เมื่อกดปิดเมนู (ของหมด) ระบบจะปิดไม่ให้ลูกค้ากดสั่งได้ทันทีทุกเครื่อง</p>
+        </div>
+        <button id="btnCloseMenuStockModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center text-sm">✕</button>
+      </div>
+
+      <div class="p-3 sm:p-4 border-b border-stone-800 bg-stone-950/40 space-y-2.5">
+        <div class="relative">
+          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 text-sm">🔍</span>
+          <input id="stockSearchInput" type="text" placeholder="ค้นหาเมนูที่จะเปิด-ปิด เช่น ยำหมูยอ, ชาเขียว, ปลานิล..." class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-xs sm:text-sm text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-500" />
+        </div>
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 text-xs">
+          <button type="button" data-stockfilter="all" class="stock-filter-btn shrink-0 px-3 py-1.5 rounded-xl font-semibold bg-amber-500 text-stone-950 transition">ทั้งหมด (104)</button>
+          <button type="button" data-stockfilter="soldout" class="stock-filter-btn shrink-0 px-3 py-1.5 rounded-xl font-semibold bg-stone-800 text-rose-300 border border-rose-500/40 transition">🔴 ปิดขาย (ของหมด) (<span id="stockFilterSoldCount">0</span>)</button>
+          <button type="button" data-stockfilter="available" class="stock-filter-btn shrink-0 px-3 py-1.5 rounded-xl font-semibold bg-stone-800 text-emerald-300 border border-emerald-500/40 transition">🟢 เปิดขายปกติ</button>
+        </div>
+      </div>
+
+      <div id="stockItemsList" class="p-3 sm:p-4 overflow-y-auto flex-1 space-y-2">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="p-3.5 sm:p-4 bg-stone-950 border-t border-stone-800 flex items-center justify-between text-xs text-stone-400">
+        <div>ปิดขายอยู่ทั้งหมด: <strong id="stockSoldOutTotalText" class="text-rose-400 text-sm font-bold">0</strong> รายการ</div>
+        <button id="btnDoneMenuStock" type="button" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold transition shadow text-xs sm:text-sm">
+          เสร็จสิ้น ✓
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 8: STAFF PIN VERIFICATION (PIN: 2808) ==================== -->
+  <div id="pinAuthModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-stone-900 border border-amber-500/50 w-full max-w-xs rounded-3xl overflow-hidden shadow-2xl p-5 text-center space-y-4">
+      <div class="w-12 h-12 mx-auto rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl border border-amber-500/30">
+        🔒
+      </div>
+      <div>
+        <h3 class="text-base font-bold text-white">ยืนยันรหัสพนักงานร้าน</h3>
+        <p class="text-xs text-stone-400 mt-0.5">กรุณาใส่รหัส PIN 4 หลักเพื่อเปิด-ปิดเมนู</p>
+      </div>
+
+      <div class="flex justify-center">
+        <input id="pinInputField" type="password" maxlength="4" placeholder="••••" class="w-36 tracking-[0.5em] text-center text-2xl font-black py-2 rounded-2xl bg-stone-950 border-2 border-stone-700 text-amber-400 focus:outline-none focus:border-amber-500" />
+      </div>
+
+      <div id="pinErrorMessage" class="hidden text-xs text-rose-400 font-semibold">❌ รหัสผ่านไม่ถูกต้อง ลองใหม่อีกครั้ง</div>
+
+      <div class="grid grid-cols-2 gap-2 pt-1">
+        <button id="btnCancelPinModal" type="button" class="py-2.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-semibold">ยกเลิก</button>
+        <button id="btnSubmitPinModal" type="button" class="py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs shadow">ยืนยัน</button>
+      </div>
+    </div>
+  </div>
+
   <div id="printAllQrSheet" class="hidden p-6 bg-white text-stone-900"></div>
 
   <!-- ==================== TOAST NOTIFICATION ==================== -->
@@ -559,6 +625,9 @@
     const db = getDatabase(fbApp);
     const ordersDbRef = ref(db, 'orders');
     const staffCallsDbRef = ref(db, 'staff_calls');
+    const outOfStockDbRef = ref(db, 'out_of_stock');
+    const STAFF_PIN = "2808";
+    let isStaffPinVerified = false;
 
     // ==================== CONFIG & COMPLETE DATASET ====================
     const LINE_OA_ID = "@698ygoeo";
@@ -763,6 +832,9 @@
       cart: [],
       orders: [],
       staffCalls: [],
+      outOfStock: {},
+      stockFilter: 'all',
+      stockSearch: '',
       staffFilter: 'all',
       soundEnabled: true,
       modalItem: null,
@@ -799,6 +871,28 @@
       const billModal = document.getElementById('activeBillModal');
       if (billModal && !billModal.classList.contains('hidden')) {
         openActiveBillModal();
+      }
+    });
+
+    onValue(outOfStockDbRef, (snapshot) => {
+      state.outOfStock = snapshot.val() || {};
+      const soldCount = Object.keys(state.outOfStock).filter(k => state.outOfStock[k] === true).length;
+      
+      const badge = document.getElementById('soldOutCountBadge');
+      if (badge) {
+        badge.textContent = String(soldCount);
+        if (soldCount > 0) badge.classList.remove('hidden');
+        else badge.classList.add('hidden');
+      }
+      const filterSoldCount = document.getElementById('stockFilterSoldCount');
+      if (filterSoldCount) filterSoldCount.textContent = String(soldCount);
+      const totalSoldText = document.getElementById('stockSoldOutTotalText');
+      if (totalSoldText) totalSoldText.textContent = String(soldCount);
+
+      renderMenuGrid();
+      const modal = document.getElementById('menuStockModal');
+      if (modal && !modal.classList.contains('hidden')) {
+        renderManageStockList();
       }
     });
 
@@ -868,12 +962,12 @@
 
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = `shrink-0 px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition ${
+        btn.className = `shrink-0 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-sm sm:text-base font-bold flex items-center gap-2 transition select-none ${
           isActive
-            ? 'bg-amber-500 text-stone-950 shadow-md scale-[1.02]'
-            : 'bg-stone-900 text-stone-300 border border-stone-800 hover:border-amber-500/40'
+            ? 'bg-amber-500 text-stone-950 shadow-lg scale-[1.03] ring-2 ring-amber-400/50'
+            : 'bg-stone-900 text-stone-200 border border-stone-800 hover:border-amber-500/50 hover:bg-stone-850'
         }`;
-        btn.innerHTML = `<span>${cat.icon}</span><span>${cat.name}</span><span class="text-[10px] opacity-75">(${count})</span>`;
+        btn.innerHTML = `<span class="text-base sm:text-lg">${cat.icon}</span><span>${cat.name}</span><span class="text-xs px-2 py-0.5 rounded-full ${isActive ? 'bg-stone-950/20 text-stone-950 font-extrabold' : 'bg-stone-800 text-stone-400 font-normal'}">(${count})</span>`;
         btn.addEventListener('click', () => {
           state.activeCategory = cat.id;
           renderCategoryTabs();
@@ -952,9 +1046,15 @@
         const catLabel = (CATEGORIES.find(c => c.id === item.cat) || {}).name || '';
         const hasOptions = Boolean(item.variants || item.sweet || item.spicy || item.singleDish);
 
+        const isSoldOut = Boolean(state.outOfStock && state.outOfStock[item.id]);
+
         const card = document.createElement('div');
         card.className = `group bg-stone-900/90 hover:bg-stone-900 border ${
-          inCartQty > 0 ? 'border-amber-500/70' : 'border-stone-800/90 hover:border-stone-700'
+          isSoldOut
+            ? 'border-rose-900/40 opacity-70 bg-stone-950/60'
+            : inCartQty > 0
+              ? 'border-amber-500/70'
+              : 'border-stone-800/90 hover:border-stone-700'
         } rounded-2xl p-3.5 flex items-center justify-between gap-3 transition shadow-sm`;
 
         const variantBadges = item.variants
@@ -963,42 +1063,59 @@
              </div>`
           : '';
 
+        const actionButton = isSoldOut
+          ? `<button type="button" disabled class="px-3 py-2 rounded-xl font-bold text-xs bg-rose-950/60 text-rose-300 border border-rose-500/30 cursor-not-allowed">
+               <span>❌ หมดชั่วคราว</span>
+             </button>`
+          : `<button type="button" class="btn-add-item px-3 py-2 rounded-xl font-bold text-xs transition flex items-center gap-1 shadow ${
+              hasOptions
+                ? 'bg-stone-800 hover:bg-amber-500 text-amber-300 hover:text-stone-950 border border-amber-500/40'
+                : 'bg-amber-500 hover:bg-amber-400 text-stone-950'
+            }">
+               <span>+ เลือก</span>
+             </button>`;
+
         card.innerHTML = `
           <div class="flex items-start gap-3 min-w-0 flex-1 cursor-pointer item-card-trigger">
-            <div class="w-12 h-12 rounded-2xl bg-stone-800 border border-stone-700/70 flex items-center justify-center text-2xl shrink-0 shadow-inner">
+            <div class="w-12 h-12 rounded-2xl ${isSoldOut ? 'bg-stone-900 text-stone-500 border-stone-800' : 'bg-stone-800 border-stone-700/70'} border flex items-center justify-center text-2xl shrink-0 shadow-inner">
               ${item.emoji}
             </div>
             <div class="min-w-0 flex-1">
               <div class="flex items-center gap-1.5 flex-wrap">
-                ${item.badge ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">${item.badge}</span>` : ''}
-                ${item.spicy ? `<span class="text-[10px] text-rose-400 font-medium">🌶️ เลือกความเผ็ดได้</span>` : ''}
-                ${item.sweet ? `<span class="text-[10px] text-sky-300 font-medium">💧 เลือกความหวานได้</span>` : ''}
+                ${isSoldOut ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-500 text-stone-950 shadow">❌ สินค้าหมดชั่วคราว</span>` : ''}
+                ${item.badge && !isSoldOut ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">${item.badge}</span>` : ''}
+                ${item.spicy && !isSoldOut ? `<span class="text-[10px] text-rose-400 font-medium">🌶️ เลือกความเผ็ดได้</span>` : ''}
+                ${item.sweet && !isSoldOut ? `<span class="text-[10px] text-sky-300 font-medium">💧 เลือกความหวานได้</span>` : ''}
               </div>
-              <h4 class="font-bold text-sm sm:text-base text-stone-100 group-hover:text-amber-300 transition truncate mt-0.5">${item.name}</h4>
+              <h4 class="font-bold text-sm sm:text-base ${isSoldOut ? 'text-stone-400 line-through' : 'text-stone-100 group-hover:text-amber-300'} transition truncate mt-0.5">${item.name}</h4>
               ${variantBadges}
               <div class="flex items-center gap-2 mt-1.5">
-                <span class="text-sm sm:text-base font-extrabold text-amber-400">${getItemPriceDisplay(item)}</span>
+                <span class="text-sm sm:text-base font-extrabold ${isSoldOut ? 'text-stone-500' : 'text-amber-400'}">${getItemPriceDisplay(item)}</span>
                 <span class="text-[11px] text-stone-500">• ${catLabel}</span>
               </div>
             </div>
           </div>
           <div class="flex flex-col items-end gap-1.5 shrink-0">
             ${inCartQty > 0 ? `<span class="px-2 py-0.5 rounded-full bg-amber-500 text-stone-950 font-extrabold text-[10px]">ในตะกร้า ${inCartQty}</span>` : ''}
-            <button type="button" class="btn-add-item px-3 py-2 rounded-xl font-bold text-xs transition flex items-center gap-1 shadow ${
-              hasOptions
-                ? 'bg-stone-800 hover:bg-amber-500 text-amber-300 hover:text-stone-950 border border-amber-500/40'
-                : 'bg-amber-500 hover:bg-amber-400 text-stone-950'
-            }">
-              <span>+ เลือก</span>
-            </button>
+            ${actionButton}
           </div>
         `;
 
-        card.querySelector('.item-card-trigger').addEventListener('click', () => openItemModal(item));
-        card.querySelector('.btn-add-item').addEventListener('click', (e) => {
-          e.stopPropagation();
+        card.querySelector('.item-card-trigger').addEventListener('click', () => {
+          if (isSoldOut) {
+            showToast(`ขออภัยครับ "${item.name}" วัตถุดิบหมดชั่วคราว`, '⚠️');
+            return;
+          }
           openItemModal(item);
         });
+        
+        const addBtn = card.querySelector('.btn-add-item');
+        if (addBtn) {
+          addBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openItemModal(item);
+          });
+        }
 
         grid.appendChild(card);
       });
@@ -1969,6 +2086,138 @@
       });
     }
 
+
+    // ==================== STOCK / OUT OF STOCK MANAGEMENT ====================
+    let pendingAuthCallback = null;
+
+    function promptStaffPin(callback) {
+      if (isStaffPinVerified) {
+        callback();
+        return;
+      }
+      pendingAuthCallback = callback;
+      const modal = document.getElementById('pinAuthModal');
+      const input = document.getElementById('pinInputField');
+      const errMsg = document.getElementById('pinErrorMessage');
+      if (input) input.value = '';
+      if (errMsg) errMsg.classList.add('hidden');
+      if (modal) modal.classList.remove('hidden');
+      setTimeout(() => { if (input) input.focus(); }, 150);
+    }
+
+    function verifyStaffPin() {
+      const input = document.getElementById('pinInputField');
+      const errMsg = document.getElementById('pinErrorMessage');
+      const val = input ? input.value.trim() : '';
+
+      if (val === STAFF_PIN) {
+        isStaffPinVerified = true;
+        document.getElementById('pinAuthModal').classList.add('hidden');
+        if (errMsg) errMsg.classList.add('hidden');
+        playBeep('tap');
+        showToast('ยืนยันรหัสถูกต้อง', '🔓');
+        if (typeof pendingAuthCallback === 'function') {
+          const cb = pendingAuthCallback;
+          pendingAuthCallback = null;
+          cb();
+        }
+      } else {
+        if (errMsg) errMsg.classList.remove('hidden');
+        if (input) {
+          input.value = '';
+          input.focus();
+        }
+        playBeep('tap');
+      }
+    }
+
+    function toggleItemStock(itemId) {
+      const isCurrentlySoldOut = Boolean(state.outOfStock && state.outOfStock[itemId]);
+      const nextStatus = !isCurrentlySoldOut;
+
+      update(outOfStockDbRef, {
+        [itemId]: nextStatus
+      }).then(() => {
+        playBeep('tap');
+        const targetItem = MENU_ITEMS.find(m => m.id === itemId);
+        const itemName = targetItem ? targetItem.name : itemId;
+        if (nextStatus) {
+          showToast(`ปิดขาย "${itemName}" (ขึ้นของหมดแล้ว)`, '🔴');
+        } else {
+          showToast(`เปิดขาย "${itemName}" ปกติแล้ว`, '🟢');
+        }
+      }).catch(err => {
+        console.error(err);
+        showToast('ไม่สามารถอัปเดตสถานะได้ ตรวจสอบอินเทอร์เน็ตครับ', '❌');
+      });
+    }
+
+    function renderManageStockList() {
+      const list = document.getElementById('stockItemsList');
+      if (!list) return;
+
+      const q = (state.stockSearch || '').trim().toLowerCase();
+      let items = MENU_ITEMS.filter(it => {
+        const isSold = Boolean(state.outOfStock && state.outOfStock[it.id]);
+        if (state.stockFilter === 'soldout' && !isSold) return false;
+        if (state.stockFilter === 'available' && isSold) return false;
+        if (q && !it.name.toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+      list.innerHTML = '';
+      if (items.length === 0) {
+        list.innerHTML = `
+          <div class="py-8 text-center bg-stone-950 rounded-2xl border border-stone-800 p-4">
+            <div class="text-3xl mb-1.5">🔍</div>
+            <div class="text-sm font-bold text-stone-300">ไม่พบรายการเมนูที่ตรงกับเงื่อนไข</div>
+          </div>
+        `;
+        return;
+      }
+
+      items.forEach(it => {
+        const isSold = Boolean(state.outOfStock && state.outOfStock[it.id]);
+        const catObj = CATEGORIES.find(c => c.id === it.cat) || {};
+
+        const row = document.createElement('div');
+        row.className = `p-3 rounded-2xl border flex items-center justify-between gap-3 transition ${
+          isSold
+            ? 'bg-rose-950/30 border-rose-600/40'
+            : 'bg-stone-950 border-stone-800 hover:border-stone-700'
+        }`;
+
+        row.innerHTML = `
+          <div class="flex items-center gap-3 min-w-0 flex-1">
+            <div class="w-10 h-10 rounded-xl bg-stone-900 border border-stone-800 flex items-center justify-center text-xl shrink-0">
+              ${it.emoji}
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2">
+                <h4 class="font-bold text-xs sm:text-sm text-stone-100 truncate">${it.name}</h4>
+                ${isSold ? `<span class="px-2 py-0.2 rounded-full bg-rose-500 text-stone-950 text-[10px] font-extrabold shrink-0">ปิดขายอยู่</span>` : ''}
+              </div>
+              <div class="text-[11px] text-stone-400 mt-0.5">${catObj.name || ''} • ${getItemPriceDisplay(it)}</div>
+            </div>
+          </div>
+          <div class="shrink-0">
+            <button type="button" class="btn-toggle-stock px-3.5 py-1.5 rounded-xl font-extrabold text-xs transition shadow flex items-center gap-1.5 ${
+              isSold
+                ? 'bg-emerald-500 hover:bg-emerald-400 text-stone-950'
+                : 'bg-rose-600 hover:bg-rose-500 text-white'
+            }">
+              <span>${isSold ? '🟢 กดเพื่อเปิดขาย' : '🔴 ปิดขาย (ของหมด)'}</span>
+            </button>
+          </div>
+        `;
+
+        row.querySelector('.btn-toggle-stock').addEventListener('click', () => {
+          toggleItemStock(it.id);
+        });
+
+        list.appendChild(row);
+      });
+    }
     // ==================== INIT ====================
     function initApp() {
       const urlTable = detectTableFromUrl();
@@ -2176,7 +2425,70 @@
         const newRef = push(ordersDbRef);
         set(newRef, demoOrder);
       });
-    }
+    
+      // Stock management & PIN authentication event listeners
+      const btnOpenStock = document.getElementById('btnOpenMenuStockModal');
+      if (btnOpenStock) {
+        btnOpenStock.addEventListener('click', () => {
+          promptStaffPin(() => {
+            renderManageStockList();
+            document.getElementById('menuStockModal').classList.remove('hidden');
+          });
+        });
+      }
+
+      const btnCloseStock = document.getElementById('btnCloseMenuStockModal');
+      const btnDoneStock = document.getElementById('btnDoneMenuStock');
+      if (btnCloseStock) {
+        btnCloseStock.addEventListener('click', () => {
+          document.getElementById('menuStockModal').classList.add('hidden');
+        });
+      }
+      if (btnDoneStock) {
+        btnDoneStock.addEventListener('click', () => {
+          document.getElementById('menuStockModal').classList.add('hidden');
+        });
+      }
+
+      const btnSubmitPin = document.getElementById('btnSubmitPinModal');
+      const btnCancelPin = document.getElementById('btnCancelPinModal');
+      const pinInput = document.getElementById('pinInputField');
+
+      if (btnSubmitPin) btnSubmitPin.addEventListener('click', verifyStaffPin);
+      if (btnCancelPin) {
+        btnCancelPin.addEventListener('click', () => {
+          document.getElementById('pinAuthModal').classList.add('hidden');
+          pendingAuthCallback = null;
+        });
+      }
+      if (pinInput) {
+        pinInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') verifyStaffPin();
+        });
+      }
+
+      const stockSearch = document.getElementById('stockSearchInput');
+      if (stockSearch) {
+        stockSearch.addEventListener('input', (e) => {
+          state.stockSearch = e.target.value;
+          renderManageStockList();
+        });
+      }
+
+      document.querySelectorAll('.stock-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.stockFilter = btn.getAttribute('data-stockfilter');
+          document.querySelectorAll('.stock-filter-btn').forEach(b => {
+            if (b.getAttribute('data-stockfilter') === state.stockFilter) {
+              b.className = 'stock-filter-btn shrink-0 px-3 py-1.5 rounded-xl font-semibold bg-amber-500 text-stone-950 transition';
+            } else {
+              b.className = 'stock-filter-btn shrink-0 px-3 py-1.5 rounded-xl font-semibold bg-stone-800 text-stone-300 border border-stone-700 transition';
+            }
+          });
+          renderManageStockList();
+        });
+      });
+}
 
     window.addEventListener('DOMContentLoaded', initApp);
   </script>
