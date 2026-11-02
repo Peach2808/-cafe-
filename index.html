@@ -54,9 +54,12 @@
   <header class="sticky top-0 z-30 bg-stone-950/95 backdrop-blur-md border-b border-stone-800 px-3 py-2.5">
     <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-2.5">
-        <div class="w-10 h-10 rounded-xl bg-amber-500 text-stone-950 flex flex-col items-center justify-center font-bold leading-none shadow-md">
-          <span class="text-xs tracking-tighter">มตล</span>
-          <span class="text-[9px] font-extrabold tracking-widest">CAFE</span>
+        <div class="w-10 h-10 rounded-xl overflow-hidden bg-amber-500 text-stone-950 flex flex-col items-center justify-center font-bold leading-none shadow-md shrink-0">
+          <img src="logo.jpg" alt="มัน.ตึง.ลำ Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="hidden w-full h-full flex-col items-center justify-center">
+            <span class="text-xs tracking-tighter">มตล</span>
+            <span class="text-[9px] font-extrabold tracking-widest">CAFE</span>
+          </div>
         </div>
         <div>
           <div class="flex items-center gap-2">
@@ -73,7 +76,7 @@
         <!-- Cloud Sync Indicator -->
         <div id="syncStatusBadge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-stone-900 border border-stone-800 text-[11px] text-stone-300" title="สถานะซิงค์ข้อมูลคลาวด์และเครื่องร้าน">
           <span id="syncIndicatorDot" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span id="syncStatusText">Cloud-Ready Sync</span>
+          <span id="syncStatusText">Firebase Realtime Sync</span>
         </div>
 
         <!-- Table Badge -->
@@ -83,9 +86,9 @@
           <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-[10px] text-emerald-300 font-bold">ล็อกตาม QR</span>
         </div>
 
-        <!-- Simulator Trigger (Hidden for Customers scanning from table) -->
-        <button id="btnOpenTableModal" type="button" class="hidden items-center gap-1 px-2.5 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-700 text-stone-300 text-[11px] font-medium transition" title="สำหรับเจ้าของร้านทดลองจำลองการสแกน QR โต๊ะอื่น">
-          <span>🔄 จำลองสแกนโต๊ะอื่น</span>
+        <!-- Simulator Trigger -->
+        <button id="btnOpenTableModal" type="button" class="hidden items-center gap-1 px-2.5 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-700 text-stone-300 text-[11px] font-medium transition" title="สำหรับจำลองการสแกนโต๊ะอื่น">
+          <span>🔄 สแกนโต๊ะอื่น / สั่งกลับบ้าน</span>
         </button>
 
         <!-- View Switcher -->
@@ -107,12 +110,12 @@
     <!-- Hero Banner -->
     <section class="relative overflow-hidden rounded-b-3xl sm:rounded-3xl sm:mt-4 mx-0 sm:mx-4 border-b sm:border border-stone-800 shadow-2xl">
       <div class="relative h-44 sm:h-56 w-full">
-        <img src="https://placehold.co/1000x400/26221e/f5f2eb?text=Mantuenglam+Cafe+and+Restaurant" onerror="this.src='https://placehold.co/1000x400/26221e/f5f2eb?text=Mantuenglam+Cafe';" alt="มัน.ตึง.ลำ Cafe & Rest" class="w-full h-full object-cover max-w-full" />
+        <img src="banner.jpg" onerror="this.src='https://placehold.co/1000x400/26221e/f5f2eb?text=Mantuenglam+Cafe';" alt="มัน.ตึง.ลำ Cafe & Rest" class="w-full h-full object-cover max-w-full" />
         <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent"></div>
         <div class="absolute bottom-0 inset-x-0 p-4 sm:p-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
             <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500 text-stone-950 mb-1.5">
-              สแกนสั่งอาหารที่โต๊ะ • ไม่ต้องรอคิว
+              สแกนสั่งอาหารที่โต๊ะ &amp; สั่งกลับบ้าน • ไม่ต้องรอคิว
             </span>
             <h2 class="text-xl sm:text-2xl font-bold text-white drop-shadow">อร่อยครบเครื่อง เรื่องยำ ทอด ต้ม ผัด &amp; คาเฟ่</h2>
             <p class="text-xs sm:text-sm text-stone-300">เลือกเมนู ปรับความหวาน/ความเผ็ดตามใจ แล้วกดส่งเข้าครัวได้ทันที</p>
@@ -138,10 +141,10 @@
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <span class="text-xs sm:text-sm font-bold text-white">ระบบระบุที่นั่งอัตโนมัติจาก QR Code:</span>
+              <span class="text-xs sm:text-sm font-bold text-white">ระบบระบุที่นั่ง/ประเภทสั่งซื้อ:</span>
               <span id="qrDetectedBannerTable" class="px-2.5 py-0.5 rounded-lg bg-amber-500 text-stone-950 font-extrabold text-xs sm:text-sm shadow">โต๊ะ 3</span>
             </div>
-            <p class="text-[11px] text-stone-300 mt-0.5">ไม่ต้องเลือกโต๊ะเอง • เมื่อกดสั่งอาหาร ออเดอร์จะส่งเข้าครัวเป็นชื่อโต๊ะของคุณทันที</p>
+            <p class="text-[11px] text-stone-300 mt-0.5">ระบุอัตโนมัติจาก QR Code • ออเดอร์จะส่งตรงเข้าจอครัวทันที</p>
           </div>
         </div>
         <div class="text-[11px] text-emerald-300 font-mono bg-stone-950/80 px-2.5 py-1 rounded-lg border border-stone-800" id="qrUrlParamPreview">
@@ -204,14 +207,14 @@
         <h2 class="text-lg sm:text-xl font-bold text-amber-400 flex items-center gap-2">
           👨‍🍳 ระบบจัดการออเดอร์หน้าร้าน &amp; ห้องครัว (POS / KDS)
         </h2>
-        <p class="text-xs text-stone-400">ออเดอร์ที่ลูกค้ากดสั่งจากโต๊ะจะแสดงที่นี่ทันที พร้อมอัปเดตสถานะให้ลูกค้าเห็นแบบเรียลไทม์</p>
+        <p class="text-xs text-stone-400">ออเดอร์จากโต๊ะและสั่งกลับบ้านจะเด้งที่นี่ทันทีผ่าน Firebase Realtime</p>
       </div>
       <div class="flex flex-wrap items-center gap-2">
         <button id="btnToggleSound" type="button" class="px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-xs font-medium text-amber-300 border border-stone-700 transition">
           🔊 เสียงแจ้งเตือน: เปิด
         </button>
         <button id="btnOpenQrGenerator" type="button" class="px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-bold transition shadow">
-          🖨️ สร้างป้าย QR ประจำโต๊ะ
+          🖨️ สร้างป้าย QR ประจำโต๊ะ/กลับบ้าน
         </button>
         <button id="btnAddDemoOrder" type="button" class="px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-medium border border-stone-700 transition">
           + จำลองออเดอร์ลูกค้า
@@ -241,7 +244,7 @@
 
     <!-- Staff Calls Alert List -->
     <div id="staffCallsContainer" class="mb-5 hidden">
-      <h3 class="text-sm font-bold text-rose-400 mb-2 flex items-center gap-1.5">🔔 โต๊ะที่กำลังเรียกพนักงาน</h3>
+      <h3 class="text-sm font-bold text-rose-400 mb-2 flex items-center gap-1.5">🔔 แจ้งเตือนเรียกพนักงาน</h3>
       <div id="staffCallsList" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
     </div>
 
@@ -259,7 +262,7 @@
     </div>
   </section>
 
-  <!-- ==================== STICKY BOTTOM CART BAR (Customer) ==================== -->
+  <!-- ==================== STICKY BOTTOM CART BAR ==================== -->
   <div id="bottomCartBar" class="fixed bottom-0 inset-x-0 z-30 p-3 bg-gradient-to-t from-stone-950 via-stone-950/95 to-transparent pointer-events-none">
     <div class="max-w-5xl mx-auto flex items-center justify-between gap-3 pointer-events-auto">
       <button id="btnOpenCartDrawer" type="button" class="flex-1 wood-bar hover:brightness-110 text-white p-3 sm:px-5 rounded-2xl shadow-2xl border border-amber-500/40 flex items-center justify-between transition">
@@ -269,7 +272,7 @@
           </div>
           <div class="text-left">
             <div class="text-xs text-amber-200/90 font-medium" id="cartBarSubtext">ยังไม่มีรายการในตะกร้า • เลือกเมนูได้เลย</div>
-            <div class="text-sm sm:text-base font-bold text-white">ตะกร้าสั่งอาหาร (<span id="cartBarTableText">โต๊ะ 1</span>)</div>
+            <div class="text-sm sm:text-base font-bold text-white">ตะกร้าสั่งอาหาร (<span id="cartBarTableText">โต๊ะ 3</span>)</div>
           </div>
         </div>
         <div class="flex items-center gap-2.5">
@@ -318,7 +321,7 @@
 
         <div>
           <label for="modalItemNote" class="block text-xs font-semibold text-stone-300 mb-1.5">หมายเหตุเพิ่มเติมถึงครัว (ถ้ามี)</label>
-          <input id="modalItemNote" type="text" placeholder="เช่น ไม่ใส่ผักชี, ไม่ใส่ผงชูรส, แยกน้ำยำ..." class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-700 text-xs sm:text-sm text-white placeholder-stone-500 focus:outline-none focus:border-amber-500" />
+          <input id="modalItemNote" type="text" placeholder="เช่น ไม่ใส่ผักชี, ไม่ใส่ชูรส, แยกน้ำยำ..." class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-700 text-xs sm:text-sm text-white placeholder-stone-500 focus:outline-none focus:border-amber-500" />
         </div>
 
         <div class="flex items-center justify-between pt-2 border-t border-stone-800">
@@ -347,7 +350,7 @@
       <div class="p-4 sm:p-5 border-b border-stone-800 flex items-center justify-between bg-stone-950/70">
         <div>
           <h3 class="text-lg font-bold text-amber-400 flex items-center gap-2">
-            🛒 ตะกร้าสั่งอาหาร (<span id="cartModalTableName">โต๊ะ 1</span>)
+            🛒 ตะกร้าสั่งอาหาร (<span id="cartModalTableName">โต๊ะ 3</span>)
           </h3>
           <p class="text-xs text-stone-400">ตรวจสอบรายการก่อนกดส่งเข้าครัว</p>
         </div>
@@ -372,10 +375,10 @@
         </div>
         <div class="space-y-2">
           <button id="btnSubmitToLine" type="button" class="w-full py-3.5 rounded-2xl bg-[#06C755] hover:bg-[#05b34c] text-stone-950 font-extrabold text-sm sm:text-base shadow-lg transition flex items-center justify-center gap-2">
-            <span>💬 ส่งออเดอร์เข้า LINE ร้านค้าทันที (@698ygoeo)</span>
+            <span>💬 ส่งออเดอร์เข้า LINE ร้านค้า (@698ygoeo)</span>
           </button>
-          <button id="btnSubmitOrderToKitchen" type="button" class="w-full py-2.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/40 font-bold text-xs sm:text-sm transition flex items-center justify-center gap-1.5">
-            <span>🚀 ส่งออเดอร์เข้าหน้าครัวในเว็บ (ไม่เปิดแอป LINE)</span>
+          <button id="btnSubmitOrderToKitchen" type="button" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-extrabold text-xs sm:text-sm transition flex items-center justify-center gap-1.5 shadow">
+            <span>🚀 ส่งออเดอร์เข้าครัวทันที (Realtime Sync)</span>
           </button>
         </div>
       </div>
@@ -388,7 +391,7 @@
       <div class="p-4 sm:p-5 border-b border-stone-800 flex items-center justify-between bg-stone-950/70">
         <div>
           <h3 class="text-lg font-bold text-emerald-400 flex items-center gap-2">
-            🧾 บิลค่าอาหาร &amp; สถานะออเดอร์ (<span id="billModalTableName">โต๊ะ 1</span>)
+            🧾 บิลค่าอาหาร &amp; สถานะออเดอร์ (<span id="billModalTableName">โต๊ะ 3</span>)
           </h3>
           <p class="text-xs text-stone-400">มัน.ตึง.ลำ Cafe' &amp; Rest • โทร 061-348-5831</p>
         </div>
@@ -401,7 +404,7 @@
 
       <div class="p-4 bg-stone-950 border-t border-stone-800 space-y-3">
         <div class="flex items-center justify-between text-base sm:text-lg font-bold">
-          <span class="text-white">ยอดรวมสุทธิของโต๊ะนี้</span>
+          <span class="text-white">ยอดรวมสุทธิ</span>
           <span id="billModalGrandTotal" class="text-amber-400 text-xl">0 ฿</span>
         </div>
         <div class="grid grid-cols-2 gap-2.5">
@@ -421,12 +424,16 @@
     <div class="bg-stone-900 border border-stone-700 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl">
       <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950/60">
         <div>
-          <h3 class="text-base font-bold text-amber-400">📲 จำลองการสแกน QR Code ประจำโต๊ะ</h3>
-          <p class="text-[11px] text-stone-400">ของจริงลูกค้าไม่ต้องกดเลือกเอง (เมื่อสแกน QR บนโต๊ะไหน เว็บจะล็อกเป็นโต๊ะนั้นอัตโนมัติ)</p>
+          <h3 class="text-base font-bold text-amber-400">📲 เลือกโต๊ะหรือสั่งกลับบ้าน</h3>
+          <p class="text-[11px] text-stone-400">เลือกลำดับที่นั่งหรือสั่งกลับบ้านเพื่อส่งออเดอร์</p>
         </div>
         <button id="btnCloseTableModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center text-sm">✕</button>
       </div>
       <div class="p-4 space-y-4 max-h-[75vh] overflow-y-auto">
+        <div>
+          <label class="block text-xs font-semibold text-amber-400 mb-2">🛍️ สั่งกลับบ้าน (Takeaway)</label>
+          <div id="tableOptionsTakeaway" class="grid grid-cols-2 gap-2"></div>
+        </div>
         <div>
           <label class="block text-xs font-semibold text-amber-300 mb-2">🛋️ โซนด้านใน (โซฟา 1–2, โต๊ะ 3–5)</label>
           <div id="tableOptionsIndoor" class="grid grid-cols-3 sm:grid-cols-5 gap-2"></div>
@@ -447,7 +454,7 @@
   <div id="serviceCallModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-stone-900 border border-stone-700 w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl">
       <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950/60">
-        <h3 class="text-base font-bold text-amber-400">🔔 บริการประจำโต๊ะ (<span id="serviceModalTable">โต๊ะ 1</span>)</h3>
+        <h3 class="text-base font-bold text-amber-400">🔔 บริการประจำโต๊ะ (<span id="serviceModalTable">โต๊ะ 3</span>)</h3>
         <button id="btnCloseServiceModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center text-sm">✕</button>
       </div>
       <div class="p-4 space-y-2.5">
@@ -471,20 +478,20 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 6: QR GENERATOR FOR TABLES (Staff) ==================== -->
+  <!-- ==================== MODAL 6: QR GENERATOR ==================== -->
   <div id="qrGeneratorModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-stone-900 border border-stone-700 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl max-h-[92vh] flex flex-col">
       <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950/60">
         <div>
-          <h3 class="text-base font-bold text-amber-400">🖨️ ป้าย QR Code ถาวรประจำโต๊ะ (ชี้ตรง GitHub Pages)</h3>
-          <p class="text-[11px] text-emerald-400">✓ ชี้ตรงไปที่ https://peach2808.github.io/-cafe-/ • สแกนใช้งานได้ทันที</p>
+          <h3 class="text-base font-bold text-amber-400">🖨️ ป้าย QR Code โต๊ะ &amp; สั่งกลับบ้าน</h3>
+          <p class="text-[11px] text-emerald-400">✓ สแกนแล้วสั่งตรงเข้าครัวได้ทันที</p>
         </div>
         <button id="btnCloseQrModal" type="button" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center text-sm">✕</button>
       </div>
       <div class="p-4 sm:p-5 text-center space-y-3.5 overflow-y-auto flex-1">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-left">
           <div>
-            <label for="qrTableSelect" class="block text-[11px] text-stone-300 mb-1">เลือกโต๊ะที่ต้องการดู/พิมพ์ป้าย:</label>
+            <label for="qrTableSelect" class="block text-[11px] text-stone-300 mb-1">เลือกจุดที่ต้องการดู/พิมพ์ป้าย:</label>
             <select id="qrTableSelect" class="w-full px-3 py-2 rounded-xl bg-stone-800 border border-stone-700 text-xs text-amber-300 font-semibold"></select>
           </div>
           <div>
@@ -497,7 +504,7 @@
           <div class="text-xs font-extrabold tracking-widest text-amber-700 uppercase">มัน.ตึง.ลำ Cafe' &amp; Rest</div>
           <div id="qrCardTableTitle" class="text-xl font-black text-stone-950 mt-0.5">โต๊ะ 3 (โซนด้านใน)</div>
           <div class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-0.5 inline-block mt-1">
-            ♾️ QR ถาวรประจำโต๊ะ • สแกนขึ้นโต๊ะอัตโนมัติ
+            ♾️ QR ถาวร • สแกนขึ้นระบบอัตโนมัติ
           </div>
           <div id="qrSvgContainer" class="my-2.5 flex justify-center">
             <!-- QR Code SVG -->
@@ -511,14 +518,14 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
           <button id="btnPrintAll12Tables" type="button" class="py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs transition shadow flex items-center justify-center gap-1.5">
-            🖨️ พิมพ์ป้ายครบทั้ง 12 โต๊ะ (ใช้ถาวร)
+            🖨️ พิมพ์ป้ายครบทุกโต๊ะ + สั่งกลับบ้าน
           </button>
           <button id="btnCopyTableLink" type="button" class="py-2.5 px-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/40 font-bold text-xs transition">
-            🔗 คัดลอกลิงก์ประจำโต๊ะนี้
+            🔗 คัดลอกลิงก์ประจำจุดนี้
           </button>
         </div>
         <button id="btnSimulateScanThisTable" type="button" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs sm:text-sm transition">
-          📱 ทดลองสแกนเข้าสั่งอาหารในนามโต๊ะนี้
+          📱 สลับเข้าสั่งอาหารในนามจุดนี้
         </button>
       </div>
     </div>
@@ -532,7 +539,27 @@
     <span id="toastMessage">บันทึกสำเร็จ</span>
   </div>
 
-  <script>
+  <script type="module">
+    // ==================== FIREBASE REALTIME SETUP ====================
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, set, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBAOY-jqd8cqe7h7W0ONcoE7X_R2LBuZBU",
+      authDomain: "mantuenglam-cafe.firebaseapp.com",
+      databaseURL: "https://mantuenglam-cafe-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "mantuenglam-cafe",
+      storageBucket: "mantuenglam-cafe.firebasestorage.app",
+      messagingSenderId: "546108452803",
+      appId: "1:546108452803:web:dbb2d1552a0ae928151776",
+      measurementId: "G-8C64PZKQ0V"
+    };
+
+    const fbApp = initializeApp(firebaseConfig);
+    const db = getDatabase(fbApp);
+    const ordersDbRef = ref(db, 'orders');
+    const staffCallsDbRef = ref(db, 'staff_calls');
+
     // ==================== CONFIG & COMPLETE DATASET ====================
     const LINE_OA_ID = "@698ygoeo";
     const GITHUB_PAGES_URL = "https://peach2808.github.io/-cafe-/";
@@ -566,7 +593,7 @@
       { id: 't3', cat: 'tea_milk', name: 'ชาไทย', price: 35, emoji: '🧋', sweet: true, badge: 'ขายดี', signature: true, variants: [{ label: 'ร้อน', price: 35 }, { label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
       { id: 't4', cat: 'tea_milk', name: 'ชาพีช', price: 35, emoji: '🍑', sweet: true, variants: [{ label: 'ร้อน', price: 35 }, { label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
       { id: 't5', cat: 'tea_milk', name: 'ชามะนาว', price: 35, emoji: '🍋', sweet: true, variants: [{ label: 'ร้อน', price: 35 }, { label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
-      { id: 't6', cat: 'tea_milk', name: 'ชาน้ำผึ้งมะนาว', price: 40, emoji: '🍯', sweet: true, variants: [{ label: 'ร้อน', price: 40 }, { label: 'เย็น', price: 45 }, { label: 'ปั่น', price: 50 }] },
+      { id: 't6', cat: 'tea_milk', name: 'ชาน้ำผึ้งมะนาว', price: 40, emoji: '🍯', sweet: true, variants: [{ label: 'ร้อน', price: 35 }, { label: 'เย็น', price: 45 }, { label: 'ปั่น', price: 50 }] },
       { id: 't7', cat: 'tea_milk', name: 'นมสด', price: 30, emoji: '🥛', sweet: true, variants: [{ label: 'ร้อน', price: 30 }, { label: 'เย็น', price: 35 }, { label: 'ปั่น', price: 40 }] },
       { id: 't8', cat: 'tea_milk', name: 'นมสดน้ำผึ้ง', price: 35, emoji: '🍯', sweet: true, variants: [{ label: 'ร้อน', price: 35 }, { label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
       { id: 't9', cat: 'tea_milk', name: 'นมชมพู', price: 40, emoji: '🩷', sweet: true, variants: [{ label: 'เย็น', price: 40 }, { label: 'ปั่น', price: 45 }] },
@@ -685,6 +712,14 @@
 
     const TABLE_ZONES = [
       {
+        zoneId: 'takeaway',
+        zoneName: 'สั่งกลับบ้าน (Takeaway)',
+        tables: [
+          { name: 'สั่งกลับบ้าน 1', code: 'takeaway1', aliases: ['กลับบ้าน1', 'takeaway1', 'สั่งกลับบ้าน1'] },
+          { name: 'สั่งกลับบ้าน 2', code: 'takeaway2', aliases: ['กลับบ้าน2', 'takeaway2', 'สั่งกลับบ้าน2'] }
+        ]
+      },
+      {
         zoneId: 'indoor',
         zoneName: 'โซนด้านใน',
         tables: [
@@ -721,25 +756,12 @@
     let state = {
       viewMode: 'customer',
       currentTable: 'โต๊ะ 3',
-      isTableLockedByQr: false, // ถ้าสแกนมาจาก QR โต๊ะโดยตรง จะเป็น true และซ่อนปุ่มจำลอง
+      isTableLockedByQr: false,
       activeCategory: 'all',
       quickFilter: 'all',
       searchQuery: '',
       cart: [],
-      orders: [
-        {
-          orderId: 'ORD-101',
-          table: 'โต๊ะ 3',
-          time: '10:12 น.',
-          status: 'cooking',
-          items: [
-            { name: 'ปลานิลมันตึงลำ (Signature)', optionSummary: 'เผ็ดปกติ', qty: 1, unitPrice: 209 },
-            { name: 'ต้มแซ่บกระดูกอ่อน', optionSummary: 'เผ็ดจัดจ้าน', qty: 1, unitPrice: 139 },
-            { name: 'ข้าวสวย (จาน / โถ)', optionSummary: 'โถ (80 ฿)', qty: 1, unitPrice: 80 },
-            { name: 'ชาไทย', optionSummary: 'เย็น • หวานน้อย 50%', qty: 2, unitPrice: 40 }
-          ]
-        }
-      ],
+      orders: [],
       staffCalls: [],
       staffFilter: 'all',
       soundEnabled: true,
@@ -752,44 +774,45 @@
       modalNote: ''
     };
 
-    // ==================== CLOUD-READY LOCALSTORAGE & SYNC ENGINE ====================
-    const STORAGE_KEY = 'mantuenglam_cafe_cloud_ready_state_v2';
-
-    function loadStateFromStorage() {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (parsed.orders) state.orders = parsed.orders;
-          if (parsed.cart) state.cart = parsed.cart;
-          if (parsed.staffCalls) state.staffCalls = parsed.staffCalls;
-        }
-      } catch (e) {}
-    }
-
-    function saveStateToStorage() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({
-          orders: state.orders,
-          cart: state.cart,
-          staffCalls: state.staffCalls,
-          updatedAt: Date.now()
-        }));
-      } catch (e) {}
-    }
-
-    // จำลองซิงค์เรียลไทม์ข้ามเครื่อง (Cross-device Cloud Sync Simulation)
-    window.addEventListener('storage', (e) => {
-      if (e.key === STORAGE_KEY && e.newValue) {
-        try {
-          const remote = JSON.parse(e.newValue);
-          if (remote.orders) state.orders = remote.orders;
-          if (remote.staffCalls) state.staffCalls = remote.staffCalls;
-          updateCartUI();
-          if (state.viewMode === 'staff') renderStaffDashboard();
-          showToast('ซิงค์ข้อมูลอัปเดตจากอุปกรณ์อื่นเรียบร้อย', '⚡');
-        } catch (err) {}
+    // ==================== FIREBASE REALTIME LISTENERS ====================
+    let isFirstOrdersLoad = true;
+    onValue(ordersDbRef, (snapshot) => {
+      const data = snapshot.val();
+      const prevLength = state.orders.length;
+      if (data) {
+        state.orders = Object.keys(data).map(key => ({
+          ...data[key],
+          firebaseKey: key
+        })).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      } else {
+        state.orders = [];
       }
+
+      if (!isFirstOrdersLoad && state.orders.length > prevLength && state.viewMode === 'staff') {
+        playBeep('order');
+      }
+      isFirstOrdersLoad = false;
+
+      updateCartUI();
+      if (state.viewMode === 'staff') renderStaffDashboard();
+      
+      const billModal = document.getElementById('activeBillModal');
+      if (billModal && !billModal.classList.contains('hidden')) {
+        openActiveBillModal();
+      }
+    });
+
+    onValue(staffCallsDbRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        state.staffCalls = Object.keys(data).map(key => ({
+          ...data[key],
+          firebaseKey: key
+        })).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      } else {
+        state.staffCalls = [];
+      }
+      if (state.viewMode === 'staff') renderStaffDashboard();
     });
 
     // ==================== WEB AUDIO SOUND EFFECTS ====================
@@ -1161,7 +1184,6 @@
         });
       }
 
-      saveStateToStorage();
       playBeep('tap');
       document.getElementById('itemOptionModal').classList.add('hidden');
       updateCartUI();
@@ -1232,13 +1254,11 @@
         row.querySelector('.btn-cart-dec').addEventListener('click', () => {
           cItem.qty -= 1;
           if (cItem.qty <= 0) state.cart.splice(index, 1);
-          saveStateToStorage();
           updateCartUI();
           renderMenuGrid();
         });
         row.querySelector('.btn-cart-inc').addEventListener('click', () => {
           cItem.qty += 1;
-          saveStateToStorage();
           updateCartUI();
           renderMenuGrid();
         });
@@ -1248,18 +1268,24 @@
     }
 
     function buildLineOrderMessage(tableWithZone, orderId, items) {
-      let text = `🚨 สั่งอาหารจาก ${tableWithZone}\nรหัสออเดอร์: ${orderId}\n------------------\n`;
+      let text = `🚨 สั่งอาหารจาก ${tableWithZone}
+รหัสออเดอร์: ${orderId}
+------------------
+`;
       let total = 0;
       items.forEach(i => {
         const sub = i.unitPrice * i.qty;
         const opt = (i.optionSummary && i.optionSummary !== 'ปกติ') ? ` [${i.optionSummary}]` : '';
-        text += `• ${i.name}${opt} x${i.qty} (${sub}฿)\n`;
+        text += `• ${i.name}${opt} x${i.qty} (${sub}฿)
+`;
         total += sub;
       });
-      text += `------------------\n💰 ยอดรวม: ${total.toLocaleString()} บาท`;
+      text += `------------------
+💰 ยอดรวม: ${total.toLocaleString()} บาท`;
       return text;
     }
 
+    // ==================== SUBMIT ORDER TO FIREBASE ====================
     function submitCartToKitchen(sendViaLine = false) {
       if (state.cart.length === 0) {
         showToast('กรุณาเลือกเมนูลงตะกร้าก่อนส่งออเดอร์ครับ', '⚠️');
@@ -1276,35 +1302,40 @@
         qty: c.qty,
         unitPrice: c.unitPrice
       }));
+
       const newOrder = {
         orderId: `ORD-${Math.floor(100 + Math.random() * 900)}`,
         table: state.currentTable,
         time: timeStr,
         status: 'pending',
-        items: orderItems
+        items: orderItems,
+        createdAt: Date.now()
       };
 
-      const lineMessageText = buildLineOrderMessage(tableWithZone, newOrder.orderId, orderItems);
+      const newRef = push(ordersDbRef);
+      set(newRef, newOrder)
+        .then(() => {
+          playBeep('order');
+          state.cart = [];
+          document.getElementById('cartDrawerModal').classList.add('hidden');
+          updateCartUI();
+          renderMenuGrid();
 
-      state.orders.unshift(newOrder);
-      state.cart = [];
-      saveStateToStorage();
-      playBeep('order');
-
-      document.getElementById('cartDrawerModal').classList.add('hidden');
-      updateCartUI();
-      renderMenuGrid();
-      renderStaffDashboard();
-
-      if (sendViaLine) {
-        showToast(`กำลังเปิด LINE เพื่อส่งออเดอร์ ${tableWithZone}...`, '💬');
-        const encoded = encodeURIComponent(lineMessageText);
-        const lineUrl = `https://line.me/R/oaMessage/${LINE_OA_ID}/?${encoded}`;
-        const win = window.open(lineUrl, '_blank'); if (!win) { window.location.href = lineUrl; }
-      } else {
-        openActiveBillModal();
-        showToast(`ส่งออเดอร์ ${tableWithZone} เข้าครัวเรียบร้อยแล้ว!`, '🚀');
-      }
+          if (sendViaLine) {
+            showToast(`กำลังเปิด LINE เพื่อส่งออเดอร์ ${tableWithZone}...`, '💬');
+            const encoded = encodeURIComponent(buildLineOrderMessage(tableWithZone, newOrder.orderId, orderItems));
+            const lineUrl = `https://line.me/R/oaMessage/${LINE_OA_ID}/?${encoded}`;
+            const win = window.open(lineUrl, '_blank');
+            if (!win) { window.location.href = lineUrl; }
+          } else {
+            openActiveBillModal();
+            showToast(`ส่งออเดอร์ ${tableWithZone} เข้าครัวเรียบร้อยแล้ว!`, '🚀');
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          showToast('ส่งออเดอร์ไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตครับ', '❌');
+        });
     }
 
     // ==================== ACTIVE BILL MODAL ====================
@@ -1385,11 +1416,13 @@
     }
 
     function renderTableSelector() {
+      const takeawayDiv = document.getElementById('tableOptionsTakeaway');
       const indoorDiv = document.getElementById('tableOptionsIndoor');
       const outdoorDiv = document.getElementById('tableOptionsOutdoor');
       const specialDiv = document.getElementById('tableOptionsSpecial');
       const qrSelect = document.getElementById('qrTableSelect');
 
+      if (takeawayDiv) takeawayDiv.innerHTML = '';
       indoorDiv.innerHTML = '';
       if (outdoorDiv) outdoorDiv.innerHTML = '';
       specialDiv.innerHTML = '';
@@ -1421,11 +1454,23 @@
         return btn;
       };
 
-      TABLE_ZONES[0].tables.forEach(t => indoorDiv.appendChild(createTableBtn(t.name)));
-      if (outdoorDiv) {
-        TABLE_ZONES[1].tables.forEach(t => outdoorDiv.appendChild(createTableBtn(t.name)));
+      const takeawayZone = TABLE_ZONES.find(z => z.zoneId === 'takeaway');
+      const indoorZone = TABLE_ZONES.find(z => z.zoneId === 'indoor');
+      const outdoorZone = TABLE_ZONES.find(z => z.zoneId === 'outdoor');
+      const lawnZone = TABLE_ZONES.find(z => z.zoneId === 'lawn');
+
+      if (takeawayZone && takeawayDiv) {
+        takeawayZone.tables.forEach(t => takeawayDiv.appendChild(createTableBtn(t.name)));
       }
-      TABLE_ZONES[2].tables.forEach(t => specialDiv.appendChild(createTableBtn(t.name)));
+      if (indoorZone) {
+        indoorZone.tables.forEach(t => indoorDiv.appendChild(createTableBtn(t.name)));
+      }
+      if (outdoorDiv && outdoorZone) {
+        outdoorZone.tables.forEach(t => outdoorDiv.appendChild(createTableBtn(t.name)));
+      }
+      if (lawnZone) {
+        lawnZone.tables.forEach(t => specialDiv.appendChild(createTableBtn(t.name)));
+      }
     }
 
     function getTableQueryCode(tName) {
@@ -1471,7 +1516,7 @@
       return null;
     }
 
-    // Pure-JS ISO/IEC 18004 Standard QR Code Matrix Generator
+    // Pure-JS QR Matrix Generator
     const QR_VERSIONS = [
       null,
       { size: 21, dataBytes: 19, ecBytes: 7, align: [] },
@@ -1701,13 +1746,13 @@
             <div style="font-size: 11px; font-weight: 700; color: #047857;">(${t.zoneName})</div>
             <div style="margin: 8px 0; display: flex; justify-content: center;">${svg}</div>
             <div style="font-size: 9px; font-family: monospace; color: #444; word-break: break-all;">${fullUrl}</div>
-            <div style="font-size: 10px; font-weight: 700; margin-top: 4px;">สแกนสั่งอาหารที่โต๊ะ • ใช้ซ้ำได้ถาวร</div>
+            <div style="font-size: 10px; font-weight: 700; margin-top: 4px;">สแกนสั่งอาหาร • ใช้ซ้ำได้ถาวร</div>
           </div>
         `;
       }).join('');
       sheet.innerHTML = `
         <div style="text-align: center; margin-bottom: 16px;">
-          <h1 style="font-size: 20px; font-weight: 900;">ป้าย QR Code ประจำโต๊ะถาวรครบทั้ง 12 โต๊ะ — มัน.ตึง.ลำ Cafe' &amp; Rest</h1>
+          <h1 style="font-size: 20px; font-weight: 900;">ป้าย QR Code ประจำจุดสั่งซื้อครบทุกจุด — มัน.ตึง.ลำ Cafe' &amp; Rest</h1>
           <p style="font-size: 12px; color: #555;">ชี้ตรงไปที่ ${GITHUB_PAGES_URL}</p>
         </div>
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
@@ -1732,7 +1777,6 @@
       const paramPrev = document.getElementById('qrUrlParamPreview');
       if (paramPrev) paramPrev.textContent = `?table=${codeParam}`;
 
-      // ซ่อนปุ่มจำลองสแกนโต๊ะอื่นเมื่อลูกค้าสแกนเข้ามาจากโต๊ะโดยตรง
       const simBtn = document.getElementById('btnOpenTableModal');
       if (simBtn) {
         if (state.isTableLockedByQr) {
@@ -1751,8 +1795,7 @@
 
     function selectTable(tName) {
       state.currentTable = tName;
-      state.isTableLockedByQr = false; // ถ้ากดเปลี่ยนจากปุ่มจำลอง ให้แสดงปุ่มได้ปกติ
-      saveStateToStorage();
+      state.isTableLockedByQr = false;
       syncTableBadges();
       document.getElementById('tableSelectModal').classList.add('hidden');
       renderTableSelector();
@@ -1787,7 +1830,7 @@
       } else {
         callsWrap.classList.remove('hidden');
         callsList.innerHTML = '';
-        state.staffCalls.forEach((sc, idx) => {
+        state.staffCalls.forEach((sc) => {
           const card = document.createElement('div');
           card.className = 'p-3 rounded-xl bg-rose-950/50 border border-rose-500/40 flex items-center justify-between gap-2';
           card.innerHTML = `
@@ -1798,9 +1841,9 @@
             <button type="button" class="px-2.5 py-1.5 rounded-lg bg-rose-500 hover:bg-rose-400 text-white text-xs font-bold shrink-0">รับทราบ ✓</button>
           `;
           card.querySelector('button').addEventListener('click', () => {
-            state.staffCalls.splice(idx, 1);
-            saveStateToStorage();
-            renderStaffDashboard();
+            if (sc.firebaseKey) {
+              remove(ref(db, `staff_calls/${sc.firebaseKey}`));
+            }
             showToast(`ดูแล ${sc.table} เรียบร้อยแล้ว`);
           });
           callsList.appendChild(card);
@@ -1875,7 +1918,7 @@
             <div class="flex items-center gap-1.5">
               ${ord.status === 'pending' ? `<button type="button" data-next="cooking" class="btn-ord-status px-3 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-stone-950 font-bold text-xs">🔥 รับออเดอร์/เริ่มทำ</button>` : ''}
               ${ord.status === 'cooking' ? `<button type="button" data-next="served" class="btn-ord-status px-3 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-bold text-xs">✅ เสิร์ฟแล้ว</button>` : ''}
-              ${ord.status === 'served' ? `<button type="button" data-next="paid" class="btn-ord-status px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs">💰 รับชำระเงิน/เคลียร์โต๊ะ</button>` : ''}
+              ${ord.status === 'served' ? `<button type="button" data-next="paid" class="btn-ord-status px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs">💰 รับชำระเงิน/เคลียร์</button>` : ''}
               ${ord.status === 'paid' ? `<span class="text-xs text-stone-500 font-medium">ปิดบิลเรียบร้อย</span>` : ''}
             </div>
           </div>
@@ -1884,12 +1927,14 @@
         const statusBtn = card.querySelector('.btn-ord-status');
         if (statusBtn) {
           statusBtn.addEventListener('click', () => {
-            ord.status = statusBtn.getAttribute('data-next');
-            saveStateToStorage();
-            playBeep('tap');
-            renderStaffDashboard();
-            updateCartUI();
-            showToast(`อัปเดตสถานะ ${ord.table} (${ord.orderId}) แล้ว`);
+            const nextStatus = statusBtn.getAttribute('data-next');
+            if (ord.firebaseKey) {
+              update(ref(db, `orders/${ord.firebaseKey}`), { status: nextStatus })
+                .then(() => {
+                  playBeep('tap');
+                  showToast(`อัปเดตสถานะ ${ord.table} แล้ว`);
+                });
+            }
           });
         }
 
@@ -1911,20 +1956,21 @@
     function triggerServiceRequest(reason) {
       const now = new Date();
       const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} น.`;
-      state.staffCalls.unshift({
+      
+      const newCallRef = push(staffCallsDbRef);
+      set(newCallRef, {
         table: state.currentTable,
         reason,
-        time: timeStr
+        time: timeStr,
+        createdAt: Date.now()
+      }).then(() => {
+        playBeep('order');
+        showToast(`แจ้งพนักงาน (${reason}) เรียบร้อยแล้วครับ`, '🔔');
       });
-      saveStateToStorage();
-      playBeep('order');
-      renderStaffDashboard();
-      showToast(`แจ้งพนักงาน (${reason}) เรียบร้อยแล้วครับ`, '🔔');
     }
 
     // ==================== INIT ====================
     function initApp() {
-      loadStateFromStorage();
       const urlTable = detectTableFromUrl();
       if (urlTable) {
         state.currentTable = urlTable;
@@ -2007,7 +2053,6 @@
       });
       document.getElementById('btnClearCart').addEventListener('click', () => {
         state.cart = [];
-        saveStateToStorage();
         updateCartUI();
         renderMenuGrid();
         showToast('ล้างรายการในตะกร้าแล้ว');
@@ -2111,11 +2156,12 @@
       });
 
       document.getElementById('btnAddDemoOrder').addEventListener('click', () => {
-        const sampleTables = ['โซฟา 1', 'โซฟา 2', 'โต๊ะ 4', 'โต๊ะ 6', 'โต๊ะสนาม 1', 'โต๊ะสนาม 2'];
+        const sampleTables = ['สั่งกลับบ้าน 1', 'สั่งกลับบ้าน 2', 'โซฟา 1', 'โต๊ะ 4', 'โต๊ะ 6', 'โต๊ะสนาม 1'];
         const rTable = sampleTables[Math.floor(Math.random() * sampleTables.length)];
         const now = new Date();
         const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} น.`;
-        state.orders.unshift({
+        
+        const demoOrder = {
           orderId: `ORD-${Math.floor(100 + Math.random() * 900)}`,
           table: rTable,
           time: timeStr,
@@ -2124,12 +2170,11 @@
             { name: 'ยำผักบุ้งกรอบ', optionSummary: 'เผ็ดปกติ', qty: 1, unitPrice: 129 },
             { name: 'หมูสามชั้นทอดน้ำปลา', optionSummary: 'ปกติ', qty: 1, unitPrice: 119 },
             { name: 'ข้าวกะเพราหมู', optionSummary: 'เผ็ดปกติ • + ไข่ดาว (10฿)', qty: 2, unitPrice: 65 }
-          ]
-        });
-        saveStateToStorage();
-        playBeep('order');
-        renderStaffDashboard();
-        showToast(`มีออเดอร์ใหม่เข้าจาก ${rTable}!`, '🔔');
+          ],
+          createdAt: Date.now()
+        };
+        const newRef = push(ordersDbRef);
+        set(newRef, demoOrder);
       });
     }
 
